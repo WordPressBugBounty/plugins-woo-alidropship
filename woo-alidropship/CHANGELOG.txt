@@ -1,3 +1,7 @@
+/**2.1.1 - 2024.10.23**/
+– Updated: Compatible with WP 6.6.2 and  WC 9.3.3
+- Fixed: HTML error in Bulk Set categories (Import List)
+
 /**2.1.0 - 2024.08.31**/
 - Updated: Import AliExpress product in 'Find product to import' with API
 - Updated: Remove the old API and use the new API to get AliExpress product information

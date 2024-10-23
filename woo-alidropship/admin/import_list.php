@@ -577,7 +577,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Import_List {
 						'modal-popup-set-categories'
 					) ) ) ?>">
                         <div class="<?php echo esc_attr( self::set( 'modal-popup-set-categories-select-wrap' ) ) ?>">
-							<?php echo esc_attr(str_replace( array(
+							<?php echo str_replace( array(
 								'vi_wad_product[{ali_product_id}][categories][]',
 								'vi-wad-import-data-categories',
 								'vi-ui dropdown search'
@@ -585,7 +585,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Import_List {
 								esc_attr( 'vi_wad_bulk_set_categories' ),
 								self::set( esc_attr( 'modal-popup-set-categories-select' ) ),
 								'vi-ui dropdown fluid search'
-							), self::$categories_options )); ?>
+							), self::$categories_options ); ?>
                             <span class="vi-ui black button mini <?php echo esc_attr( self::set( 'modal-popup-set-categories-clear' ) ) ?>"><?php esc_html_e( 'Clear selected', 'woo-alidropship' ) ?></span>
                         </div>
                     </div>

@@ -360,7 +360,7 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 
 		/*check version*/
 		if ( version_compare( VI_WOO_ALIDROPSHIP_VERSION, $require_version, '<' ) ) {
-			$result['message']      = sprintf( esc_html__( 'Require ALD - Dropshipping and Fulfillment for AliExpress and WooCommerce plugin version %s', 'woo-alidropship' ), $require_version );//phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+			$result['message']      = sprintf( esc_html__( 'Require ALD - Dropshipping and Fulfillment for AliExpress and WooCommerce plugin version %s, your current version is %s', 'woo-alidropship' ), $require_version ,VI_WOO_ALIDROPSHIP_VERSION);//phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
 			$result['message_type'] = 2;
 
 			wp_send_json( $result );

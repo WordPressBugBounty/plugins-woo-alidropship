@@ -70,6 +70,7 @@ if ( ! class_exists( 'Vi_Wad_Draft_Product' ) ) {
 				'supports'            => array( 'title' ),
 //				'menu_icon'           => "dashicons-products",
 				'exclude_from_search' => true,
+				'can_export' => false,
 			);
 			register_post_type( 'vi_wad_draft_product', $args );
 		}
