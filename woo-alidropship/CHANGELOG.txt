@@ -1,3 +1,7 @@
+/**2.1.2 - 2024.11.21**/
+– Updated: Compatible with WP 6.7 and  WC 9.4
+– Updated: Update support class
+
 /**2.1.1 - 2024.10.23**/
 – Updated: Compatible with WP 6.6.2 and  WC 9.3.3
 - Fixed: HTML error in Bulk Set categories (Import List)
