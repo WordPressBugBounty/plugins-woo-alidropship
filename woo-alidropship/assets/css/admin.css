@@ -379,3 +379,12 @@ tbody.vi-wad-format-price-rules-container.ui-sortable > tr:hover .vi-wad-format-
     right: unset;
     left: 15px;
 }
+.vi-ui.labeled.input.wad-labeled-button .vi-ui.label {
+    padding: 0;
+}
+.vi-ui.labeled.input.wad-labeled-button .vi-ui.label .vi-ui.button{
+    margin: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}

@@ -317,6 +317,9 @@ You can distinguish between AliExpress orders with your initial store orders and
 9. Comparison table for the free and the premium version
 
 == Changelog ==
+/**2.1.3 - 2024.12.02**/
+– Updated: Update support class
+
 /**2.1.2 - 2024.11.21**/
 – Updated: Compatible with WP 6.7 and  WC 9.4
 – Updated: Update support class
