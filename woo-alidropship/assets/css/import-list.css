@@ -1033,6 +1033,10 @@ ul.vi-wad-attribute-filter-list li.vi-wad-attribute-filter-item.vi-wad-attribute
     font-size: 18px;
 }
 
+#ald-find-product-modal .ald-message-notice {
+    font-size: 14px;
+    font-weight: normal;
+}
 #ald-find-product-modal .ald-header-title {
     margin-bottom: 10px;
 }

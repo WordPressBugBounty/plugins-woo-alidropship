@@ -3,7 +3,7 @@ Contributors: villatheme, mrt3vn
 Donate link: http://www.villatheme.com/donate
 Tags: alidropship, dropship, alidropship woo, aliexpress dropshipping plugin, aliexpress dropshipping
 Requires at least: 5.0.0
-Tested up to: 6.7
+Tested up to: 6.7.2
 Requires PHP: 7.0
 Stable tag: trunk
 License: GPL v2 or later
@@ -317,6 +317,9 @@ You can distinguish between AliExpress orders with your initial store orders and
 9. Comparison table for the free and the premium version
 
 == Changelog ==
+/**2.1.4 - 2024.12.12**/
+- Fixed: Fixed the error of not being able to save settings
+
 /**2.1.3 - 2024.12.02**/
 – Updated: Update support class
 

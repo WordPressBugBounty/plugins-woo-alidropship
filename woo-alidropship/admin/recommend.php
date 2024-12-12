@@ -57,7 +57,8 @@ class VI_WOO_ALIDROPSHIP_Admin_Recommend {
 				'message_not_install' => __( 'Need to save your server storage? <strong>EXMAGE – WordPress Image Links</strong> will help you solve the problem by using external image URLs. </br>When this plugin is active, "Use external links for images" option will be available in the ALD plugin settings/Product which allows to use original AliExpress product image URLs for featured image, gallery images and variation image of imported AliExpress products.', 'woo-alidropship' ),
 				'message_not_active'  => __( '<strong>EXMAGE – WordPress Image Links</strong> is currently inactive, external images added by this plugin(Post/product featured image, product gallery images...) will no longer work properly.', 'woo-alidropship' ),
 			),
-			array(
+			/*
+			 array(
 				'slug'                => 'bulky-bulk-edit-products-for-woo',
 				'pro'                 => '',
 				'name'                => 'Bulky – Bulk Edit Products for WooCommerce',
@@ -71,6 +72,21 @@ class VI_WOO_ALIDROPSHIP_Admin_Recommend {
 				'message_not_install' => __( 'Try our brand new <strong>Email Template Customizer for WooCommerce</strong> plugin to easily customize your WooCommerce emails and make them more beautiful and professional.', 'woo-alidropship' ),
 //				'message_not_active'  => __( '<strong>Email Template Customizer for WooCommerce</strong> is currently inactive. Activate it to customize WooCommerce emails with ease and make your customers more satisfied when receiving your emails.', 'woo-alidropship' ),
 			),
+			*/
+            array(
+                'slug'                => 'woo-photo-reviews',
+                'pro'                 => '',
+                'name'                => 'Photo Reviews for WooCommerce',
+                'message_not_install' => __( '<strong>Photo Reviews for WooCommerce</strong> helps you send review reminder emails automatically to request a review, and lets your customer include photos in their feedback.', 'woo-alidropship' ),
+//				'message_not_active'  => __( '<strong>Photo Reviews for WooCommerce</strong> is currently inactive. Activate it to automatically send email to your customers to request reviews', 'woo-alidropship' ),
+            ),
+            array(
+                'slug'                => 'woo-notification',
+                'pro'                 => '',
+                'name'                => 'Notification for WooCommerce',
+                'message_not_install' => __( '<strong>Notification for WooCommerce</strong> display recent orders as popup notifications, boosting conversion rates by showing real-time purchase, creating urgency, and showcasing new products.', 'woo-alidropship' ),
+//				'message_not_active'  => __( '<strong>Notification for WooCommerce</strong> is currently inactive. Activate it to display recent orders as popup notifications', 'woo-alidropship' ),
+            ),
 			array(
 				'slug'                => 'product-variations-swatches-for-woocommerce',
 				'pro'                 => 'woocommerce-product-variations-swatches',

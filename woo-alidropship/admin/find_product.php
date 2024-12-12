@@ -232,7 +232,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Find_Product {
 			"HK"    => "Hong Kong,China",
 			"HU"    => "Hungary",
 			"IS"    => "Iceland",
-			"IN"    => "India",
+//			"IN"    => "India",
 			"ID"    => "Indonesia",
 			"IQ"    => "Iraq",
 			"IE"    => "Ireland",
@@ -509,6 +509,9 @@ class VI_WOO_ALIDROPSHIP_Admin_Find_Product {
             <div class="header">
                 <div class="ald-header-title">
 					<?php esc_html_e( 'Find product to import', 'woo-alidropship' ); ?>
+                </div>
+                <div class="vi-ui negative message ald-message-notice">
+                    <div><strong>Important note:</strong> <?php esc_html_e( 'AliExpress does not currently support shipping to certain countries, like India or mainland China. Before starting dropshipping on this platform, it’s recommended to verify whether your country or your target dropshipping destination is supported. Visit AliExpress and check their shipping policies to avoid any potential issues', 'woo-alidropship' ); ?></div>
                 </div>
                 <form class="vi-ui form small ald-search-product-form">
 

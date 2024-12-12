@@ -267,8 +267,13 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
             $this->orders_tracking_active = true;
         }
         global $wooaliexpressdropship_settings;
-        if (isset($_POST['vi_wad_save_settings']) && isset($_POST['_wooaliexpressdropship_nonce']) && wp_verify_nonce(sanitize_text_field($_POST['_wooaliexpressdropship_nonce']), 'wooaliexpressdropship_save_settings')) {
+        if (
+                isset($_POST['vi-wad-save-settings']) &&
+                isset($_POST['_wooaliexpressdropship_nonce']) &&
+                wp_verify_nonce(sanitize_text_field($_POST['_wooaliexpressdropship_nonce']), 'wooaliexpressdropship_save_settings')
+        ) {
             $args = self::$settings->get_params();
+
             if (isset($_REQUEST['vi_wad_setup_wizard'])) {
                 foreach ($args as $key => $arg) {
                     if (isset($_POST['wad_' . $key])) {
@@ -510,7 +515,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         <tr>
                             <th>
                                 <label for="<?php self::set_params('use_api', true) ?>">
-                                    <?php esc_html_e('Use API', 'woocommerce-alidropship') ?>
+                                    <?php esc_html_e('Use API', 'woo-alidropship') ?>
                                 </label>
                             </th>
                             <td>
@@ -586,20 +591,20 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Number of items per page', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Number of items per page', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('If you increase the "Number of items per page" using in the Screen options on each page above too high and the page can not be fully loaded, you can use this option to decrease the value accordingly.', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('If you increase the "Number of items per page" using in the Screen options on each page above too high and the page can not be fully loaded, you can use this option to decrease the value accordingly.', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Show menu count', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Show menu count', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Select elements that you want to show menu count for.', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('Select elements that you want to show menu count for.', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <?php
@@ -691,7 +696,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         <tr>
                             <th>
                                 <label>
-                                    <?php esc_html_e('Product sku', 'woocommerce-alidropship') ?>
+                                    <?php esc_html_e('Product sku', 'woo-alidropship') ?>
                                 </label>
                             </th>
                             <td>
@@ -701,7 +706,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         <tr>
                             <th>
                                 <label>
-                                    <?php esc_html_e('Auto generate unique sku if exists', 'woocommerce-alidropship') ?>
+                                    <?php esc_html_e('Auto generate unique sku if exists', 'woo-alidropship') ?>
                                 </label>
                             </th>
                             <td>
@@ -728,7 +733,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         <tr>
                             <th>
                                 <label>
-                                    <?php esc_html_e('Import specifications', 'woocommerce-alidropship') ?>
+                                    <?php esc_html_e('Import specifications', 'woo-alidropship') ?>
                                 </label>
                             </th>
                             <td>
@@ -756,7 +761,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         <tr>
                             <th>
                                 <label>
-                                    <?php esc_html_e('Carrier company', 'woocommerce-alidropship') ?>
+                                    <?php esc_html_e('Carrier company', 'woo-alidropship') ?>
                                 </label>
                             </th>
                             <td>
@@ -1645,7 +1650,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Sync products every', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Sync products every', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
@@ -1653,7 +1658,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Sync products at', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Sync products at', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
@@ -1661,7 +1666,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Use HTTP service URL', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Use HTTP service URL', 'woo-alidropship') ?></label>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
                             </td>
@@ -1675,125 +1680,125 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         <tbody>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Product status', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Product status', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Only sync products with selected statuses. Leave empty to select all statuses.', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('Only sync products with selected statuses. Leave empty to select all statuses.', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Sync price', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Sync price', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Sync price of WooCommerce products with AliExpress. All rules in Product Price tab will be applied to new price.', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('Sync price of WooCommerce products with AliExpress. All rules in Product Price tab will be applied to new price.', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Exclude on-sale products', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Exclude on-sale products', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Do not sync price if a product is on sale', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('Do not sync price if a product is on sale', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Exclude products', 'woocommerce-alidropship'); ?></label>
+                                <label><?php esc_html_e('Exclude products', 'woo-alidropship'); ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('If you don\'t want to sync price of some specific products, enter them here', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('If you don\'t want to sync price of some specific products, enter them here', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Exclude categories', 'woocommerce-alidropship'); ?></label>
+                                <label><?php esc_html_e('Exclude categories', 'woo-alidropship'); ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('If you don\'t want to sync price of products from some specific categories, enter them here', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('If you don\'t want to sync price of products from some specific categories, enter them here', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Sync quantity', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Sync quantity', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Sync quantity of WooCommerce products with AliExpress', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('Sync quantity of WooCommerce products with AliExpress', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('If a product is available purchase', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('If a product is available purchase', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Select an action when an AliExpress product is available purchase', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('Select an action when an AliExpress product is available purchase', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('If a product is out of stock', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('If a product is out of stock', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Select an action when an AliExpress product is out-of-stock', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('Select an action when an AliExpress product is out-of-stock', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('If a product is no longer available', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('If a product is no longer available', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Select an action when an AliExpress product is no longer available', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('Select an action when an AliExpress product is no longer available', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('If selected shipping method is no longer available', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('If selected shipping method is no longer available', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Select an action when an AliExpress product\'s selected shipping method is removed or no shipping methods available', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('Select an action when an AliExpress product\'s selected shipping method is removed or no shipping methods available', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('If a variation is no longer available', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('If a variation is no longer available', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Select an action when a variation of an AliExpress product is no longer available', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('Select an action when a variation of an AliExpress product is no longer available', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
 
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Notification email', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Notification email', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('When syncing products, send email to admin if an AliExpress product is no longer available/is out of stock/has price changed', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('When syncing products, send email to admin if an AliExpress product is no longer available/is out of stock/has price changed', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Received address', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Received address', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php echo wp_kses_post(__('Notification will be sent to this address. If not set, the "From" address in <a target="_blank" href="admin.php?page=wc-settings&tab=email">WooCommerce settings/Emails</a> will be used.', 'woocommerce-alidropship')) ?></p>
+                                <p><?php echo wp_kses_post(__('Notification will be sent to this address. If not set, the "From" address in <a target="_blank" href="admin.php?page=wc-settings&tab=email">WooCommerce settings/Emails</a> will be used.', 'woo-alidropship')) ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Manual sync with current Ali country', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Manual sync with current Ali country', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
@@ -1844,42 +1849,42 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                 <div class="vi-ui bottom attached tab segment vi-wad-tab-content" data-tab="video">
                     <div class="vi-ui positive message">
                         <ul class="list">
-                            <li><?php esc_html_e('Product video uses original AliExpress video url', 'woocommerce-alidropship'); ?></li>
-                            <li><?php esc_html_e('For products you imported before 1.0.9, please sync them for videos to be updated', 'woocommerce-alidropship'); ?></li>
+                            <li><?php esc_html_e('Product video uses original AliExpress video url', 'woo-alidropship'); ?></li>
+                            <li><?php esc_html_e('For products you imported before 1.0.9, please sync them for videos to be updated', 'woo-alidropship'); ?></li>
                         </ul>
                     </div>
                     <table class="form-table">
                         <tbody>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Import product video', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Import product video', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Product video will be imported as an external link', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('Product video will be imported as an external link', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Show product video tab', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Show product video tab', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Display product video on a separate tab in the frontend', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('Display product video on a separate tab in the frontend', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Video tab priority', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Video tab priority', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p class="description"><?php esc_html_e('You can adjust this value to change order of video tab', 'woocommerce-alidropship') ?></p>
+                                <p class="description"><?php esc_html_e('You can adjust this value to change order of video tab', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Make video full tab width', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Make video full tab width', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
@@ -1887,7 +1892,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Add video to description', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Add video to description', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
@@ -1935,16 +1940,16 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Link existing variations only', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Link existing variations only', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Do not create new variations even if the number of variations you select when overriding/reimporting a product is greater than the number of variations of target product.', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('Do not create new variations even if the number of variations you select when overriding/reimporting a product is greater than the number of variations of target product.', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Keep SKU', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Keep SKU', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
@@ -1992,11 +1997,11 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Override specifications', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Override specifications', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Replace the additional information of the overridden product with the new product\'s specification.', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('Replace the additional information of the overridden product with the new product\'s specification.', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
@@ -2031,11 +2036,11 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         <tbody>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Link variation only', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Link variation only', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('When migrating a product from other plugins(Link existing Woo product), only link existing variations', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('When migrating a product from other plugins(Link existing Woo product), only link existing variations', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         </tbody>
@@ -2309,29 +2314,29 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         <tbody>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Get tracking number automatically', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Get tracking number automatically', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('When migrating a product from other plugins(Link existing Woo product), only link existing variations', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('When migrating a product from other plugins(Link existing Woo product), only link existing variations', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e("Order's priority", 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e("Order's priority", 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('When migrating a product from other plugins(Link existing Woo product), only link existing variations', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('When migrating a product from other plugins(Link existing Woo product), only link existing variations', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                <label><?php esc_html_e('Tracking number existed', 'woocommerce-alidropship') ?></label>
+                                <label><?php esc_html_e('Tracking number existed', 'woo-alidropship') ?></label>
                             </th>
                             <td>
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e("If you are sure that the tracking number will not change during the order's lifetime, use this option to exclude items that already have a tracking number from being synchronized.", 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e("If you are sure that the tracking number will not change during the order's lifetime, use this option to exclude items that already have a tracking number from being synchronized.", 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         </tbody>
@@ -2525,7 +2530,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
     public function page_logs() {
         ?>
         <div class="wrap">
-            <h2><?php esc_html_e('Your logs show here', 'woocommerce-alidropship') ?></h2>
+            <h2><?php esc_html_e('Your logs show here', 'woo-alidropship') ?></h2>
             <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
             <img src="<?php echo esc_url( VI_WOO_ALIDROPSHIP_IMAGES . 'log.jpg' ) ?>" alt="alidropship logs">
         </div>
@@ -2535,7 +2540,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
     public function page_ali_orders() {
         ?>
         <div class="wrap">
-            <h2><?php esc_html_e('Ali Order', 'woocommerce-alidropship') ?></h2>
+            <h2><?php esc_html_e('Ali Order', 'woo-alidropship') ?></h2>
             <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
             <iframe width="560" height="315" src="https://www.youtube.com/embed/uGW4at0ycvo?si=mT9wXOOIQgXvcXrx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
@@ -2545,7 +2550,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
     public function page_migrate_products() {
         ?>
         <div class="wrap">
-            <h2><?php esc_html_e('Migrate Products', 'woocommerce-alidropship') ?></h2>
+            <h2><?php esc_html_e('Migrate Products', 'woo-alidropship') ?></h2>
             <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
             <img src="<?php echo esc_url( VI_WOO_ALIDROPSHIP_IMAGES . 'migrate-products.png' ) ?>" alt="alidropship migrate products" style="width: 100%;">
         </div>
