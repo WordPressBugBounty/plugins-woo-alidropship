@@ -88,6 +88,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 			'billing_neighborhood_meta_key'         => '',
 			'shipping_neighborhood_meta_key'        => '',
 			'rut_meta_key'                          => '',
+			'rfc_curp_meta_key'                     => '',
 			'use_external_image'                    => '',
 			'fulfill_billing_fields_in_latin'       => '',
 			'ald_table'                             => '',

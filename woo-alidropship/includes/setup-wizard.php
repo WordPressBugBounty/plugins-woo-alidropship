@@ -37,54 +37,79 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 
 		public static function recommended_plugins() {
 			return array(
-				array(
-					'slug' => 'woo-orders-tracking',
-					'name' => 'Orders Tracking for WooCommerce',
-					'desc' => __( 'Allows you to bulk add tracking code to WooCommerce orders. Then the plugin will send tracking email with tracking URLs to customers. The plugin also helps you to add tracking code and carriers name to your PayPal transactions. This option will save you tons of time and avoid mistake when adding tracking code to PayPal.', 'woo-alidropship' ),
-					'img'  => 'https://ps.w.org/woo-orders-tracking/assets/icon-128x128.jpg'
-				),
-				array(
-					'slug' => 'exmage-wp-image-links',
-					'name' => 'EXMAGE – WordPress Image Links',
-					'desc' => __( 'Save storage by using external image URLs. This plugin is required if you want to use external URLs(AliExpress cdn image URLs) for product featured image, gallery images and variation image.', 'woo-alidropship' ),
-					'img'  => 'https://ps.w.org/exmage-wp-image-links/assets/icon-128x128.jpg'
-				),
-				array(
-					'slug' => 'product-variations-swatches-for-woocommerce',
-					'name' => 'Product Variations Swatches for WooCommerce',
-					'desc' => __( 'Product Variations Swatches for WooCommerce is a professional plugin that allows you to show and select attributes for variation products. The plugin displays variation select options of the products under colors, buttons, images, variation images, radio so it helps the customers observe the products they need more visually, save time to find the wanted products than dropdown type for variations of a variable product.', 'woo-alidropship' ),
-					'img'  => 'https://ps.w.org/product-variations-swatches-for-woocommerce/assets/icon-128x128.jpg'
-				),
-				array(
-					'slug' => 'bulky-bulk-edit-products-for-woo',
-					'name' => 'Bulky – Bulk Edit Products for WooCommerce',
-					'desc' => __( 'The plugin offers sufficient simple and advanced tools to help filter various available attributes of simple and variable products such as  ID, Title, Content, Excerpt, Slugs, SKU, Post date, range of regular price and sale price, Sale date, range of stock quantity, Product type, Categories.... Users can quickly search for wanted products fields and work with the product fields in bulk.', 'woo-alidropship' ),
-					'img'  => 'https://ps.w.org/bulky-bulk-edit-products-for-woo/assets/icon-128x128.png'
-				),
-				array(
-					'slug' => 'woo-cart-all-in-one',
-					'name' => 'Cart All In One For WooCommerce',
-					'desc' => __( 'All cart features you need in one simple plugin', 'woo-alidropship' ),
-					'img'  => 'https://ps.w.org/woo-cart-all-in-one/assets/icon-128x128.png'
-				),
-				array(
-					'slug' => 'email-template-customizer-for-woo',
-					'name' => 'Email Template Customizer for WooCommerce',
-					'desc' => __( 'Customize WooCommerce emails to make them more beautiful and professional after only several mouse clicks.', 'woo-alidropship' ),
-					'img'  => 'https://ps.w.org/email-template-customizer-for-woo/assets/icon-128x128.jpg'
-				),
-				array(
-					'slug' => 'woo-abandoned-cart-recovery',
-					'name' => 'Abandoned Cart Recovery for WooCommerce',
-					'desc' => __( 'Helps you to recovery unfinished order in your store. When a customer adds a product to cart but does not complete check out. After a scheduled time, the cart will be marked as “abandoned”. The plugin will start to send cart recovery email or facebook message to the customer, remind him/her to complete the order.', 'woo-alidropship' ),
-					'img'  => 'https://ps.w.org/woo-abandoned-cart-recovery/assets/icon-128x128.png'
-				),
-				array(
-					'slug' => 'woo-photo-reviews',
-					'name' => 'Photo Reviews for WooCommerce',
-					'desc' => __( 'An ultimate review plugin for WooCommerce which helps you send review reminder emails, allows customers to post reviews include product pictures and send thank you emails with WooCommerce coupons to customers.', 'woo-alidropship' ),
-					'img'  => 'https://ps.w.org/woo-photo-reviews/assets/icon-128x128.jpg'
-				),
+                array(
+                    'slug' => 'exmage-wp-image-links',
+                    'name' => 'EXMAGE – WordPress Image Links',
+                    'desc' => __( 'Save storage by using external image URLs. This plugin is required if you want to use external URLs(AliExpress cdn image URLs) for product featured image, gallery images and variation image.', 'woo-alidropship' ),
+                    'img'  => 'https://ps.w.org/exmage-wp-image-links/assets/icon-128x128.gif'
+                ),
+                array(
+                    'slug' => 'woo-photo-reviews',
+                    'name' => 'Photo Reviews for WooCommerce',
+                    'desc' => __( 'An ultimate review plugin for WooCommerce which helps you send review reminder emails, allows customers to post reviews include product pictures and send thank you emails with WooCommerce coupons to customers.', 'woo-alidropship' ),
+                    'img'  => 'https://ps.w.org/woo-photo-reviews/assets/icon-128x128.gif'
+                ),
+                array(
+                    'slug' => 'woo-notification',
+                    'name' => 'Notification for WooCommerce | Boost Your Sales – Recent Sales Popup – Live Feed Sales – Upsells',
+                    'desc' => __( 'Display recent orders as popup notifications, boosting conversion rates by showing real-time purchase, creating urgency, and showcasing new products.', 'woo-alidropship' ),
+                    'img'  => 'https://ps.w.org/woo-notification/assets/icon-128x128.gif'
+                ),
+                array(
+                    'slug' => 'bopo-woo-product-bundle-builder',
+                    'name' => 'Bopo - WooCommerce Product Bundle Builder',
+                    'desc' => __( 'Create irresistible bundle products for WooCommerce, offering flexible pricing and great deals for your customers.', 'woo-alidropship' ),
+                    'img'  => 'https://ps.w.org/bopo-woo-product-bundle-builder/assets/icon-128x128.gif'
+                ),
+                array(
+                    'slug' => 'woo-orders-tracking',
+                    'name' => 'Orders Tracking for WooCommerce',
+                    'desc' => __( 'Allows you to bulk add tracking code to WooCommerce orders. Then the plugin will send tracking email with tracking URLs to customers. The plugin also helps you to add tracking code and carriers name to your PayPal transactions. This option will save you tons of time and avoid mistake when adding tracking code to PayPal.', 'woo-alidropship' ),
+                    'img'  => 'https://ps.w.org/woo-orders-tracking/assets/icon-128x128.gif'
+                ),
+                array(
+                    'slug' => 'woo-multi-currency',
+                    'name' => 'CURCY – Multi Currency for WooCommerce – The best free currency exchange plugin – Run smoothly on WooCommerce 9.x',
+                    'desc' => __( 'Allows you to display prices and accepts payments in multiple currencies. Working only with WooCommerce.', 'woo-alidropship' ),
+                    'img'  => 'https://ps.w.org/woo-multi-currency/assets/icon-128x128.gif'
+                ),
+                array(
+                    'slug' => 'product-variations-swatches-for-woocommerce',
+                    'name' => 'Product Variations Swatches for WooCommerce',
+                    'desc' => __( 'Product Variations Swatches for WooCommerce is a professional plugin that allows you to show and select attributes for variation products. The plugin displays variation select options of the products under colors, buttons, images, variation images, radio so it helps the customers observe the products they need more visually, save time to find the wanted products than dropdown type for variations of a variable product.', 'woo-alidropship' ),
+                    'img'  => 'https://ps.w.org/product-variations-swatches-for-woocommerce/assets/icon-128x128.gif'
+                ),
+                array(
+                    'slug' => 'woo-product-builder',
+                    'name' => 'Product Builder for WooCommerce – Custom PC Builder',
+                    'desc' => __( 'Increases sales with Building product configuration for your online store. Help build a complete product from small components.', 'woo-alidropship' ),
+                    'img'  => 'https://ps.w.org/woo-product-builder/assets/icon-128x128.gif'
+                ),
+                array(
+                    'slug' => 'woo-cart-all-in-one',
+                    'name' => 'Cart All In One For WooCommerce',
+                    'desc' => __( 'All cart features you need in one simple plugin', 'woo-alidropship' ),
+                    'img'  => 'https://ps.w.org/woo-cart-all-in-one/assets/icon-128x128.gif'
+                ),
+                array(
+                    'slug' => 'woo-abandoned-cart-recovery',
+                    'name' => 'Abandoned Cart Recovery for WooCommerce',
+                    'desc' => __( 'Helps you to recovery unfinished order in your store. When a customer adds a product to cart but does not complete check out. After a scheduled time, the cart will be marked as “abandoned”. The plugin will start to send cart recovery email or facebook message to the customer, remind him/her to complete the order.', 'woo-alidropship' ),
+                    'img'  => 'https://ps.w.org/woo-abandoned-cart-recovery/assets/icon-128x128.gif'
+                ),
+                array(
+                    'slug' => 'bulky-bulk-edit-products-for-woo',
+                    'name' => 'Bulky – Bulk Edit Products for WooCommerce',
+                    'desc' => __( 'The plugin offers sufficient simple and advanced tools to help filter various available attributes of simple and variable products such as ID, Title, Content, Excerpt, Slugs, SKU, Post date, range of regular price and sale price, Sale date, range of stock quantity, Product type, Categories.... Users can quickly search for wanted products fields and work with the product fields in bulk.', 'woo-alidropship' ),
+                    'img'  => 'https://ps.w.org/bulky-bulk-edit-products-for-woo/assets/icon-128x128.gif'
+                ),
+
+                array(
+                    'slug' => 'email-template-customizer-for-woo',
+                    'name' => 'Email Template Customizer for WooCommerce',
+                    'desc' => __( 'Customize WooCommerce emails to make them more beautiful and professional after only several mouse clicks.', 'woo-alidropship' ),
+                    'img'  => 'https://ps.w.org/email-template-customizer-for-woo/assets/icon-128x128.gif'
+                ),
 			);
 		}
 

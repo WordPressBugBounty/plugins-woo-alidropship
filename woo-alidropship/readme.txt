@@ -4,6 +4,8 @@ Donate link: http://www.villatheme.com/donate
 Tags: alidropship, dropship, alidropship woo, aliexpress dropshipping plugin, aliexpress dropshipping
 Requires at least: 5.0.0
 Tested up to: 6.7.2
+WC tested up to: 9.6.1
+WC requires at least: 7.0
 Requires PHP: 7.0
 Stable tag: trunk
 License: GPL v2 or later
@@ -295,7 +297,7 @@ You can distinguish between AliExpress orders with your initial store orders and
 
 - [Project Page](https://villatheme.com/extensions/aliexpress-dropshipping-and-fulfillment-for-woocommerce/)
 - [Documentation](http://docs.villatheme.com/?item=aliexpress-dropshipping-and-fulfillment-for-woocommerce)
-- [Report Bugs/Issues](https://villatheme.com/supports/forum/plugins/aliexpress-dropshipping-and-fulfillment-for-woocommerce/)
+- [Report Bugs/Issues](https://villatheme.com/knowledge-base/security-is-our-priority/)
 
 == Installation ==
 
@@ -317,6 +319,11 @@ You can distinguish between AliExpress orders with your initial store orders and
 9. Comparison table for the free and the premium version
 
 == Changelog ==
+/**2.1.5 - 2025.02.07**/
+- Added: Added an option for the "RFC/CURP meta field" to fulfill orders for customers in Mexico.
+– Updated: Compatible WC 9.6
+– Updated: Update support class
+
 /**2.1.4 - 2024.12.12**/
 - Fixed: Fixed the error of not being able to save settings
 

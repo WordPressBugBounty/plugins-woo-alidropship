@@ -1432,7 +1432,8 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 			'phoneCountry' => $phone_country,
 			'cpf'          => '',
 			'rutNo'        => '',
-			'fromOrderId'  => $order->get_id()
+            'passportNo'          => '',
+            'fromOrderId'  => $order->get_id()
 		);
 
 		if ( $country === 'BR' ) {
@@ -1457,6 +1458,17 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 				}
 			}
 		}
+        /*add RFC/CURP for Mexico*/
+        if ($country === 'MX') {
+            $rfc_curp_meta_key = self::$settings->get_params('rfc_curp_meta_key');
+            if ($rfc_curp_meta_key) {
+//				$rfc_curp = get_post_meta( $order->get_id(), 'rfc_curp_meta_key', true );
+                $rfc_curp = $order->get_meta($rfc_curp_meta_key);
+                if ($rfc_curp) {
+                    $result['passportNo'] = trim($rfc_curp);
+                }
+            }
+        }
 		if ( $address_number ) {
 			$result['street'] = "{$result['street']}, {$address_number}";
 		}

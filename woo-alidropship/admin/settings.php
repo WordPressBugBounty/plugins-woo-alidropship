@@ -2245,6 +2245,19 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         </tr>
                         <tr>
                             <th>
+                                <label for="<?php self::set_params('rfc_curp_meta_key', true) ?>"><?php esc_html_e('RFC/CURP meta field', 'woocommerce-alidropship') ?></label>
+                            <td>
+                                <input type="text"
+                                       name="<?php self::set_params('rfc_curp_meta_key') ?>"
+                                       id="<?php self::set_params('rfc_curp_meta_key', true) ?>"
+                                       class="<?php self::set_params('rfc_curp_meta_key', true) ?>"
+                                       value="<?php echo esc_attr(self::$settings->get_params('rfc_curp_meta_key')) ?>">
+                                <p><?php esc_html_e('The order meta field that a 3rd party plugin uses to store customer\'s RFC/CURP number.', 'woocommerce-alidropship') ?></p>
+                                <p><?php esc_html_e('RFC/CURP number is required when you fulfill orders of Customers from Mexico.', 'woocommerce-alidropship') ?></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
                                 <label for="<?php self::set_params('fulfill_order_note', true) ?>">
                                     <?php esc_html_e('AliExpress Order note', 'woo-alidropship') ?>
                                 </label>
@@ -2528,31 +2541,94 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
     }
 
     public function page_logs() {
+        VI_WOO_ALIDROPSHIP_Admin_Settings::enqueue_semantic();
         ?>
         <div class="wrap">
             <h2><?php esc_html_e('Your logs show here', 'woo-alidropship') ?></h2>
-            <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-            <img src="<?php echo esc_url( VI_WOO_ALIDROPSHIP_IMAGES . 'log.jpg' ) ?>" alt="alidropship logs">
+            <div class="vi-ui segment " >
+                <table class="form-table">
+                    <tbody>
+                    <tr>
+                        <th>
+                            <label><?php esc_html_e('Upgrade', 'woo-alidropship') ?></label>
+                        </th>
+                        <td>
+                            <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label><?php esc_html_e('Preview', 'woo-alidropship') ?></label>
+                        </th>
+                        <td>
+                            <img src="<?php echo esc_url( 'https://villatheme.com/wp-content/uploads/2025/02/log.jpg' ) ?>" alt="alidropship logs">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <?php
     }
 
     public function page_ali_orders() {
+        VI_WOO_ALIDROPSHIP_Admin_Settings::enqueue_semantic();
         ?>
         <div class="wrap">
             <h2><?php esc_html_e('Ali Order', 'woo-alidropship') ?></h2>
-            <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/uGW4at0ycvo?si=mT9wXOOIQgXvcXrx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <div class="vi-ui segment " >
+                <table class="form-table">
+                    <tbody>
+                    <tr>
+                        <th>
+                            <label><?php esc_html_e('Upgrade', 'woo-alidropship') ?></label>
+                        </th>
+                        <td>
+                            <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label><?php esc_html_e('Preview', 'woo-alidropship') ?></label>
+                        </th>
+                        <td>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/uGW4at0ycvo?si=mT9wXOOIQgXvcXrx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <?php
     }
 
     public function page_migrate_products() {
+        VI_WOO_ALIDROPSHIP_Admin_Settings::enqueue_semantic();
         ?>
         <div class="wrap">
             <h2><?php esc_html_e('Migrate Products', 'woo-alidropship') ?></h2>
-            <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-            <img src="<?php echo esc_url( VI_WOO_ALIDROPSHIP_IMAGES . 'migrate-products.png' ) ?>" alt="alidropship migrate products" style="width: 100%;">
+            <div class="vi-ui segment " >
+                <table class="form-table">
+                    <tbody>
+                    <tr>
+                        <th>
+                            <label><?php esc_html_e('Upgrade', 'woo-alidropship') ?></label>
+                        </th>
+                        <td>
+                            <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label><?php esc_html_e('Preview', 'woo-alidropship') ?></label>
+                        </th>
+                        <td>
+                            <img src="<?php echo esc_url( 'https://villatheme.com/wp-content/uploads/2025/02/migrate-products.png' ) ?>" alt="alidropship migrate products" style="width: 100%;">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <?php
     }

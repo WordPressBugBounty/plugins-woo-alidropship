@@ -1,3 +1,8 @@
+/**2.1.5 - 2025.02.07**/
+- Added: Added an option for the "RFC/CURP meta field" to fulfill orders for customers in Mexico.
+– Updated: Compatible WC 9.6
+– Updated: Update support class
+
 /**2.1.4 - 2024.12.12**/
 - Fixed: Fixed the error of not being able to save settings
 
@@ -5,11 +10,11 @@
 – Updated: Update support class
 
 /**2.1.2 - 2024.11.21**/
-– Updated: Compatible with WP 6.7 and  WC 9.4
+– Updated: Compatible with WP 6.7 and WC 9.4
 – Updated: Update support class
 
 /**2.1.1 - 2024.10.23**/
-– Updated: Compatible with WP 6.6.2 and  WC 9.3.3
+– Updated: Compatible with WP 6.6.2 and WC 9.3.3
 - Fixed: HTML error in Bulk Set categories (Import List)
 
 /**2.1.0 - 2024.08.31**/
@@ -22,7 +27,7 @@
 – Updated: Filter while getting ALD data
 
 /**2.0.4 - 2024.07.23**/
-– Updated: Compatible with WP 6.6 and  WC 9.1
+– Updated: Compatible with WP 6.6 and WC 9.1
 
 /**2.0.3 - 2024.06.01**/
 – Updated: Import AliExpress product data from AliExpress's new design
@@ -31,7 +36,7 @@
 
 /**2.0.2 - 2024.04.13**/
 – Fixed: Can not filter orders on the Woo orders tab
-– Updated: Compatible with WP 6.5 and  WC 8.7
+– Updated: Compatible with WP 6.5 and WC 8.7
 – Updated: Update support class
 
 /**2.0.1 – 2023.12.27*/
