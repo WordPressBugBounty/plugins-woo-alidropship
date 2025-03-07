@@ -4,7 +4,7 @@ Donate link: http://www.villatheme.com/donate
 Tags: alidropship, dropship, alidropship woo, aliexpress dropshipping plugin, aliexpress dropshipping
 Requires at least: 5.0.0
 Tested up to: 6.7.2
-WC tested up to: 9.6.1
+WC tested up to: 9.7.0
 WC requires at least: 7.0
 Requires PHP: 7.0
 Stable tag: trunk
@@ -319,6 +319,10 @@ You can distinguish between AliExpress orders with your initial store orders and
 9. Comparison table for the free and the premium version
 
 == Changelog ==
+/**2.1.6 - 2025.03.07**/
+– Updated: Compatible WC 9.7.0
+– Updated: Update support class
+
 /**2.1.5 - 2025.02.07**/
 - Added: Added an option for the "RFC/CURP meta field" to fulfill orders for customers in Mexico.
 – Updated: Compatible WC 9.6
