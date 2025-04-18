@@ -869,11 +869,12 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                                     }
                                     ?>
                                     <p>
-                                        <strong>*</strong><?php echo wp_kses_post(sprintf(esc_html__('To use this feature, you have to install and activate %1$s plugin. %2$s', 'woo-alidropship'), '<a target="_blank" href="https://bit.ly/exmage">EXMAGE – WordPress Image Links</a>', $button)) //phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?>
+                                        <strong>*</strong><?php echo wp_kses_post(sprintf(esc_html__('To use this feature, you have to install and activate %1$s plugin. %2$s', 'woo-alidropship'), '<a target="_blank" href="https://wordpress.org/plugins/exmage-wp-image-links/">EXMAGE – WordPress Image Links</a>', $button)) //phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?>
                                     </p>
                                     <?php
                                 }
                                 ?>
+                                <div class="vi-ui yellow message"><?php echo esc_html__('Note: In some cases, AliExpress may block image access. If images don’t display properly, please download the images instead of using external links', 'woo-alidropship');?></div>
                             </td>
                         </tr>
                         <tr>
@@ -1852,6 +1853,9 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                             <li><?php esc_html_e('Product video uses original AliExpress video url', 'woo-alidropship'); ?></li>
                             <li><?php esc_html_e('For products you imported before 1.0.9, please sync them for videos to be updated', 'woo-alidropship'); ?></li>
                         </ul>
+                    </div>
+                    <div class="vi-ui yellow message">
+                        <?php esc_html_e('Note: In some cases, AliExpress may block image/video access. If you see that the videos don’t display properly, please disable this feature and download them instead of using external linksl', 'woo-alidropship'); ?>
                     </div>
                     <table class="form-table">
                         <tbody>

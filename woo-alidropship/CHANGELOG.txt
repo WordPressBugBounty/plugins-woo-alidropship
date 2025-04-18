@@ -1,3 +1,8 @@
+/**2.1.7 - 2025.04.18**/
+- Updated: Warning message for "Use the external link for image" option users and Video feature, regarding media access restriction
+- Updated: file language
+- Updated: Compatibility check with WP 6.8 and WC 9.8
+
 /**2.1.6 - 2025.03.07**/
 – Updated: Compatible WC 9.7.0
 – Updated: Update support class

@@ -3,23 +3,23 @@
  * Plugin Name: ALD - Dropshipping and Fulfillment for AliExpress and WooCommerce
  * Plugin URI: https://villatheme.com/extensions/aliexpress-dropshipping-and-fulfillment-for-woocommerce/
  * Description: Transfer data from AliExpress products to WooCommerce effortlessly and fulfill WooCommerce orders to AliExpress automatically.
- * Version: 2.1.6
+ * Version: 2.1.7
  * Author: VillaTheme(villatheme.com)
  * Author URI: http://villatheme.com
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: woo-alidropship
  * Copyright 2019-2025 VillaTheme.com. All rights reserved.
- * Tested up to: 6.7.2
+ * Tested up to: 6.8
  * Requires Plugins: woocommerce
- * WC tested up to: 9.7.0
+ * WC tested up to: 9.8.1
  * Requires PHP: 7.0
  **/
 
 if (!defined('ABSPATH')) {
     exit;
 }
-define('VI_WOO_ALIDROPSHIP_VERSION', '2.1.6');
+define('VI_WOO_ALIDROPSHIP_VERSION', '2.1.7');
 define('VI_WOO_ALIDROPSHIP_DIR', plugin_dir_path(__FILE__));
 define('VI_WOO_ALIDROPSHIP_INCLUDES', VI_WOO_ALIDROPSHIP_DIR . "includes" . DIRECTORY_SEPARATOR);
 
