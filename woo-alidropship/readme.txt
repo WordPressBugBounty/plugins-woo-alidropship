@@ -311,6 +311,8 @@ You can distinguish between AliExpress orders with your initial store orders and
 
 [Coupon Box for WooCommerce](https://wordpress.org/plugins/woo-coupon-box)
 
+[VARGAL - Additional Variation Gallery for Woo](https://wordpress.org/plugins/vargal-additional-variation-gallery-for-woo/)
+
 ### Documentation
 
 - [Getting Started](http://docs.villatheme.com/?item=aliexpress-dropshipping-and-fulfillment-for-woocommerce)
@@ -330,17 +332,19 @@ You can distinguish between AliExpress orders with your initial store orders and
 == Frequently Asked Questions ==
 
 == Screenshots ==
-1. Import products on a AliExpress category page using Chrome extension
-2. Import products on a AliExpress single product page using Chrome extension
-3. Product default settings when adding products to import list
-4. Product Price rules
-5. AliExpress orders fulfilment settings
-6. Import list overview
-7. Modify product variations before importing to WooCommerce products
-8. Imported products list
-9. Comparison table for the free and the premium version
+1. Imported page
+2. Import list tab gallery
+3. Import list tab product
+4. import list tab variation
+5. AliExpress categories page
+6. AliExpress single detail page
 
 == Changelog ==
+/**2.1.8 - 2025.04.25**/
+- Updated: file language
+– Updated: Compatible WC 9.8.2
+– Updated: Update support class
+
 /**2.1.7 - 2025.04.18**/
 - Updated: Warning message for "Use the external link for image" option users and Video feature, regarding media access restriction
 - Updated: file language

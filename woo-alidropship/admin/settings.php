@@ -1192,7 +1192,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                             <td>
                                 <a class="vi-ui button" target="_blank"
                                    href="https://1.envato.market/PeXrM"><?php esc_html_e('Upgrade This Feature', 'woo-alidropship') ?></a>
-                                <p><?php esc_html_e('Get exchange rate from Google finance, Yahoo finance API...', 'woo-alidropship') ?></p>
+                                <p><?php esc_html_e('Get exchange rate from Google finance, Yahoo finance API, Cuex API, Wise API...', 'woo-alidropship') ?></p>
                             </td>
                         </tr>
                         <tr>

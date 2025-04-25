@@ -32,7 +32,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Recommend {
         <div class="villatheme-dashboard updated" style="border-left: 4px solid #ffba00">
             <div class="villatheme-content">
                 <form action="" method="get">
-                    <p><?php echo wp_kses( $message ,VI_WOO_ALIDROPSHIP_DATA::allow_html())  ?></p>
+                    <p><?php echo wp_kses( $message, VI_WOO_ALIDROPSHIP_DATA::allow_html() ) ?></p>
                     <p><?php echo wp_kses_post( $button ) ?></p>
                     <a href="<?php echo esc_url( add_query_arg( array(
 						'wad_dismiss_nonce' => wp_create_nonce( 'wad_dismiss_nonce' ),
@@ -57,42 +57,47 @@ class VI_WOO_ALIDROPSHIP_Admin_Recommend {
 				'message_not_install' => __( 'Need to save your server storage? <strong>EXMAGE – WordPress Image Links</strong> will help you solve the problem by using external image URLs. </br>When this plugin is active, "Use external links for images" option will be available in the ALD plugin settings/Product which allows to use original AliExpress product image URLs for featured image, gallery images and variation image of imported AliExpress products.', 'woo-alidropship' ),
 				'message_not_active'  => __( '<strong>EXMAGE – WordPress Image Links</strong> is currently inactive, external images added by this plugin(Post/product featured image, product gallery images...) will no longer work properly.', 'woo-alidropship' ),
 			),
-			/*
-			 array(
-				'slug'                => 'bulky-bulk-edit-products-for-woo',
-				'pro'                 => '',
-				'name'                => 'Bulky – Bulk Edit Products for WooCommerce',
-				'message_not_install' => __( 'Quickly and easily edit your products in bulk with <strong>Bulky – Bulk Edit Products for WooCommerce</strong>', 'woo-alidropship' ),
-//				'message_not_active'  => __( '<strong>Bulky – Bulk Edit Products for WooCommerce</strong> is currently inactive. Activate it to quickly edit your products in bulk', 'woo-alidropship' ),
+			array(
+				'slug'                => 'woo-photo-reviews',
+				'pro'                 => 'woocommerce-photo-reviews',
+				'name'                => 'Photo Reviews for WooCommerce',
+				'message_not_install' => __( '<strong>Photo Reviews for WooCommerce</strong> helps you send review reminder emails automatically to request a review, and lets your customer include photos in their feedback.', 'woo-alidropship' ),
+				'message_not_active'  => __( '<strong>Photo Reviews for WooCommerce</strong> is currently inactive. Activate it to automatically send email to your customers to request reviews', 'woo-alidropship' ),
 			),
 			array(
-				'slug'                => 'email-template-customizer-for-woo',
-				'pro'                 => 'woocommerce-email-template-customizer',
-				'name'                => 'Email Template Customizer for WooCommerce',
-				'message_not_install' => __( 'Try our brand new <strong>Email Template Customizer for WooCommerce</strong> plugin to easily customize your WooCommerce emails and make them more beautiful and professional.', 'woo-alidropship' ),
-//				'message_not_active'  => __( '<strong>Email Template Customizer for WooCommerce</strong> is currently inactive. Activate it to customize WooCommerce emails with ease and make your customers more satisfied when receiving your emails.', 'woo-alidropship' ),
+				'slug'                => 'woo-notification',
+				'pro'                 => 'woocommerce-notification',
+				'name'                => 'Notification for WooCommerce',
+				'message_not_install' => __( '<strong>Notification for WooCommerce</strong> display recent orders as popup notifications, boosting conversion rates by showing real-time purchase, creating urgency, and showcasing new products.', 'woo-alidropship' ),
+				'message_not_active'  => __( '<strong>Notification for WooCommerce</strong> is currently inactive. Activate it to display recent orders as popup notifications', 'woo-alidropship' ),
 			),
-			*/
-            array(
-                'slug'                => 'woo-photo-reviews',
-                'pro'                 => '',
-                'name'                => 'Photo Reviews for WooCommerce',
-                'message_not_install' => __( '<strong>Photo Reviews for WooCommerce</strong> helps you send review reminder emails automatically to request a review, and lets your customer include photos in their feedback.', 'woo-alidropship' ),
-//				'message_not_active'  => __( '<strong>Photo Reviews for WooCommerce</strong> is currently inactive. Activate it to automatically send email to your customers to request reviews', 'woo-alidropship' ),
-            ),
-            array(
-                'slug'                => 'woo-notification',
-                'pro'                 => '',
-                'name'                => 'Notification for WooCommerce',
-                'message_not_install' => __( '<strong>Notification for WooCommerce</strong> display recent orders as popup notifications, boosting conversion rates by showing real-time purchase, creating urgency, and showcasing new products.', 'woo-alidropship' ),
-//				'message_not_active'  => __( '<strong>Notification for WooCommerce</strong> is currently inactive. Activate it to display recent orders as popup notifications', 'woo-alidropship' ),
-            ),
 			array(
 				'slug'                => 'product-variations-swatches-for-woocommerce',
 				'pro'                 => 'woocommerce-product-variations-swatches',
 				'name'                => 'Product Variations Swatches for WooCommerce',
 				'message_not_install' => __( 'Need a variations swatches plugin that works perfectly with ALD - Dropshipping and Fulfillment for AliExpress and WooCommerce? <strong>Product Variations Swatches for WooCommerce</strong> is what you need.', 'woo-alidropship' ),
 				'message_not_active'  => __( '<strong>Product Variations Swatches for WooCommerce</strong> is currently inactive, this prevents variable products from displaying beautifully.', 'woo-alidropship' ),
+			),
+			array(
+				'slug'                => 'bulky-bulk-edit-products-for-woo',
+				'pro'                 => '',
+				'name'                => 'Bulky – Bulk Edit Products for WooCommerce',
+				'message_not_install' => __( 'Quickly and easily edit your products in bulk with <strong>Bulky – Bulk Edit Products for WooCommerce</strong>', 'woo-alidropship' ),
+				//				'message_not_active'  => __( '<strong>Bulky – Bulk Edit Products for WooCommerce</strong> is currently inactive. Activate it to quickly edit your products in bulk', 'woo-alidropship' ),
+			),
+			array(
+				'slug'                => 'email-template-customizer-for-woo',
+				'pro'                 => 'woocommerce-email-template-customizer',
+				'name'                => 'Email Template Customizer for WooCommerce',
+				'message_not_install' => __( 'Try our brand new <strong>Email Template Customizer for WooCommerce</strong> plugin to easily customize your WooCommerce emails and make them more beautiful and professional.', 'woo-alidropship' ),
+				//				'message_not_active'  => __( '<strong>Email Template Customizer for WooCommerce</strong> is currently inactive. Activate it to customize WooCommerce emails with ease and make your customers more satisfied when receiving your emails.', 'woo-alidropship' ),
+			),
+			array(
+				'slug'                => 'vargal-additional-variation-gallery-for-woo',
+				'name'                => 'VARGAL – Additional Variation Gallery for Woo',
+				'desc'                => esc_html__( 'Easily set unlimited images or MP4/WebM videos for each WC product variation and display them when the customer selects', 'woo-alidropship' ),
+				'message_not_install' => sprintf( "%s <strong>VARGAL – Additional Variation Gallery for Woo</strong> %s", esc_html__( 'Looking for a plugin that lets you add unlimited images or MP4/WebM videos to each WooCommerce product variation?', 'woo-alidropship' ), esc_html__( 'is what you need.', 'woo-alidropship' ) ),
+				'message_not_active'  => sprintf( "<strong>VARGAL</strong> %s", esc_html__( 'is currently inactive, the variation gallery setting will not be set.', 'woo-alidropship' ) ),
 			),
 		);
 		$plugins             = get_plugins();
@@ -124,15 +129,15 @@ class VI_WOO_ALIDROPSHIP_Admin_Recommend {
 		$page = isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '';
 		if ( $pagenow === 'admin.php' && $page === 'woo-alidropship-recommend' ) {
 			wp_dequeue_style( 'eopa-admin-css' );
-			wp_enqueue_style( 'vi-woo-alidropship-form', VI_WOO_ALIDROPSHIP_CSS . 'form.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-			wp_enqueue_style( 'vi-woo-alidropship-table', VI_WOO_ALIDROPSHIP_CSS . 'table.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-			wp_enqueue_style( 'vi-woo-alidropship-icon', VI_WOO_ALIDROPSHIP_CSS . 'icon.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-			wp_enqueue_style( 'vi-woo-alidropship-segment', VI_WOO_ALIDROPSHIP_CSS . 'segment.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-			wp_enqueue_style( 'vi-woo-alidropship-button', VI_WOO_ALIDROPSHIP_CSS . 'button.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-			if (!wp_style_is('viwad-recommended_plugins')){
-				wp_register_style('viwad-recommended_plugins',false,[],VI_WOO_ALIDROPSHIP_VERSION);
-				wp_enqueue_style('viwad-recommended_plugins');
-				wp_add_inline_style('viwad-recommended_plugins','.fist-col { min-width: 300px;}.vi-wad-plugin-name {font-weight: 600;}.vi-wad-plugin-name a { text-decoration: none;}');
+			wp_enqueue_style( 'vi-woo-alidropship-form', VI_WOO_ALIDROPSHIP_CSS . 'form.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+			wp_enqueue_style( 'vi-woo-alidropship-table', VI_WOO_ALIDROPSHIP_CSS . 'table.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+			wp_enqueue_style( 'vi-woo-alidropship-icon', VI_WOO_ALIDROPSHIP_CSS . 'icon.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+			wp_enqueue_style( 'vi-woo-alidropship-segment', VI_WOO_ALIDROPSHIP_CSS . 'segment.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+			wp_enqueue_style( 'vi-woo-alidropship-button', VI_WOO_ALIDROPSHIP_CSS . 'button.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+			if ( ! wp_style_is( 'viwad-recommended_plugins' ) ) {
+				wp_register_style( 'viwad-recommended_plugins', false, [], VI_WOO_ALIDROPSHIP_VERSION );
+				wp_enqueue_style( 'viwad-recommended_plugins' );
+				wp_add_inline_style( 'viwad-recommended_plugins', '.fist-col { min-width: 300px;}.vi-wad-plugin-name {font-weight: 600;}.vi-wad-plugin-name a { text-decoration: none;}' );
 			}
 		} else {
 			$wad_dismiss_nonce = isset( $_REQUEST['wad_dismiss_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wad_dismiss_nonce'] ) ) : '';
