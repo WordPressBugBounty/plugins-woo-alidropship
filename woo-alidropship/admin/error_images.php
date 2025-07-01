@@ -105,32 +105,37 @@ class VI_WOO_ALIDROPSHIP_Admin_Error_Images {
 				if ( $post && $post->post_type === 'product' ) {
 					if ( $data['set_gallery'] != 2 || ( ! $this->settings->get_params( 'use_external_image' ) && $this->settings->get_params( 'download_description_images' ) ) ) {
 						$thumb_id = VI_WOO_ALIDROPSHIP_DATA::download_image( $image_id, html_entity_decode( $data['image_src'] ), $product_id );
+
+
 						if ( $thumb_id && ! is_wp_error( $thumb_id ) ) {
-							if ( $data['set_gallery'] == 2 ) {
-								$downloaded_url = wp_get_attachment_url( $thumb_id );
-								$description    = html_entity_decode( $post->post_content, ENT_QUOTES | ENT_XML1, 'UTF-8' );
-								$description    = preg_replace( '/[^"]{0,}' . preg_quote( $image_id, '/' ) . '[^"]{0,}/U', $downloaded_url, $description );
-								$description    = str_replace( $data['image_src'], $downloaded_url, $description );
-								wp_update_post( array( 'ID' => $product_id, 'post_content' => $description ) );
-							} else {
-								if ( $data['product_ids'] ) {
-									$product_ids = explode( ',', $data['product_ids'] );
-									foreach ( $product_ids as $v_id ) {
-										if ( in_array( get_post_type( $v_id ), array( 'product', 'product_variation' ) ) ) {
-											update_post_meta( $v_id, '_thumbnail_id', $thumb_id );
+							$cancel = apply_filters( 'ald_cancel_set_product_gallery', false, $thumb_id, $data );
+							if ( ! $cancel ) {
+								if ( $data['set_gallery'] == 2 ) {
+									$downloaded_url = wp_get_attachment_url( $thumb_id );
+									$description    = html_entity_decode( $post->post_content, ENT_QUOTES | ENT_XML1, 'UTF-8' );
+									$description    = preg_replace( '/[^"]{0,}' . preg_quote( $image_id, '/' ) . '[^"]{0,}/U', $downloaded_url, $description );
+									$description    = str_replace( $data['image_src'], $downloaded_url, $description );
+									wp_update_post( array( 'ID' => $product_id, 'post_content' => $description ) );
+								} else {
+									if ( $data['product_ids'] ) {
+										$product_ids = explode( ',', $data['product_ids'] );
+										foreach ( $product_ids as $v_id ) {
+											if ( in_array( get_post_type( $v_id ), array( 'product', 'product_variation' ) ) ) {
+												update_post_meta( $v_id, '_thumbnail_id', $thumb_id );
+											}
 										}
 									}
-								}
 
-								if ( 1 == $data['set_gallery'] ) {
-									$gallery = get_post_meta( $product_id, '_product_image_gallery', true );
-									if ( $gallery ) {
-										$gallery_array = explode( ',', $gallery );
-									} else {
-										$gallery_array = array();
+									if ( 1 == $data['set_gallery'] ) {
+										$gallery = get_post_meta( $product_id, '_product_image_gallery', true );
+										if ( $gallery ) {
+											$gallery_array = explode( ',', $gallery );
+										} else {
+											$gallery_array = array();
+										}
+										$gallery_array[] = $thumb_id;
+										update_post_meta( $product_id, '_product_image_gallery', implode( ',', array_unique( $gallery_array ) ) );
 									}
-									$gallery_array[] = $thumb_id;
-									update_post_meta( $product_id, '_product_image_gallery', implode( ',', array_unique( $gallery_array ) ) );
 								}
 							}
 							$response['status'] = 'success';
@@ -276,7 +281,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Error_Images {
 		                                            <?php
 		                                            break;
 	                                            case 'product_ids':
-		                                            echo wp_kses_post(str_replace( ',', ', ', $result_v ));
+		                                            echo wp_kses_post( str_replace( ',', ', ', $result_v ) );
 		                                            break;
 	                                            case 'set_gallery':
 		                                            if ( $result_v == 2 ) {
@@ -335,7 +340,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Error_Images {
 		                                            <?php
 		                                            break;
 	                                            case 'product_ids':
-		                                            echo wp_kses_post(str_replace( ',', ', ', $result_v ));
+		                                            echo wp_kses_post( str_replace( ',', ', ', $result_v ) );
 		                                            break;
 	                                            case 'set_gallery':
 		                                            if ( $result_v == 2 ) {
@@ -488,7 +493,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Error_Images {
                                         <select name="vi_wad_search_product_id" class="vi-wad-search-product-id">
                                             <option value=""><?php esc_html_e( 'Filter by product', 'woo-alidropship' ) ?></option>
 											<?php
-											echo wp_kses( $filter_product_html,VI_WOO_ALIDROPSHIP_DATA::allow_html() );
+											echo wp_kses( $filter_product_html, VI_WOO_ALIDROPSHIP_DATA::allow_html() );
 											?>
                                         </select>
                                     </p>
@@ -519,9 +524,9 @@ class VI_WOO_ALIDROPSHIP_Admin_Error_Images {
                 </form>
 				<?php
 				$pagination_html = ob_get_clean();
-				echo wp_kses($pagination_html, $this->settings::allow_html());
-				echo wp_kses($image_list, $this->settings::allow_html());
-				echo wp_kses($pagination_html, $this->settings::allow_html());
+				echo wp_kses( $pagination_html, $this->settings::allow_html() );
+				echo wp_kses( $image_list, $this->settings::allow_html() );
+				echo wp_kses( $pagination_html, $this->settings::allow_html() );
 			} else {
 				?>
                 <div class="vi-ui segment">
@@ -541,12 +546,12 @@ class VI_WOO_ALIDROPSHIP_Admin_Error_Images {
 		wp_dequeue_script( 'select-js' );//Causes select2 error, from ThemeHunk MegaMenu Plus plugin
 		wp_dequeue_style( 'eopa-admin-css' );
 		/*Stylesheet*/
-		wp_enqueue_style( 'vi-woo-alidropship-form', VI_WOO_ALIDROPSHIP_CSS . 'form.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-		wp_enqueue_style( 'vi-woo-alidropship-table', VI_WOO_ALIDROPSHIP_CSS . 'table.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-		wp_enqueue_style( 'vi-woo-alidropship-icon', VI_WOO_ALIDROPSHIP_CSS . 'icon.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-		wp_enqueue_style( 'vi-woo-alidropship-segment', VI_WOO_ALIDROPSHIP_CSS . 'segment.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-		wp_enqueue_style( 'vi-woo-alidropship-button', VI_WOO_ALIDROPSHIP_CSS . 'button.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-		wp_enqueue_style( 'select2', VI_WOO_ALIDROPSHIP_CSS . 'select2.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
+		wp_enqueue_style( 'vi-woo-alidropship-form', VI_WOO_ALIDROPSHIP_CSS . 'form.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+		wp_enqueue_style( 'vi-woo-alidropship-table', VI_WOO_ALIDROPSHIP_CSS . 'table.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+		wp_enqueue_style( 'vi-woo-alidropship-icon', VI_WOO_ALIDROPSHIP_CSS . 'icon.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+		wp_enqueue_style( 'vi-woo-alidropship-segment', VI_WOO_ALIDROPSHIP_CSS . 'segment.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+		wp_enqueue_style( 'vi-woo-alidropship-button', VI_WOO_ALIDROPSHIP_CSS . 'button.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+		wp_enqueue_style( 'select2', VI_WOO_ALIDROPSHIP_CSS . 'select2.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
 		wp_enqueue_script( 'select2-v4', VI_WOO_ALIDROPSHIP_JS . 'select2.js', array( 'jquery' ), '4.0.3', false );
 	}
 
@@ -560,7 +565,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Error_Images {
 		if ( $pagenow === 'admin.php' && $page === 'woo-alidropship-error-images' ) {
 			$this->enqueue_semantic();
 			wp_enqueue_style( 'woo-alidropship-error-images', VI_WOO_ALIDROPSHIP_CSS . 'error-images.css', '', VI_WOO_ALIDROPSHIP_VERSION );
-			wp_enqueue_script( 'woo-alidropship-error-images', VI_WOO_ALIDROPSHIP_JS . 'error-images.js', array( 'jquery' ), VI_WOO_ALIDROPSHIP_VERSION , false);
+			wp_enqueue_script( 'woo-alidropship-error-images', VI_WOO_ALIDROPSHIP_JS . 'error-images.js', array( 'jquery' ), VI_WOO_ALIDROPSHIP_VERSION, false );
 			wp_localize_script( 'woo-alidropship-error-images', 'vi_wad_params_admin_error_images', array(
 				'url'                     => admin_url( 'admin-ajax.php' ),
 				'_vi_wad_ajax_nonce'      => VI_WOO_ALIDROPSHIP_Admin_Settings::create_ajax_nonce(),

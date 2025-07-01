@@ -40,37 +40,42 @@ class Vi_WAD_Background_Download_Images extends WP_Background_Process {
 			if ( $post && $post->post_type === 'product' && $src ) {
 				$thumb_id = VI_WOO_ALIDROPSHIP_DATA::download_image( $image_id, $src, $product_id );
 				if ( $thumb_id && ! is_wp_error( $thumb_id ) ) {
-					if ( $set_gallery == 2 ) {
-						$downloaded_url = wp_get_attachment_url( $thumb_id );
-						$description    = html_entity_decode( $post->post_content, ENT_QUOTES | ENT_XML1, 'UTF-8' );
-						$description    = preg_replace( '/[^"]{0,}' . preg_quote( $image_id, '/' ) . '[^"]{0,}/U', $downloaded_url, $description );
-						$description    = str_replace( $src, $downloaded_url, $description );
-						wp_update_post( array( 'ID' => $product_id, 'post_content' => $description ) );
-					} else {
-						if ( count( $product_ids ) ) {
-							foreach ( $product_ids as $v_id ) {
-								$post_type = get_post_type( $v_id );
-								if ( $post_type === 'product' ) {
-									update_post_meta( $v_id, '_thumbnail_id', $thumb_id );
-									if ( $parent_id ) {
-										Ali_Product_Table::update_post_meta( $parent_id, '_vi_wad_product_image', $thumb_id );
+
+					$cancel = apply_filters( 'ald_cancel_set_product_gallery', false, $thumb_id, $item );
+					if ( ! $cancel ) {
+						if ( $set_gallery == 2 ) {
+							$downloaded_url = wp_get_attachment_url( $thumb_id );
+							$description    = html_entity_decode( $post->post_content, ENT_QUOTES | ENT_XML1, 'UTF-8' );
+							$description    = preg_replace( '/[^"]{0,}' . preg_quote( $image_id, '/' ) . '[^"]{0,}/U', $downloaded_url, $description );
+							$description    = str_replace( $src, $downloaded_url, $description );
+							wp_update_post( array( 'ID' => $product_id, 'post_content' => $description ) );
+						} else {
+							if ( count( $product_ids ) ) {
+								foreach ( $product_ids as $v_id ) {
+									$post_type = get_post_type( $v_id );
+									if ( $post_type === 'product' ) {
+										update_post_meta( $v_id, '_thumbnail_id', $thumb_id );
+										if ( $parent_id ) {
+											Ali_Product_Table::update_post_meta( $parent_id, '_vi_wad_product_image', $thumb_id );
+										}
+									} elseif ( $post_type === 'product_variation' ) {
+										update_post_meta( $v_id, '_thumbnail_id', $thumb_id );
 									}
-								} elseif ( $post_type === 'product_variation' ) {
-									update_post_meta( $v_id, '_thumbnail_id', $thumb_id );
 								}
 							}
-						}
-						if ( 1 == $set_gallery ) {
-							$gallery = get_post_meta( $product_id, '_product_image_gallery', true );
-							if ( $gallery ) {
-								$gallery_array = explode( ',', $gallery );
-							} else {
-								$gallery_array = array();
+							if ( 1 == $set_gallery ) {
+								$gallery = get_post_meta( $product_id, '_product_image_gallery', true );
+								if ( $gallery ) {
+									$gallery_array = explode( ',', $gallery );
+								} else {
+									$gallery_array = array();
+								}
+								$gallery_array[] = $thumb_id;
+								update_post_meta( $product_id, '_product_image_gallery', implode( ',', array_unique( $gallery_array ) ) );
 							}
-							$gallery_array[] = $thumb_id;
-							update_post_meta( $product_id, '_product_image_gallery', implode( ',', array_unique( $gallery_array ) ) );
 						}
 					}
+
 				} else {
 					VI_WOO_ALIDROPSHIP_Error_Images_Table::insert( $product_id, implode( ',', $product_ids ), $src, intval( $set_gallery ) );
 					error_log( 'ALD - Dropshipping and Fulfillment for AliExpress and WooCommerce error: ' . $thumb_id->get_error_code() . ' - ' . $thumb_id->get_error_message() );

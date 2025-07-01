@@ -992,6 +992,7 @@ jQuery(document).ready(function ($) {
                         forceSelection: false,
                         selectOnKeydown: false
                     });
+                    $(document).trigger('ald_after_load_variations_table',[response,$variations_table]);
                 },
                 error: function (err) {
                     console.log(err);

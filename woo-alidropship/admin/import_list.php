@@ -1630,9 +1630,18 @@ class VI_WOO_ALIDROPSHIP_Admin_Import_List {
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			return;
 		}
-		self::check_ajax_referer();
-		// phpcs:disable WordPress.Security.NonceVerification
-		parse_str( $_POST['form_data'], $form_data );
+		self::check_ajax_referer();// phpcs:disable WordPress.Security.NonceVerification
+		/*Some servers will base64 encode when sending $_POST to the server*/
+		$decoded = base64_decode( $_POST['form_data'], true );
+
+		if ( $decoded === false ) {
+			parse_str( $_POST['form_data'], $form_data );// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		} else {
+			/*Remove wrapping double quotes after base64 decoding to prevent errors.*/
+			$decoded = str_replace( '"', '', $decoded );
+			parse_str( $decoded, $form_data );// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		}
+
 		if ( ! isset( $form_data['z_check_max_input_vars'] ) ) {
 			/*z_check_max_input_vars is the last key of POST data. If it does not exist in $form_data after using parse_str(), some data may also be missing*/
 			wp_send_json( array(
@@ -2106,6 +2115,8 @@ class VI_WOO_ALIDROPSHIP_Admin_Import_List {
 							$variation_ids[ $pos ][] = $variation_id;
 						}
 					}
+                    /*Compe vargal*/
+					$dispatch = apply_filters('ald_dispatch_after_make_variation_data',$dispatch,$variation_id, $product_variation,$disable_background_process);
 				}
 				if ( count( $variation_ids ) ) {
 					if ( $disable_background_process ) {

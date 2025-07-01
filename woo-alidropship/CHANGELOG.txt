@@ -1,3 +1,9 @@
+/**2.1.9 - 2025.07.01**/
+– Updated: Compatible check with WP 6.8.1 and WC 9.9.5
+– Updated: Update support class
+– Updated: Compatible Vargal plugin by Villatheme
+- Fixed: Fixed some servers will base64 encode when sending $_POST to the server
+
 /**2.1.8 - 2025.04.25**/
 - Updated: file language
 – Updated: Compatible WC 9.8.2
