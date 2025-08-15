@@ -4,7 +4,7 @@ Donate link: http://www.villatheme.com/donate
 Tags: alidropship, dropship, alidropship woo, aliexpress dropshipping plugin, aliexpress dropshipping
 Requires at least: 5.0.0
 Tested up to: 6.8.2
-WC tested up to: 10.0.3
+WC tested up to: 10.0.4
 WC requires at least: 7.0
 Requires PHP: 7.0
 Stable tag: trunk
@@ -340,6 +340,10 @@ You can distinguish between AliExpress orders with your initial store orders and
 6. AliExpress single detail page
 
 == Changelog ==
+/**2.1.11 - 2025.08.15**/
+– Updated: Compatible check with WC 10.0.4
+– Updated: Update support class
+
 /**2.1.10 - 2025.07.26**/
 – Updated: Compatible check with WP 6.8.2 and WC 10.0.3
 – Updated: Update support class
