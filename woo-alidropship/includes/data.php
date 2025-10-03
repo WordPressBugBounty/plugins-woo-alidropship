@@ -4,14 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class VI_WOO_ALIDROPSHIP_DATA {
-	private static $prefix;
-	private $params;
-	private $default;
-	private static $countries;
-	private static $states;
-	private static $ali_states = array();
-	protected static $instance = null;
-	protected static $allow_html = null;
+	private static   $prefix;
+	private          $params;
+	private          $default;
+	private static   $countries;
+	private static   $states;
+	private static   $ali_states   = array();
+	protected static $instance     = null;
+	protected static $allow_html   = null;
 	protected static $is_ald_table = null;
 
 	/**
@@ -94,18 +94,19 @@ class VI_WOO_ALIDROPSHIP_DATA {
 			'ald_table'                             => '',
 		);
 
-		$this->params = wp_parse_args( $wooaliexpressdropship_settings, $this->default ) ;
+		$this->params = wp_parse_args( $wooaliexpressdropship_settings, $this->default );
 	}
 
-	public function get_params( $name = "" ,$default = false) {
+	public function get_params( $name = "", $default = false ) {
 		if ( ! $name ) {
-			return apply_filters( 'wooaliexpressdropship_params',$this->params);
+			return apply_filters( 'wooaliexpressdropship_params', $this->params );
 		}
 		$name_filter = 'wooaliexpressdropship_params_' . $name;
-		if (!isset($result)){
+		if ( ! isset( $result ) ) {
 			$result = $this->params[ $name ] ?? $default;
 		}
-		return $name_filter ? apply_filters( $name_filter, $result) : $result;
+
+		return $name_filter ? apply_filters( $name_filter, $result ) : $result;
 	}
 
 	public static function get_instance( $new = false ) {
@@ -160,7 +161,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 			'fields'         => 'ids'
 		) );
 
-//		$the_query = new WP_Query( $args );
+		//		$the_query = new WP_Query( $args );
 		$the_query = VI_WOO_ALIDROPSHIP_DATA::is_ald_table() ? new Ali_Product_Query( $args ) : new WP_Query( $args );
 
 		if ( $the_query->have_posts() ) {
@@ -220,7 +221,8 @@ class VI_WOO_ALIDROPSHIP_DATA {
 	 * @return array|bool|object|string|null
 	 */
 	public static function product_get_id_by_woo_id(
-		$product_id, $count = false, $multiple = false, $status = array(
+		$product_id, $count = false, $multiple = false, $status
+	= array(
 		'publish',
 		'draft',
 		'override'
@@ -360,7 +362,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 	 *
 	 * @return array
 	 */
-	public static function get_data( $url, $args = array(), $html = '', $skip_ship_from_check = false, $product_args=[]  ) {
+	public static function get_data( $url, $args = array(), $html = '', $skip_ship_from_check = false, $product_args = [] ) {
 		$response   = array(
 			'status'  => 'success',
 			'message' => '',
@@ -370,14 +372,14 @@ class VI_WOO_ALIDROPSHIP_DATA {
 		$attributes = array(
 			'sku' => '',
 		);
-		if ($html ==='viwad_init_data_before' && !empty($product_args['product_id'])){
-			$product_data = self::ali_request([], wp_json_encode( $product_args),[],'https://aldapi.vinext.net/get_product');
-			$html= isset($product_data['data']['product']) ? $product_data['data']['product'] : [];
-			if (!empty($product_data['data']['freight'])){
-				$response['freight'] = $product_data['data']['freight']['methods']??$product_data['data']['freight'];
+		if ( $html === 'viwad_init_data_before' && ! empty( $product_args['product_id'] ) ) {
+			$product_data = self::ali_request( [], wp_json_encode( $product_args ), [], 'https://aldapi.vinext.net/get_product' );
+			$html         = isset( $product_data['data']['product'] ) ? $product_data['data']['product'] : [];
+			if ( ! empty( $product_data['data']['freight'] ) ) {
+				$response['freight'] = $product_data['data']['freight']['methods'] ?? $product_data['data']['freight'];
 			}
 		}
-		if ( ! $html && $url) {
+		if ( ! $html && $url ) {
 			$args             = wp_parse_args( $args, array(
 				'user-agent' => self::get_user_agent(),
 				'timeout'    => 10,
@@ -393,20 +395,23 @@ class VI_WOO_ALIDROPSHIP_DATA {
 				return $response;
 			}
 		}
-		$prepare = VIALD_CLASS_Parse_Ali_Data::parse_data($attributes, $html,$skip_ship_from_check );
-		if (!empty($prepare['error'])){
-			$response['status'] = 'error';
-			$response['code'] = $prepare['code']??'';
-			$response['message'] = $prepare['message']??'';
+		$prepare = VIALD_CLASS_Parse_Ali_Data::parse_data( $attributes, $html, $skip_ship_from_check );
+		if ( ! empty( $prepare['error'] ) ) {
+			$response['status']  = 'error';
+			$response['code']    = $prepare['code'] ?? '';
+			$response['message'] = $prepare['message'] ?? '';
+
 			return $response;
 		}
-		if ( !empty($attributes['sku']) ) {
+		if ( ! empty( $attributes['sku'] ) ) {
 			$response['data'] = $attributes;
 		} else {
 			$response['status'] = 'error';
 		}
+
 		return $response;
 	}
+
 	public static function get_accept_currencies() {
 		return [ 'RUB' ];
 	}
@@ -746,9 +751,13 @@ class VI_WOO_ALIDROPSHIP_DATA {
 	public static function download_image( &$image_id, $url, $post_parent = 0, $exclude = array(), $post_title = '', $desc = null ) {
 		global $wpdb;
 		$instance = self::get_instance();
-		if ( $instance->get_params( 'use_external_image' ) && class_exists( 'EXMAGE_WP_IMAGE_LINKS' ) ) {
-			$external_image = EXMAGE_WP_IMAGE_LINKS::add_image( $url, $image_id, $post_parent );
-			$thumb_id       = $external_image['id'] ? $external_image['id'] : new WP_Error( 'exmage_image_error', $external_image['message'] );
+		if ( $instance->get_params( 'use_external_image' ) && ( class_exists( 'EXMAGE_WP_IMAGE_LINKS' ) || class_exists( '\EXMAGE\EXMAGE' ) ) ) {
+			if ( class_exists( '\EXMAGE\EXMAGE' ) ) {
+				$external_image = ( new EXMAGE\Admin\EXMAGEAdmin )->add_media( $url, '', $image_id, $post_parent );
+			} else {
+				$external_image = EXMAGE_WP_IMAGE_LINKS::add_image( $url, $image_id, $post_parent );
+			}
+			$thumb_id = $external_image['id'] ? $external_image['id'] : new WP_Error( 'exmage_image_error', $external_image['message'] );
 		} else {
 			$new_url   = $url;
 			$parse_url = wp_parse_url( $new_url );
@@ -828,7 +837,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 			'orderby'        => 'meta_value_num',
 			'posts_per_page' => - 1,
 		);
-//		$the_query    = new WP_Query( $args_publish );
+		//		$the_query    = new WP_Query( $args_publish );
 		$the_query = VI_WOO_ALIDROPSHIP_DATA::is_ald_table() ? new Ali_Product_Query( $args_publish ) : new WP_Query( $args_publish );
 
 		$total = isset( $the_query->post_count ) ? $the_query->post_count : 0;
@@ -1046,20 +1055,20 @@ class VI_WOO_ALIDROPSHIP_DATA {
 		if ( count( $specsModule ) ) {
 			ob_start();
 			?>
-			<div class="product-specs-list-container">
-				<ul class="product-specs-list util-clearfix">
+            <div class="product-specs-list-container">
+                <ul class="product-specs-list util-clearfix">
 					<?php
 					foreach ( $specsModule as $specs ) {
 						?>
-						<li class="product-prop line-limit-length"><span
-									class="property-title"><?php echo esc_html( isset( $specs['attrName'] ) ? $specs['attrName'] : $specs['title'] ) ?>:&nbsp;</span><span
-									class="property-desc line-limit-length"><?php echo esc_html( isset( $specs['attrValue'] ) ? $specs['attrValue'] : $specs['value'] ) ?></span>
-						</li>
+                        <li class="product-prop line-limit-length"><span
+                                    class="property-title"><?php echo esc_html( isset( $specs['attrName'] ) ? $specs['attrName'] : $specs['title'] ) ?>:&nbsp;</span><span
+                                    class="property-desc line-limit-length"><?php echo esc_html( isset( $specs['attrValue'] ) ? $specs['attrValue'] : $specs['value'] ) ?></span>
+                        </li>
 						<?php
 					}
 					?>
-				</ul>
-			</div>
+                </ul>
+            </div>
 			<?php
 			$short_description .= ob_get_clean();
 			$short_description = apply_filters( 'vi_wad_import_product_short_description', $short_description, $data );
@@ -1238,7 +1247,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 		), 'https://www.aliexpress.com/p/order/index.html' );
 	}
 
-	public static function allow_html( ) {
+	public static function allow_html() {
 		if ( self::$allow_html !== null ) {
 			return self::$allow_html;
 		}
@@ -1288,6 +1297,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 
 		return self::$allow_html = $tags;
 	}
+
 	public static function wp_kses_post( $content ) {
 		return wp_kses( $content, self::allow_html() );
 	}
@@ -1297,22 +1307,22 @@ class VI_WOO_ALIDROPSHIP_DATA {
 	 *
 	 * @return array
 	 */
-	public static function adjust_ali_freight( $freight, $from = '') {
-		if ( empty( $freight ) ||  !is_array( $freight ) ) {
-            return [];
+	public static function adjust_ali_freight( $freight, $from = '' ) {
+		if ( empty( $freight ) || ! is_array( $freight ) ) {
+			return [];
 		}
 		$saved_freight = array();
-		switch ($from){
+		switch ( $from ) {
 			case 'api':
 				foreach ( $freight as $freight_v ) {
 					if ( empty( $freight_v ) || empty( $freight_v['company'] ) ) {
 						continue;
 					}
 					$saved_freight[] = array(
-						'company'       => $freight_v['code']??'',
-						'company_name'  => $freight_v['company']??'',
+						'company'       => $freight_v['code'] ?? '',
+						'company_name'  => $freight_v['company'] ?? '',
 						'shipping_cost' => self::get_freight_amount( $freight_v ),
-						'delivery_time' => ($freight_v['min_delivery_days']??'').'-'.($freight_v['max_delivery_days']??''),
+						'delivery_time' => ( $freight_v['min_delivery_days'] ?? '' ) . '-' . ( $freight_v['max_delivery_days'] ?? '' ),
 						'display_type'  => $freight_v['displayType'] ?? '',
 						'tracking'      => $freight_v['tracking'] ?? '',
 						'ship_from'     => $freight_v['ship_from_country'] ?? '',
@@ -1320,44 +1330,44 @@ class VI_WOO_ALIDROPSHIP_DATA {
 				}
 				break;
 			default:
-				if ($from ==='api_ru'){
+				if ( $from === 'api_ru' ) {
 					foreach ( $freight as &$method ) {
 						$method['company']       = $method['groupName'] . ' ' . $method['dateFormat'];
 						$method['freightAmount'] = $method['amount'];
 						$method['time']          = $method['dateEstimated'];
 					}
-				}elseif (!isset($freight[0]['serviceName'])) {
-                    $tmp = $freight;
-	                $freight = [];
-	                foreach ( $tmp as $f ) {
-		                if ( empty( $f['bizData'] ) ) {
-			                continue;
-		                }
-		                $bizdata = $f['bizData'];
-		                if ( ! empty( $bizdata['unreachable'] ) ) {
-			                continue;
-		                }
-		                $delivery_time = [];
-		                if ( isset( $bizdata['deliveryDayMin'] ) ) {
-			                $delivery_time[] = $bizdata['deliveryDayMin'];
-		                }
-		                if ( isset( $bizdata['deliveryDayMax'] ) ) {
-			                $delivery_time[] = $bizdata['deliveryDayMax'];
-		                }
-		                $freight[] = [
-			                'serviceName'      => $bizdata['deliveryOptionCode'] ?? '',
-			                'time'             => implode( '-', $delivery_time ),
-			                'company'          => $bizdata['company'] ?? $bizdata['deliveryOptionCode'] ?? '',
-			                'freightAmount'    => [
-				                'formatedAmount' => '',
-				                'currency'       => $bizdata['displayCurrency'] ?? $bizdata['currency'],
-				                'value'          => $bizdata['displayAmount'] ?? 0,
-			                ],
-			                'sendGoodsCountry' => $bizdata['shipFromCode'] ?? 'CN'
-		                ];
+				} elseif ( ! isset( $freight[0]['serviceName'] ) ) {
+					$tmp     = $freight;
+					$freight = [];
+					foreach ( $tmp as $f ) {
+						if ( empty( $f['bizData'] ) ) {
+							continue;
+						}
+						$bizdata = $f['bizData'];
+						if ( ! empty( $bizdata['unreachable'] ) ) {
+							continue;
+						}
+						$delivery_time = [];
+						if ( isset( $bizdata['deliveryDayMin'] ) ) {
+							$delivery_time[] = $bizdata['deliveryDayMin'];
+						}
+						if ( isset( $bizdata['deliveryDayMax'] ) ) {
+							$delivery_time[] = $bizdata['deliveryDayMax'];
+						}
+						$freight[] = [
+							'serviceName'      => $bizdata['deliveryOptionCode'] ?? '',
+							'time'             => implode( '-', $delivery_time ),
+							'company'          => $bizdata['company'] ?? $bizdata['deliveryOptionCode'] ?? '',
+							'freightAmount'    => [
+								'formatedAmount' => '',
+								'currency'       => $bizdata['displayCurrency'] ?? $bizdata['currency'],
+								'value'          => $bizdata['displayAmount'] ?? 0,
+							],
+							'sendGoodsCountry' => $bizdata['shipFromCode'] ?? 'CN'
+						];
 
-	                }
-                }
+					}
+				}
 				foreach ( $freight as $freight_k => $freight_v ) {
 					if ( empty( $freight_v ) || empty( $freight_v['company'] ) ) {
 						continue;
@@ -1394,8 +1404,8 @@ class VI_WOO_ALIDROPSHIP_DATA {
 	 * @return mixed|string
 	 */
 	public static function get_freight_amount( $freight_v ) {
-		if (!empty($freight_v['free_shipping'])){
-			return  0;
+		if ( ! empty( $freight_v['free_shipping'] ) ) {
+			return 0;
 		}
 		$freight_amount = $currency = '';
 		if ( isset( $freight_v['standardFreightAmount']['value'], $freight_v['standardFreightAmount']['currency'] ) && $freight_v['standardFreightAmount']['currency'] === 'USD' ) {
@@ -1419,11 +1429,11 @@ class VI_WOO_ALIDROPSHIP_DATA {
 				$currency       = $freight_v['previewFreightAmount']['currency'];
 			}
 		}
-		if ($freight_amount === '' && isset( $freight_v['shipping_fee_currency'], $freight_v['shipping_fee_cent'] ) ){
+		if ( $freight_amount === '' && isset( $freight_v['shipping_fee_currency'], $freight_v['shipping_fee_cent'] ) ) {
 			$freight_amount = $freight_v['shipping_fee_cent'];
 		}
 		if ( $freight_amount && $currency && $currency !== 'USD' ) {
-			$instance               = self::get_instance();
+			$instance             = self::get_instance();
 			$woocommerce_currency = get_option( 'woocommerce_currency' );
 			$rate                 = 0;
 			if ( $woocommerce_currency === $currency ) {
@@ -1436,19 +1446,20 @@ class VI_WOO_ALIDROPSHIP_DATA {
 				$freight_amount = round( $freight_amount, 2 );
 			}
 		}
+
 		return $freight_amount;
 	}
 
 	public static function chrome_extension_buttons() {
 		?>
-		<span class="vi-ui positive button labeled icon <?php echo esc_attr( self::set( array( 'connect-chrome-extension', 'hidden' ) ) ) ?>"
-		      data-site_url="<?php echo esc_url( site_url() ) ?>">
+        <span class="vi-ui positive button labeled icon <?php echo esc_attr( self::set( array( 'connect-chrome-extension', 'hidden' ) ) ) ?>"
+              data-site_url="<?php echo esc_url( site_url() ) ?>">
             <i class="linkify icon"> </i><?php esc_html_e( 'Connect the Extension', 'woo-alidropship' ) ?>
         </span>
-		<a target="_blank" href="https://downloads.villatheme.com/?download=alidropship-extension"
-		   class="vi-ui positive button labeled icon <?php echo esc_attr( self::set( 'download-chrome-extension' ) ) ?>">
-			<i class="external icon"> </i><?php esc_html_e( 'Install Chrome Extension', 'woo-alidropship' ) ?>
-		</a>
+        <a target="_blank" href="https://downloads.villatheme.com/?download=alidropship-extension"
+           class="vi-ui positive button labeled icon <?php echo esc_attr( self::set( 'download-chrome-extension' ) ) ?>">
+            <i class="external icon"> </i><?php esc_html_e( 'Install Chrome Extension', 'woo-alidropship' ) ?>
+        </a>
 		<?php
 	}
 
@@ -1474,7 +1485,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 			'data'   => '',
 			'code'   => '',
 		);
-		$url = VI_WOOCOMMERCE_ALIDROPSHIP_GET_SIGNATURE_SEARCH_PRODUCT;
+		$url    = VI_WOOCOMMERCE_ALIDROPSHIP_GET_SIGNATURE_SEARCH_PRODUCT;
 
 		$url = apply_filters( 'ald_villatheme_api_url', $url, $type );
 
@@ -1499,20 +1510,21 @@ class VI_WOO_ALIDROPSHIP_DATA {
 		return $return;
 	}
 
-	public static function ali_request( $params, $body = [] ,$request_args = [],$api_url='') {
+	public static function ali_request( $params, $body = [], $request_args = [], $api_url = '' ) {
 		try {
-			$url     = add_query_arg( array_map( 'urlencode', $params ), $api_url ?: 'https://api-sg.aliexpress.com/sync' );
-			$request_args= wp_parse_args($request_args, array(
+			$url          = add_query_arg( array_map( 'urlencode', $params ), $api_url ?: 'https://api-sg.aliexpress.com/sync' );
+			$request_args = wp_parse_args( $request_args, array(
 				'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
 				'headers'    => array(
 					'Content-Type' => 'text/plain;charset=UTF-8',
 				),
 				'body'       => $body,
 				'timeout'    => 60,
-			));
-			$request = wp_remote_post( $url, $request_args);
+			) );
+			$request      = wp_remote_post( $url, $request_args );
 			if ( ! is_wp_error( $request ) ) {
 				$body = wp_remote_retrieve_body( $request );
+
 				return vi_wad_json_decode( $body, true );
 			} else {
 				return false;
@@ -1521,6 +1533,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 			return false;
 		}
 	}
+
 	public static function get_ali_orders( $count = true, $status = 'to_order', $limit = 0, $offset = 0 ) {
 		$instance = self::get_instance();
 		global $wpdb;
@@ -1552,9 +1565,9 @@ class VI_WOO_ALIDROPSHIP_DATA {
 		if ( $status === 'to_order' ) {
 			$query .= " AND {$woocommerce_order_itemmeta}.meta_value=''";
 		}
-//		else {
-//			$query = "FROM {$posts} LEFT JOIN {$woocommerce_order_items} ON {$posts}.ID={$woocommerce_order_items}.order_id LEFT JOIN {$woocommerce_order_itemmeta} ON {$woocommerce_order_items}.order_item_id={$woocommerce_order_itemmeta}.order_item_id left JOIN `{$postmeta}` on `{$woocommerce_order_itemmeta}`.`meta_value`=`{$postmeta}`.`post_id` WHERE `{$woocommerce_order_itemmeta}`.`meta_key`='_product_id' and `{$postmeta}`.`meta_key`='_vi_wad_aliexpress_product_id' ";
-//		}
+		//		else {
+		//			$query = "FROM {$posts} LEFT JOIN {$woocommerce_order_items} ON {$posts}.ID={$woocommerce_order_items}.order_id LEFT JOIN {$woocommerce_order_itemmeta} ON {$woocommerce_order_items}.order_item_id={$woocommerce_order_itemmeta}.order_item_id left JOIN `{$postmeta}` on `{$woocommerce_order_itemmeta}`.`meta_value`=`{$postmeta}`.`post_id` WHERE `{$woocommerce_order_itemmeta}`.`meta_key`='_product_id' and `{$postmeta}`.`meta_key`='_vi_wad_aliexpress_product_id' ";
+		//		}
 
 		if ( $count ) {
 			$query = "SELECT COUNT({$select}) {$query}";
@@ -1580,11 +1593,11 @@ class VI_WOO_ALIDROPSHIP_DATA {
 		$country_code = strtolower( $country_code );
 		$rates        = array(
 			/*US*/
-//			'us' => 10,
+			//			'us' => 10,
 			/*New Zealand*/
-//			'nz' => 15,
+			//			'nz' => 15,
 			/*Australia*/
-//			'au' => 10,
+			//			'au' => 10,
 			/*EU*/
 			'at' => 20,
 			'be' => 21,
@@ -1612,7 +1625,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 			'ch' => 7.7,
 			'cy' => 19,
 			/*United Kingdom*/
-//			'uk' => 20,
+			//			'uk' => 20,
 		);
 
 		return isset( $rates[ $country_code ] ) ? $rates[ $country_code ] / 100 : '';

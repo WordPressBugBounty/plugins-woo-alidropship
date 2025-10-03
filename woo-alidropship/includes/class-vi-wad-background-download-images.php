@@ -32,7 +32,7 @@ class Vi_WAD_Background_Download_Images extends WP_Background_Process {
 			vi_wad_set_time_limit();
 			if ( $set_gallery == 2 ) {
 				$instance = VI_WOO_ALIDROPSHIP_DATA::get_instance();
-				if ( $instance->get_params( 'use_external_image' ) && class_exists( 'EXMAGE_WP_IMAGE_LINKS' ) ) {
+				if ( $instance->get_params( 'use_external_image' ) && ( class_exists( 'EXMAGE_WP_IMAGE_LINKS' ) || class_exists( '\EXMAGE\EXMAGE' )) ) {
 					return false;
 				}
 			}

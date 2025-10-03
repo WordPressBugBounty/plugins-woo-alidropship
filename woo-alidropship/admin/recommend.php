@@ -52,7 +52,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Recommend {
 		$recommended_plugins = array(
 			array(
 				'slug'                => 'exmage-wp-image-links',
-				'pro'                 => '',
+				'pro'                 => 'exmage-wordpress-image-links',
 				'name'                => 'EXMAGE – WordPress Image Links',
 				'message_not_install' => __( 'Need to save your server storage? <strong>EXMAGE – WordPress Image Links</strong> will help you solve the problem by using external image URLs. </br>When this plugin is active, "Use external links for images" option will be available in the ALD plugin settings/Product which allows to use original AliExpress product image URLs for featured image, gallery images and variation image of imported AliExpress products.', 'woo-alidropship' ),
 				'message_not_active'  => __( '<strong>EXMAGE – WordPress Image Links</strong> is currently inactive, external images added by this plugin(Post/product featured image, product gallery images...) will no longer work properly.', 'woo-alidropship' ),
@@ -139,7 +139,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Recommend {
 				wp_enqueue_style( 'viwad-recommended_plugins' );
 				wp_add_inline_style( 'viwad-recommended_plugins', '.fist-col { min-width: 300px;}.vi-wad-plugin-name {font-weight: 600;}.vi-wad-plugin-name a { text-decoration: none;}' );
 			}
-		} else {
+/*
 			$wad_dismiss_nonce = isset( $_REQUEST['wad_dismiss_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['wad_dismiss_nonce'] ) ) : '';
 			$dismiss_plugin    = isset( $_REQUEST['plugin'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['plugin'] ) ) : '';
 			if ( wp_verify_nonce( $wad_dismiss_nonce, 'wad_dismiss_nonce' ) ) {
@@ -150,7 +150,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Recommend {
 			}
 			if ( ! get_option( $this->dismiss ) ) {
 				add_action( 'admin_notices', array( $this, 'admin_notices' ) );
-			}
+			}*/
 		}
 	}
 

@@ -8,9 +8,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 	class Vi_Wad_Setup_Wizard {
 		protected static $settings;
-		protected $data;
-		protected $current_url;
-		protected $plugins;
+		protected        $data;
+		protected        $current_url;
+		protected        $plugins;
 
 		public function __construct() {
 			self::$settings = VI_WOO_ALIDROPSHIP_DATA::get_instance();
@@ -37,79 +37,81 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 
 		public static function recommended_plugins() {
 			return array(
-                array(
-                    'slug' => 'exmage-wp-image-links',
-                    'name' => 'EXMAGE – WordPress Image Links',
-                    'desc' => esc_html( 'Save storage by using external image URLs. This plugin is required if you want to use external URLs(AliExpress cdn image URLs) for product featured image, gallery images and variation image.' ),
-                    'img'  => 'https://ps.w.org/exmage-wp-image-links/assets/icon-128x128.gif'
-                ),
-                array(
-                    'slug' => 'woo-photo-reviews',
-                    'name' => 'Photo Reviews for WooCommerce',
-                    'desc' => esc_html( 'An ultimate review plugin for WooCommerce which helps you send review reminder emails, allows customers to post reviews include product pictures and send thank you emails with WooCommerce coupons to customers.' ),
-                    'img'  => 'https://ps.w.org/woo-photo-reviews/assets/icon-128x128.gif'
-                ),
-                array(
-                    'slug' => 'woo-notification',
-                    'name' => 'Notification for WooCommerce | Boost Your Sales – Recent Sales Popup – Live Feed Sales – Upsells',
-                    'desc' => esc_html( 'Display recent orders as popup notifications, boosting conversion rates by showing real-time purchase, creating urgency, and showcasing new products.' ),
-                    'img'  => 'https://ps.w.org/woo-notification/assets/icon-128x128.gif'
-                ),
-                array(
-                    'slug' => 'bopo-woo-product-bundle-builder',
-                    'name' => 'Bopo - WooCommerce Product Bundle Builder',
-                    'desc' => esc_html( 'Create irresistible bundle products for WooCommerce, offering flexible pricing and great deals for your customers.' ),
-                    'img'  => 'https://ps.w.org/bopo-woo-product-bundle-builder/assets/icon-128x128.gif'
-                ),
-                array(
-                    'slug' => 'woo-orders-tracking',
-                    'name' => 'Orders Tracking for WooCommerce',
-                    'desc' => esc_html( 'Allows you to bulk add tracking code to WooCommerce orders. Then the plugin will send tracking email with tracking URLs to customers. The plugin also helps you to add tracking code and carriers name to your PayPal transactions. This option will save you tons of time and avoid mistake when adding tracking code to PayPal.' ),
-                    'img'  => 'https://ps.w.org/woo-orders-tracking/assets/icon-128x128.gif'
-                ),
-                array(
-                    'slug' => 'woo-multi-currency',
-                    'name' => 'CURCY – Multi Currency for WooCommerce – The best free currency exchange plugin – Run smoothly on WooCommerce 9.x',
-                    'desc' => esc_html( 'Allows you to display prices and accepts payments in multiple currencies. Working only with WooCommerce.' ),
-                    'img'  => 'https://ps.w.org/woo-multi-currency/assets/icon-128x128.gif'
-                ),
-                array(
-                    'slug' => 'product-variations-swatches-for-woocommerce',
-                    'name' => 'Product Variations Swatches for WooCommerce',
-                    'desc' => esc_html( 'Product Variations Swatches for WooCommerce is a professional plugin that allows you to show and select attributes for variation products. The plugin displays variation select options of the products under colors, buttons, images, variation images, radio so it helps the customers observe the products they need more visually, save time to find the wanted products than dropdown type for variations of a variable product.' ),
-                    'img'  => 'https://ps.w.org/product-variations-swatches-for-woocommerce/assets/icon-128x128.gif'
-                ),
-                array(
-                    'slug' => 'woo-product-builder',
-                    'name' => 'Product Builder for WooCommerce – Custom PC Builder',
-                    'desc' => esc_html( 'Increases sales with Building product configuration for your online store. Help build a complete product from small components.' ),
-                    'img'  => 'https://ps.w.org/woo-product-builder/assets/icon-128x128.gif'
-                ),
-                array(
-                    'slug' => 'woo-cart-all-in-one',
-                    'name' => 'Cart All In One For WooCommerce',
-                    'desc' => esc_html( 'All cart features you need in one simple plugin' ),
-                    'img'  => 'https://ps.w.org/woo-cart-all-in-one/assets/icon-128x128.gif'
-                ),
-                array(
-                    'slug' => 'woo-abandoned-cart-recovery',
-                    'name' => 'Abandoned Cart Recovery for WooCommerce',
-                    'desc' => esc_html( 'Helps you to recovery unfinished order in your store. When a customer adds a product to cart but does not complete check out. After a scheduled time, the cart will be marked as “abandoned”. The plugin will start to send cart recovery email or facebook message to the customer, remind him/her to complete the order.' ),
-                    'img'  => 'https://ps.w.org/woo-abandoned-cart-recovery/assets/icon-128x128.gif'
-                ),
-                array(
-                    'slug' => 'bulky-bulk-edit-products-for-woo',
-                    'name' => 'Bulky – Bulk Edit Products for WooCommerce',
-                    'desc' => esc_html( 'The plugin offers sufficient simple and advanced tools to help filter various available attributes of simple and variable products such as ID, Title, Content, Excerpt, Slugs, SKU, Post date, range of regular price and sale price, Sale date, range of stock quantity, Product type, Categories.... Users can quickly search for wanted products fields and work with the product fields in bulk.' ),
-                    'img'  => 'https://ps.w.org/bulky-bulk-edit-products-for-woo/assets/icon-128x128.gif'
-                ),
+				array(
+					'slug' => 'exmage-wp-image-links',
+					'name' => 'EXMAGE – WordPress Image Links',
+					'desc' => esc_html( 'Save storage by using external image URLs. This plugin is required if you want to use external URLs(AliExpress cdn image URLs) for product featured image, gallery images and variation image.' ),
+					'img'  => 'https://ps.w.org/exmage-wp-image-links/assets/icon-128x128.gif'
+				),
+				array(
+					'slug' => 'woo-photo-reviews',
+					'name' => 'Photo Reviews for WooCommerce',
+					'desc' => esc_html( 'An ultimate review plugin for WooCommerce which helps you send review reminder emails, allows customers to post reviews include product pictures and send thank you emails with WooCommerce coupons to customers.' ),
+					'img'  => 'https://ps.w.org/woo-photo-reviews/assets/icon-128x128.gif'
+				),
+				array(
+					'slug' => 'woo-notification',
+					'name' => 'Notification for WooCommerce | Boost Your Sales – Recent Sales Popup – Live Feed Sales – Upsells',
+					'desc' => esc_html( 'Display recent orders as popup notifications, boosting conversion rates by showing real-time purchase, creating urgency, and showcasing new products.' ),
+					'img'  => 'https://ps.w.org/woo-notification/assets/icon-128x128.gif'
+				),
+				array(
+					'slug' => 'bopo-woo-product-bundle-builder',
+					'name' => 'Bopo - WooCommerce Product Bundle Builder',
+					'desc' => esc_html( 'Create irresistible bundle products for WooCommerce, offering flexible pricing and great deals for your customers.' ),
+					'img'  => 'https://ps.w.org/bopo-woo-product-bundle-builder/assets/icon-128x128.gif'
+				),
+				array(
+					'slug' => 'woo-orders-tracking',
+					'name' => 'Orders Tracking for WooCommerce',
+					'desc' => esc_html( 'Allows you to bulk add tracking code to WooCommerce orders. Then the plugin will send tracking email with tracking URLs to customers. The plugin also helps you to add tracking code and carriers name to your PayPal transactions. This option will save you tons of time and avoid mistake when adding tracking code to PayPal.' ),
+					'img'  => 'https://ps.w.org/woo-orders-tracking/assets/icon-128x128.gif'
+				),
+				array(
+					'slug' => 'woo-multi-currency',
+					'name' => 'CURCY – Multi Currency for WooCommerce – The best free currency exchange plugin – Run smoothly on WooCommerce 9.x',
+					'desc' => esc_html( 'Allows you to display prices and accepts payments in multiple currencies. Working only with WooCommerce.' ),
+					'img'  => 'https://ps.w.org/woo-multi-currency/assets/icon-128x128.gif'
+				),
+				array(
+					'slug' => 'product-variations-swatches-for-woocommerce',
+					'name' => 'Product Variations Swatches for WooCommerce',
+					'desc' => esc_html( 'Product Variations Swatches for WooCommerce is a professional plugin that allows you to show and select attributes for variation products. The plugin displays variation select options of the products under colors, buttons, images, variation images, radio so it helps the customers observe the products they need more visually, save time to find the wanted products than dropdown type for variations of a variable product.' ),
+					'img'  => 'https://ps.w.org/product-variations-swatches-for-woocommerce/assets/icon-128x128.gif'
+				),
+				array(
+					'slug'                => 'fewc-extra-checkout-fields-for-woocommerce',
+					'name'                => 'FEWC - Extra Checkout Fields For WooCommerce',
+					'desc'                => esc_html( 'Easily customize your checkout page: add custom fields, enable/disable fields, rearrange their positions, and preview changes in the WP Customizer.' ),
+					'img'                 => 'https://ps.w.org/fewc-extra-checkout-fields-for-woocommerce/assets/icon-128x128.gif',
+					'message_not_install' => sprintf( "%s <strong>FEWC - Extra Checkout Fields For WooCommerce</strong> %s", esc_html( 'Need a checkout field plugin that works perfectly with TMDS?' ), esc_html( 'is what you need.') ),
+					'message_not_active'  => sprintf( "<strong>FEWC</strong> %s", esc_html( 'is currently inactive, the custom checkout fields needed to match with the Temu checkout field might not be set.' ) ),
+				),
+				array(
+					'slug' => 'woo-cart-all-in-one',
+					'name' => 'Cart All In One For WooCommerce',
+					'desc' => esc_html( 'All cart features you need in one simple plugin' ),
+					'img'  => 'https://ps.w.org/woo-cart-all-in-one/assets/icon-128x128.gif'
+				),
+				array(
+					'slug' => 'woo-abandoned-cart-recovery',
+					'name' => 'Abandoned Cart Recovery for WooCommerce',
+					'desc' => esc_html( 'Helps you to recovery unfinished order in your store. When a customer adds a product to cart but does not complete check out. After a scheduled time, the cart will be marked as “abandoned”. The plugin will start to send cart recovery email or facebook message to the customer, remind him/her to complete the order.' ),
+					'img'  => 'https://ps.w.org/woo-abandoned-cart-recovery/assets/icon-128x128.gif'
+				),
+				array(
+					'slug' => 'bulky-bulk-edit-products-for-woo',
+					'name' => 'Bulky – Bulk Edit Products for WooCommerce',
+					'desc' => esc_html( 'The plugin offers sufficient simple and advanced tools to help filter various available attributes of simple and variable products such as ID, Title, Content, Excerpt, Slugs, SKU, Post date, range of regular price and sale price, Sale date, range of stock quantity, Product type, Categories.... Users can quickly search for wanted products fields and work with the product fields in bulk.' ),
+					'img'  => 'https://ps.w.org/bulky-bulk-edit-products-for-woo/assets/icon-128x128.gif'
+				),
 
-                array(
-                    'slug' => 'email-template-customizer-for-woo',
-                    'name' => 'Email Template Customizer for WooCommerce',
-                    'desc' => esc_html( 'Customize WooCommerce emails to make them more beautiful and professional after only several mouse clicks.' ),
-                    'img'  => 'https://ps.w.org/email-template-customizer-for-woo/assets/icon-128x128.gif'
-                ),
+				array(
+					'slug' => 'email-template-customizer-for-woo',
+					'name' => 'Email Template Customizer for WooCommerce',
+					'desc' => esc_html( 'Customize WooCommerce emails to make them more beautiful and professional after only several mouse clicks.' ),
+					'img'  => 'https://ps.w.org/email-template-customizer-for-woo/assets/icon-128x128.gif'
+				),
 			);
 		}
 
@@ -122,33 +124,33 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 				$step = isset( $_GET['step'] ) ? sanitize_text_field( $_GET['step'] ) : 1;
 				wp_dequeue_script( 'select-js' );//Causes select2 error, from ThemeHunk MegaMenu Plus plugin
 				wp_dequeue_style( 'eopa-admin-css' );
-				wp_enqueue_style( 'woo-alidropship-input', VI_WOO_ALIDROPSHIP_CSS . 'input.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-				wp_enqueue_style( 'woo-alidropship-label', VI_WOO_ALIDROPSHIP_CSS . 'label.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-				wp_enqueue_style( 'woo-alidropship-image', VI_WOO_ALIDROPSHIP_CSS . 'image.min.css' ,[], VI_WOO_ALIDROPSHIP_VERSION );
-				wp_enqueue_style( 'woo-alidropship-transition', VI_WOO_ALIDROPSHIP_CSS . 'transition.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-				wp_enqueue_style( 'woo-alidropship-form', VI_WOO_ALIDROPSHIP_CSS . 'form.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-				wp_enqueue_style( 'woo-alidropship-icon', VI_WOO_ALIDROPSHIP_CSS . 'icon.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-				wp_enqueue_style( 'woo-alidropship-dropdown', VI_WOO_ALIDROPSHIP_CSS . 'dropdown.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-				wp_enqueue_style( 'woo-alidropship-checkbox', VI_WOO_ALIDROPSHIP_CSS . 'checkbox.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-				wp_enqueue_style( 'woo-alidropship-segment', VI_WOO_ALIDROPSHIP_CSS . 'segment.min.css' ,[], VI_WOO_ALIDROPSHIP_VERSION );
-				wp_enqueue_style( 'woo-alidropship-button', VI_WOO_ALIDROPSHIP_CSS . 'button.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-				wp_enqueue_style( 'woo-alidropship-table', VI_WOO_ALIDROPSHIP_CSS . 'table.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-				wp_enqueue_style( 'woo-alidropship-step', VI_WOO_ALIDROPSHIP_CSS . 'step.min.css' ,[], VI_WOO_ALIDROPSHIP_VERSION );
-				wp_enqueue_style( 'select2', VI_WOO_ALIDROPSHIP_CSS . 'select2.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-				wp_enqueue_script( 'woo-alidropship-transition', VI_WOO_ALIDROPSHIP_JS . 'transition.min.js', array( 'jquery' ), VI_WOO_ALIDROPSHIP_VERSION ,false);
-				wp_enqueue_script( 'woo-alidropship-dropdown', VI_WOO_ALIDROPSHIP_JS . 'dropdown.min.js', array( 'jquery' ) , VI_WOO_ALIDROPSHIP_VERSION ,false);
-				wp_enqueue_script( 'woo-alidropship-checkbox', VI_WOO_ALIDROPSHIP_JS . 'checkbox.js', array( 'jquery' ), VI_WOO_ALIDROPSHIP_VERSION ,false );
+				wp_enqueue_style( 'woo-alidropship-input', VI_WOO_ALIDROPSHIP_CSS . 'input.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+				wp_enqueue_style( 'woo-alidropship-label', VI_WOO_ALIDROPSHIP_CSS . 'label.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+				wp_enqueue_style( 'woo-alidropship-image', VI_WOO_ALIDROPSHIP_CSS . 'image.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+				wp_enqueue_style( 'woo-alidropship-transition', VI_WOO_ALIDROPSHIP_CSS . 'transition.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+				wp_enqueue_style( 'woo-alidropship-form', VI_WOO_ALIDROPSHIP_CSS . 'form.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+				wp_enqueue_style( 'woo-alidropship-icon', VI_WOO_ALIDROPSHIP_CSS . 'icon.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+				wp_enqueue_style( 'woo-alidropship-dropdown', VI_WOO_ALIDROPSHIP_CSS . 'dropdown.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+				wp_enqueue_style( 'woo-alidropship-checkbox', VI_WOO_ALIDROPSHIP_CSS . 'checkbox.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+				wp_enqueue_style( 'woo-alidropship-segment', VI_WOO_ALIDROPSHIP_CSS . 'segment.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+				wp_enqueue_style( 'woo-alidropship-button', VI_WOO_ALIDROPSHIP_CSS . 'button.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+				wp_enqueue_style( 'woo-alidropship-table', VI_WOO_ALIDROPSHIP_CSS . 'table.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+				wp_enqueue_style( 'woo-alidropship-step', VI_WOO_ALIDROPSHIP_CSS . 'step.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+				wp_enqueue_style( 'select2', VI_WOO_ALIDROPSHIP_CSS . 'select2.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+				wp_enqueue_script( 'woo-alidropship-transition', VI_WOO_ALIDROPSHIP_JS . 'transition.min.js', array( 'jquery' ), VI_WOO_ALIDROPSHIP_VERSION, false );
+				wp_enqueue_script( 'woo-alidropship-dropdown', VI_WOO_ALIDROPSHIP_JS . 'dropdown.min.js', array( 'jquery' ), VI_WOO_ALIDROPSHIP_VERSION, false );
+				wp_enqueue_script( 'woo-alidropship-checkbox', VI_WOO_ALIDROPSHIP_JS . 'checkbox.js', array( 'jquery' ), VI_WOO_ALIDROPSHIP_VERSION, false );
 				wp_enqueue_script( 'select2-v4', VI_WOO_ALIDROPSHIP_JS . 'select2.js', array( 'jquery' ), '4.0.3', false );
-				wp_enqueue_style( 'woo-alidropship-admin-style', VI_WOO_ALIDROPSHIP_CSS . 'admin.css' ,[], VI_WOO_ALIDROPSHIP_VERSION);
+				wp_enqueue_style( 'woo-alidropship-admin-style', VI_WOO_ALIDROPSHIP_CSS . 'admin.css', [], VI_WOO_ALIDROPSHIP_VERSION );
 				if ( $step == 1 || $step == 2 ) {
-					wp_enqueue_script( 'woo-alidropship-admin', VI_WOO_ALIDROPSHIP_JS . 'setup-wizard.js', array( 'jquery' ) , VI_WOO_ALIDROPSHIP_VERSION ,false);
+					wp_enqueue_script( 'woo-alidropship-admin', VI_WOO_ALIDROPSHIP_JS . 'setup-wizard.js', array( 'jquery' ), VI_WOO_ALIDROPSHIP_VERSION, false );
 					wp_localize_script( 'woo-alidropship-admin', 'vi_wad_setup_wizard_params', array(
 						'url'                => admin_url( 'admin-ajax.php' ),
 						'_vi_wad_ajax_nonce' => VI_WOO_ALIDROPSHIP_Admin_Settings::create_ajax_nonce(),
 					) );
 				}
-				wp_register_script('viwad-setup-wizard', false,['jquery'], VI_WOO_ALIDROPSHIP_VERSION, false);
-				wp_enqueue_script('viwad-setup-wizard');
+				wp_register_script( 'viwad-setup-wizard', false, [ 'jquery' ], VI_WOO_ALIDROPSHIP_VERSION, false );
+				wp_enqueue_script( 'viwad-setup-wizard' );
 				wp_add_inline_script( 'viwad-setup-wizard', $this->print_script() );
 			}
 		}
@@ -182,7 +184,7 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 				$func = 'set_up_step_' . $step;
 
 				if ( method_exists( $this, $func ) ) {
-                    delete_option('viwad_setup_wizard');
+					delete_option( 'viwad_setup_wizard' );
 					$this->current_url = remove_query_arg( 'step', esc_url_raw( $_SERVER['REQUEST_URI'] ) );
 					$steps_state       = array(
 						'extensions'     => '',
@@ -296,7 +298,7 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
                                     </div>
                                 </label>
                                 <input type="text" readonly
-                                       value="<?php echo esc_attr(self::$settings->get_params( 'secret_key' )) ?>"
+                                       value="<?php echo esc_attr( self::$settings->get_params( 'secret_key' ) ) ?>"
                                        class="<?php self::set_params( 'secret_key', true ) ?>">
                             </div>
                             <p><?php esc_html_e( 'Secret key is one of the two ways to connect the chrome extension with your store. The other way is to use WooCommerce authentication.', 'woo-alidropship' ) ?></p>
@@ -350,7 +352,7 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
                                            value="1"
                                            name="<?php self::set_params( 'show_shipping_option' ) ?>"/>
                                     <label><?php esc_html_e( 'Shipping cost will be added to price of original product before applying price rules. You can select shipping country/company to calculate shipping cost of products before importing.', 'woo-alidropship' ) ?></label>
-                                    <p><?php echo wp_kses_post(__( '<strong>*Note:</strong> This is not shipping cost/method that your customers see at your store.', 'woo-alidropship' )) ?></p>
+                                    <p><?php echo wp_kses_post( __( '<strong>*Note:</strong> This is not shipping cost/method that your customers see at your store.', 'woo-alidropship' ) ) ?></p>
                                 </div>
                             </td>
                         </tr>
@@ -373,7 +375,7 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
                             </td>
                         </tr>
                         <tr>
-                            <th><?php echo wp_kses_post(sprintf( esc_html__( 'Exchange rate - USD/%s', 'woo-alidropship' ), get_option( 'woocommerce_currency' )) ) //phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></th>
+                            <th><?php echo wp_kses_post( sprintf( esc_html__( 'Exchange rate - USD/%s', 'woo-alidropship' ), get_option( 'woocommerce_currency' ) ) ) //phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></th>
                             <td>
                                 <div class="vi-ui input">
                                     <input type="text" <?php checked( self::$settings->get_params( 'import_currency_rate' ), 1 ) ?>
@@ -381,7 +383,7 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
                                            value="<?php echo esc_attr( self::$settings->get_params( 'import_currency_rate' ) ) ?>"
                                            name="<?php self::set_params( 'import_currency_rate' ) ?>"/>
                                 </div>
-                                <p><?php echo wp_kses_post(sprintf( __( 'This is exchange rate to convert product price from USD to your store\'s currency(%s) when adding products to import list.', 'woo-alidropship' ), get_option( 'woocommerce_currency' ) )) //phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></p>
+                                <p><?php echo wp_kses_post( sprintf( __( 'This is exchange rate to convert product price from USD to your store\'s currency(%s) when adding products to import list.', 'woo-alidropship' ), get_option( 'woocommerce_currency' ) ) ) //phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></p>
                             </td>
                         </tr>
 						<?php
@@ -396,7 +398,7 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
                                            min="0.001"
                                            id="<?php self::set_params( 'import_currency_rate_RUB', true ) ?>"
                                            class="<?php self::set_params( 'import_currency_rate_RUB', true ) ?>"
-                                           value="<?php echo esc_attr(self::$settings->get_params( 'import_currency_rate_RUB' )) ?>"
+                                           value="<?php echo esc_attr( self::$settings->get_params( 'import_currency_rate_RUB' ) ) ?>"
                                            name="<?php self::set_params( 'import_currency_rate_RUB' ) ?>"/>
                                     <p><?php esc_html_e( 'If you want to import products from aliexpress.ru, this is required', 'woo-alidropship' ) ?></p>
                                 </td>
@@ -623,7 +625,7 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
                                 <div class="vi-ui toggle checkbox">
                                     <input id="<?php self::set_params( 'use_external_image', true ) ?>"
                                            type="checkbox" <?php
-									if ( class_exists( 'EXMAGE_WP_IMAGE_LINKS' ) ) {
+									if ( class_exists( 'EXMAGE_WP_IMAGE_LINKS' ) || class_exists( '\EXMAGE\EXMAGE' )) {
 										checked( self::$settings->get_params( 'use_external_image' ), 1 );
 									} else {
 										echo esc_attr( 'disabled' );
@@ -636,9 +638,13 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
                                     <label><?php esc_html_e( 'This helps save storage by using original AliExpress image URLs but you will not be able to edit them', 'woo-alidropship' ) ?></label>
                                 </div>
 								<?php
-								if ( ! class_exists( 'EXMAGE_WP_IMAGE_LINKS' ) ) {
+								if ( ! class_exists( 'EXMAGE_WP_IMAGE_LINKS' ) && !class_exists( '\EXMAGE\EXMAGE' ) ) {
 									$plugins     = get_plugins();
 									$plugin_slug = 'exmage-wp-image-links';
+									/*Check if you have exmage pro then activate, otherwise use free*/
+									if ( class_exists( '\EXMAGE\EXMAGE' ) ) {
+										$plugin_slug = 'exmage-wordpress-image-links';
+									}
 									$plugin      = "{$plugin_slug}/{$plugin_slug}.php";
 									if ( ! isset( $plugins[ $plugin ] ) ) {
 										$button = '<a href="' . esc_url( wp_nonce_url( self_admin_url( "update.php?action=install-plugin&plugin={$plugin_slug}" ), "install-plugin_{$plugin_slug}" ) ) . '" target="_blank" class="button button-primary">' . esc_html__( 'Install now', 'woo-alidropship' ) . '</a>';;
@@ -650,7 +656,7 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 									}
 									?>
                                     <p>
-                                        <strong>*</strong><?php echo wp_kses_post(sprintf( esc_html__( 'To use this feature, you have to install and activate %1$s plugin. %2$s', 'woo-alidropship' ), '<a target="_blank" href="https://wordpress.org/plugins/exmage-wp-image-links/">EXMAGE – WordPress Image Links</a>', $button )) //phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?>
+                                        <strong>*</strong><?php echo wp_kses_post( sprintf( esc_html__( 'To use this feature, you have to install and activate %1$s plugin. %2$s', 'woo-alidropship' ), '<a target="_blank" href="https://wordpress.org/plugins/exmage-wp-image-links/">EXMAGE – WordPress Image Links</a>', $button ) ) //phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?>
                                     </p>
 									<?php
 								}
@@ -670,21 +676,21 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
                                            tabindex="0"
                                            class="<?php self::set_params( 'use_global_attributes', true ) ?>" value="1"
                                            name="<?php self::set_params( 'use_global_attributes' ) ?>"/>
-                                    <label><?php echo wp_kses_post(__( 'Global attributes will be used instead of custom attributes. More details about <a href="https://woocommerce.com/document/managing-product-taxonomies/#product-attributes" target="_blank">Product attributes</a>', 'woo-alidropship' )) ?></label>
+                                    <label><?php echo wp_kses_post( __( 'Global attributes will be used instead of custom attributes. More details about <a href="https://woocommerce.com/document/managing-product-taxonomies/#product-attributes" target="_blank">Product attributes</a>', 'woo-alidropship' ) ) ?></label>
                                 </div>
                             </td>
                         </tr>
                     </table>
                 </div>
                 <div class="vi-wad-btn-group">
-	                <?php $this->skip_button(); ?>
-                    <?php VI_WOO_ALIDROPSHIP_DATA::chrome_extension_buttons(); ?>
+					<?php $this->skip_button(); ?>
+					<?php VI_WOO_ALIDROPSHIP_DATA::chrome_extension_buttons(); ?>
                     <a href="<?php echo esc_url( $this->current_url . '&step=1' ) ?>" class="vi-ui button labeled icon"><i
                                 class="icon step backward"></i>
 						<?php esc_html_e( 'Back', 'woo-alidropship' ); ?>
                     </a>
                     <button type="submit"
-                            name="<?php echo esc_attr( VI_WOO_ALIDROPSHIP_DATA::set( 'save-settings', true ) ) ?>"
+                            name="vi-wad-save-settings"
                             class="vi-ui button primary right labeled icon"
                             value="vi_wad_wizard_submit"><i
                                 class="icon step forward"></i><?php esc_html_e( 'Next', 'woo-alidropship' ); ?></button>
@@ -741,8 +747,8 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
                     </div>
                 </div>
                 <div class="vi-wad-btn-group">
-	                <?php $this->skip_button(); ?>
-                    <?php VI_WOO_ALIDROPSHIP_DATA::chrome_extension_buttons(); ?>
+					<?php $this->skip_button(); ?>
+					<?php VI_WOO_ALIDROPSHIP_DATA::chrome_extension_buttons(); ?>
                     <a href="<?php echo esc_url( $this->current_url . '&step=2' ) ?>" class="vi-ui button labeled icon">
                         <i class="icon step backward"> </i>
 						<?php esc_html_e( 'Back', 'woo-alidropship' ); ?>
@@ -750,7 +756,7 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
                     <button type="submit" class="vi-ui button primary labeled icon vi-wad-finish" name="submit"
                             value="vi_wad_install_recommend_plugins">
                         <i class="icon check"></i>
-						<?php esc_html_e( 'Install & Return to Import list', 'woo-alidropship' ); ?>
+                        <span><?php esc_html_e( 'Install & Return to Import list', 'woo-alidropship' ); ?></span>
                     </button>
                 </div>
             </form>
@@ -770,18 +776,18 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
                     $('.vi-wad-select-plugin').on('change', function () {
                         let checkedCount = $('.vi-wad-select-plugin:checked').length;
                         if (checkedCount === 0) {
-                            $('.vi-wad-finish').text('<?php esc_html_e( 'Return to Import list', 'woo-alidropship' );?>');
+                            $('.vi-wad-finish span').text('<?php esc_html_e( 'Return to Import list', 'woo-alidropship' );?>');
                         } else {
-                            $('.vi-wad-finish').text(<?php echo wp_json_encode( __( 'Install & Return to Import list', 'woo-alidropship' ) )?>);
+                            $('.vi-wad-finish span').text(<?php echo wp_json_encode( __( 'Install & Return to Import list', 'woo-alidropship' ) )?>);
                         }
                     });
                     $('.vi-wad-toggle-select-plugin').on('change', function () {
                         let checked = $(this).prop('checked');
                         $('.vi-wad-select-plugin').prop('checked', checked);
                         if (!checked) {
-                            $('.vi-wad-finish').text('<?php esc_html_e( 'Return to Import list', 'woo-alidropship' );?>');
+                            $('.vi-wad-finish span').text('<?php esc_html_e( 'Return to Import list', 'woo-alidropship' );?>');
                         } else {
-                            $('.vi-wad-finish').text(<?php echo wp_json_encode( __( 'Install & Return to Import list', 'woo-alidropship' ) )?>);
+                            $('.vi-wad-finish span').text(<?php echo wp_json_encode( __( 'Install & Return to Import list', 'woo-alidropship' ) )?>);
                         }
                     });
 
@@ -841,7 +847,7 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
                 });
             </script>
 			<?php
-			return  preg_replace( '#<script[^>]*>(.*)</script>#is', '$1', ob_get_clean() ) ;
+			return preg_replace( '#<script[^>]*>(.*)</script>#is', '$1', ob_get_clean() );
 		}
 
 		public function install_plugins() {
