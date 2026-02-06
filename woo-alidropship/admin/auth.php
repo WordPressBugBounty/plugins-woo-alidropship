@@ -10,7 +10,8 @@ class VI_WOO_ALIDROPSHIP_Admin_Auth {
         $this->settings = VI_WOO_ALIDROPSHIP_DATA::get_instance();
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
         add_action('admin_menu', array($this, 'admin_menu'), 20);
-        add_filter('woocommerce_locate_template', array($this, 'woocommerce_locate_template'), 10, 3);
+//        add_filter('woocommerce_locate_template', array($this, 'woocommerce_locate_template'), 10, 3);
+        add_filter( 'woocommerce_api_permissions_in_scope', array( $this, 'extension_permissions' ), PHP_INT_MAX, 2 );
     }
 
     private static function set( $name, $set_name = false ) {
@@ -48,6 +49,17 @@ class VI_WOO_ALIDROPSHIP_Admin_Auth {
         </div>
         <?php
         delete_option('vi_wad_temp_api_credentials');
+    }
+    public function extension_permissions( $permissions, $scope ) {
+        if ( ( wc_clean(wp_unslash($_REQUEST['app_name']??'')) === 'WooCommerce AliExpress Dropshipping Extension' ) && $scope === 'read_write' ) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $permissions = [
+                    esc_html__( 'Import and sync AliExpress products','woo-alidropship' ),
+                    esc_html__( 'Get orders data to fulfill AliExpress orders', 'woo-alidropship' ),
+                    esc_html__( 'Sync your WooCommerce orders with AliExpress orders', 'woo-alidropship' ),
+            ];
+        }
+
+        return $permissions;
     }
 
     public function enqueue_semantic() {

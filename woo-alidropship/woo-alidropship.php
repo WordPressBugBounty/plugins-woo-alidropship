@@ -3,23 +3,23 @@
  * Plugin Name: ALD - Dropshipping and Fulfillment for AliExpress and WooCommerce
  * Plugin URI: https://villatheme.com/extensions/aliexpress-dropshipping-and-fulfillment-for-woocommerce/
  * Description: Transfer data from AliExpress products to WooCommerce effortlessly and fulfill WooCommerce orders to AliExpress automatically.
- * Version: 2.1.13
+ * Version: 2.1.15
  * Author: VillaTheme(villatheme.com)
  * Author URI: http://villatheme.com
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: woo-alidropship
- * Copyright 2019-2025 VillaTheme.com. All rights reserved.
- * Tested up to: 6.8
+ * Copyright 2019-2026 VillaTheme.com. All rights reserved.
+ * Tested up to: 6.9
  * Requires Plugins: woocommerce
- * WC tested up to: 10.2
+ * WC tested up to: 10.4
  * Requires PHP: 7.0
  **/
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-define( 'VI_WOO_ALIDROPSHIP_VERSION', '2.1.13' );
+define( 'VI_WOO_ALIDROPSHIP_VERSION', '2.1.15' );
 define( 'VI_WOO_ALIDROPSHIP_DIR', plugin_dir_path( __FILE__ ) );
 define( 'VI_WOO_ALIDROPSHIP_INCLUDES', VI_WOO_ALIDROPSHIP_DIR . "includes" . DIRECTORY_SEPARATOR );
 
@@ -37,7 +37,7 @@ if ( is_file( VI_WOO_ALIDROPSHIP_INCLUDES . "ali-product-table.php" ) ) {
  */
 class VI_WOO_ALIDROPSHIP {
 	public function __construct() {
-		register_activation_hook( __FILE__, array( $this, 'install' ) );
+		register_activation_hook( __FILE__, array( $this, 'activate' ) );
 		add_action( 'plugins_loaded', array( $this, 'check_environment' ) );
 		add_action( 'before_woocommerce_init', [ $this, 'custom_order_tables_declare_compatibility' ] );
 	}
@@ -99,13 +99,14 @@ class VI_WOO_ALIDROPSHIP {
 	/**
 	 * When active plugin Function will be call
 	 */
-	public function install() {
+	public function activate() {
 		if ( ! function_exists( 'is_plugin_active' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 		if ( is_plugin_active( 'woocommerce-alidropship/woocommerce-alidropship.php' ) ) {
 			return;
 		}
+		Ali_Product_Table::create_table();
 		VI_WOO_ALIDROPSHIP_Ali_Orders_Info_Table::create_table();
 		$check_active = get_option( 'wooaliexpressdropship_params' );
 		if ( ! $check_active ) {
@@ -133,6 +134,12 @@ class VI_WOO_ALIDROPSHIP {
 				$params['billing_neighborhood_meta_key']  = '_billing_neighborhood';
 				$params['shipping_neighborhood_meta_key'] = '_shipping_neighborhood';
 			}
+			$posts = get_posts( [ 'post_type' => 'vi_wad_draft_product', 'numberposts' => 1, 'post_status' => 'any' ] );
+			if ( empty( $posts ) ) {
+				update_option( 'ald_deleted_old_posts_data', true );
+				update_option( 'ald_migrated_to_new_table', true );
+				$params['ald_table'] = 1;
+			}
 			update_option( 'wooaliexpressdropship_params', $params );
 			add_action( 'activated_plugin', array( $this, 'after_activated' ) );
 		} elseif ( wp_next_scheduled( 'vi_wad_update_aff_urls' ) ) {
@@ -143,6 +150,8 @@ class VI_WOO_ALIDROPSHIP {
 	public function after_activated( $plugin ) {
 		if ( $plugin === plugin_basename( __FILE__ ) ) {
 			update_option( 'viwad_setup_wizard', 1, 'no' );
+			Ali_Product_Table::create_table();
+			VI_WOO_ALIDROPSHIP_Ali_Orders_Info_Table::create_table();
 			$this->check_environment(  );
 		}
 	}

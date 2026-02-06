@@ -101,12 +101,12 @@ class VI_WOO_ALIDROPSHIP_Admin_Transfer_Settings {
 		wp_enqueue_style( 'vi-woo-alidropship-segment', VI_WOO_ALIDROPSHIP_CSS . 'segment.min.css' ,[], VI_WOO_ALIDROPSHIP_VERSION );
 		wp_enqueue_style( 'vi-woo-alidropship-button', VI_WOO_ALIDROPSHIP_CSS . 'button.min.css' ,[], VI_WOO_ALIDROPSHIP_VERSION );
 		wp_enqueue_style( 'vi-woo-alidropship-message', VI_WOO_ALIDROPSHIP_CSS . 'message.min.css' ,[], VI_WOO_ALIDROPSHIP_VERSION );
-		wp_enqueue_style( 'select2', VI_WOO_ALIDROPSHIP_CSS . 'select2.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
-		if ( woocommerce_version_check( '3.0.0' ) ) {
-			wp_enqueue_script( 'select2' );
-		} else {
-			wp_enqueue_script( 'select2-v4', VI_WOO_ALIDROPSHIP_JS . 'select2.js', array( 'jquery' ), '4.0.3' , false);
-		}
+//		wp_enqueue_style( 'select2', VI_WOO_ALIDROPSHIP_CSS . 'select2.min.css',[], VI_WOO_ALIDROPSHIP_VERSION  );
+//		if ( woocommerce_version_check( '3.0.0' ) ) {
+//			wp_enqueue_script( 'select2' );
+//		} else {
+//			wp_enqueue_script( 'select2-v4', VI_WOO_ALIDROPSHIP_JS . 'select2.js', array( 'jquery' ), '4.0.3' , false);
+//		}
 	}
 
 

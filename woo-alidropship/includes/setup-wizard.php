@@ -78,7 +78,13 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 					'name' => 'Product Variations Swatches for WooCommerce',
 					'desc' => esc_html( 'Product Variations Swatches for WooCommerce is a professional plugin that allows you to show and select attributes for variation products. The plugin displays variation select options of the products under colors, buttons, images, variation images, radio so it helps the customers observe the products they need more visually, save time to find the wanted products than dropdown type for variations of a variable product.' ),
 					'img'  => 'https://ps.w.org/product-variations-swatches-for-woocommerce/assets/icon-128x128.gif'
-				),
+				), [
+                            'slug'                => 'vargal-additional-variation-gallery-for-woo',
+                            'pro'                 => 'vargal-woocommerce-additional-variation-gallery',
+                            'name'                => 'VARGAL – Additional Variation Gallery for Woo',
+                            'img'  => 'https://ps.w.org/vargal-additional-variation-gallery-for-woo/assets/icon-128x128.gif',
+                            'desc'                => esc_html( 'Easily set unlimited images or MP4/WebM videos for each WC product variation and display them when the customer selects' ),
+                    ],
 				array(
 					'slug'                => 'fewc-extra-checkout-fields-for-woocommerce',
 					'name'                => 'FEWC - Extra Checkout Fields For WooCommerce',

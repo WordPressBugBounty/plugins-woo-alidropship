@@ -1127,7 +1127,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 			'post_content' => $description,
 		), $post_data ), true );
 		if ( $post_id && ! is_wp_error( $post_id ) ) {
-			if ( count( $original_desc_images ) ) {
+			if ( !empty( $original_desc_images ) ) {
 				Ali_Product_Table::update_post_meta( $post_id, '_vi_wad_description_images', $original_desc_images );
 			}
 			Ali_Product_Table::update_post_meta( $post_id, '_vi_wad_sku', $sku );

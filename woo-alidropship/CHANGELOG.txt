@@ -1,3 +1,9 @@
+/**2.1.15 - 2026.01.24**/
+- Updated: VillaTheme support
+
+/**2.1.14 - 2025.11.01**/
+- Updated: Compatibility with WC 10.3
+
 /**2.1.13 - 2025.10.03**/
 - Updated: Improved compatibility with EXMAGE – WordPress Image Links Premium
 – Updated: Compatible check with WC 10.2

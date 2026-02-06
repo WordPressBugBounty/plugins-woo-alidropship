@@ -172,11 +172,16 @@ class VI_WOO_ALIDROPSHIP_Admin_Import_List {
 		if ( ! empty( $_GET['vi_wad_move_queued_images'] ) ) {
 			$nonce = isset( $_GET['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ) : '';
 			if ( wp_verify_nonce( $nonce ) ) {
-				$table   = "{$wpdb->prefix}options";
-				$query   = "select * from {$table} where option_name like '%vi_wad_background_download_images_batch%'";
-				$results = $wpdb->get_results( $query, ARRAY_A );// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared , WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+                $table = $wpdb->options;
+                $column = 'option_name';
+                if (is_multisite()) {
+                    $table = $wpdb->sitemeta;
+                    $column = 'meta_key';
+                }
+                $query   = $wpdb->prepare( 'select * from %i where %i like %s', [ $table,$column, "%vi_wad_background_download_images_batch%" ] );
+                $results = $wpdb->get_results( $query, ARRAY_A );// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared , WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				foreach ( $results as $result ) {
-					$images = maybe_unserialize( $result['option_value'] );
+                    $images = maybe_unserialize( $result['option_value'] ?? $result['meta_value'] ??'');
 					$delete = false;
 					foreach ( $images as $image ) {
 						if ( get_post_type( $image['woo_product_id'] ) === 'product' ) {
@@ -188,7 +193,11 @@ class VI_WOO_ALIDROPSHIP_Admin_Import_List {
 						}
 					}
 					if ( $delete ) {
-						delete_option( $result['option_name'] );
+                        if (isset($result['meta_key'])){
+                            delete_site_option($result['meta_key']);
+                        }else {
+                            delete_option( $result['option_name'] );
+                        }
 					}
 				}
 				wp_safe_redirect( remove_query_arg( array( 'vi_wad_move_queued_images' ) ) );

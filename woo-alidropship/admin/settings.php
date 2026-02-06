@@ -251,8 +251,10 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
 		wp_enqueue_script( 'woo-alidropship-dimmer', VI_WOO_ALIDROPSHIP_JS . 'dimmer.min.js', array( 'jquery' ), VI_WOO_ALIDROPSHIP_VERSION, false );
 		wp_enqueue_script( 'woo-alidropship-modal', VI_WOO_ALIDROPSHIP_JS . 'modal.min.js', array( 'jquery' ), VI_WOO_ALIDROPSHIP_VERSION, false );
 		wp_enqueue_script( 'woo-alidropship-address', VI_WOO_ALIDROPSHIP_JS . 'jquery.address-1.6.min.js', array( 'jquery' ), VI_WOO_ALIDROPSHIP_VERSION, false );
-		wp_enqueue_style( 'select2', VI_WOO_ALIDROPSHIP_CSS . 'select2.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
-		if ( woocommerce_version_check( '3.0.0' ) ) {
+		wp_enqueue_style( 'woo-alidropship-select2', VI_WOO_ALIDROPSHIP_CSS . 'select2.min.css', [], VI_WOO_ALIDROPSHIP_VERSION );
+		if ( woocommerce_version_check( '10.3.0' ) ) {
+			wp_enqueue_script( 'wc-select2' );
+		}elseif ( woocommerce_version_check( '3.0.0' ) ) {
 			wp_enqueue_script( 'select2' );
 		} else {
 			wp_enqueue_script( 'select2-v4', VI_WOO_ALIDROPSHIP_JS . 'select2.js', array( 'jquery' ), '4.0.3', false );
@@ -472,6 +474,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                     <div class="item" data-tab="price"><?php esc_html_e( 'Product Price', 'woo-alidropship' ) ?></div>
                     <div class="item vi-wad-tab-item" data-tab="attributes"><?php esc_html_e( 'Product Attributes', 'woo-alidropship' ) ?></div>
                     <div class="item" data-tab="video"><?php esc_html_e( 'Product Video', 'woo-alidropship' ) ?></div>
+                    <div class="item" data-tab="review"><?php esc_html_e( 'Product Review', 'woo-alidropship' ) ?></div>
                     <div class="item vi-wad-tab-item" data-tab="product_update"><?php esc_html_e( 'Product Sync', 'woo-alidropship' ) ?></div>
                     <div class="item" data-tab="product_split"><?php esc_html_e( 'Product Splitting', 'woo-alidropship' ) ?></div>
                     <div class="item" data-tab="override"><?php esc_html_e( 'Product Overriding', 'woo-alidropship' ) ?></div>
@@ -697,6 +700,16 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                             <th>
                                 <label>
 									<?php esc_html_e( 'Product sku', 'woo-alidropship' ) ?>
+                                </label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-alidropship' ) ?></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label>
+									<?php esc_html_e( 'Product title', 'woo-alidropship' ) ?>
                                 </label>
                             </th>
                             <td>
@@ -1906,6 +1919,75 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                                 <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-alidropship' ) ?></a>
                             </td>
                         </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="vi-ui bottom attached tab segment vi-wad-tab-content" data-tab="review">
+                    <div class="vi-ui yellow message">
+                        <?php esc_html_e( 'Please note that this feature applies only to products imported through the extension.', 'woo-alidropship' ); ?>
+                    </div>
+                    <table class="form-table">
+                        <tbody>
+                        <?php
+                        $fields = [
+                                'product_import_review'     => [
+                                        'title' => esc_html__( 'Import review', 'woo-alidropship'),
+                                        'desc'  => [
+                                                __( ' Turn on this option to enable importing product reviews','woo-alidropship' ),
+                                        ],
+                                ],
+                                'product_review_limit'      => [
+                                        'title' => esc_html__( 'Number of reviews imported','woo-alidropship'),
+                                ],
+                                'product_review_rating'     => [
+                                        'title'    => esc_html__( 'Reviews rating', 'woo-alidropship' ),
+                                        'desc'     => [
+                                                __( 'The type of imported review', 'woo-alidropship' ),
+                                        ],
+                                ],
+                                'product_review_skip_empty' => [
+                                        'title' => esc_html__( 'Skip if empty', 'woo-alidropship' ),
+                                        'desc'  => [
+                                                __( 'Don’t import reviews that have empty content', 'woo-alidropship' ),
+                                        ],
+                                ],
+                                'product_review_status'     => [
+                                        'title'   => esc_html__( 'Review status','woo-alidropship' ),
+                                        'desc'    => [
+                                                __( 'The status is set for the imported review','woo-alidropship'),
+                                        ],
+                                ],
+                                'product_review_verified'   => [
+                                        'title' => esc_html__( 'Set review verified', 'woo-alidropship' ),
+                                        'desc'  => [
+                                                __( 'Mark imported reviews as Verified owner', 'woo-alidropship' ),
+                                        ],
+                                ],
+                        ];
+                        foreach ( $fields as $field ) {
+                            ?>
+                            <tr>
+                                <th>
+                                    <label><?php echo wp_kses_post($field['title']??'') ?></label>
+                                </th>
+                                <td>
+                                    <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-alidropship' ) ?></a>
+                                    <?php
+                                    if (!empty($field['desc'])){
+                                        if (is_array($field['desc'])) {
+                                            foreach ($field['desc'] as $desc) {
+                                                echo wp_kses_post(sprintf('<p class="description">%s</p>',$desc));
+                                            }
+                                        }else{
+                                            echo wp_kses_post(sprintf('<p class="description">%s</p>', $field['desc']));
+                                        }
+                                    }
+                                    ?>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
                         </tbody>
                     </table>
                 </div>
