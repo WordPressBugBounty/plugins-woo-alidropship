@@ -912,6 +912,26 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         </tr>
                         <tr>
                             <th>
+                                <label>
+									<?php esc_html_e( 'Image name', 'woo-alidropship' ) ?>
+                                </label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-alidropship' ) ?></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label>
+									<?php esc_html_e( 'Image format', 'woo-alidropship' ) ?>
+                                </label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-alidropship' ) ?></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
                                 <label for="<?php self::set_params( 'product_gallery', true ) ?>">
 									<?php esc_html_e( 'Default select product images', 'woo-alidropship' ) ?>
                                 </label>

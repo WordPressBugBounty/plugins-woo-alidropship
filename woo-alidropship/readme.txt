@@ -344,6 +344,10 @@ You can distinguish between AliExpress orders with your initial store orders and
 6. AliExpress single detail page
 
 == Changelog ==
+
+/**2.1.16 - 2026.02.07**/
+- Updated: VillaTheme support
+
 /**2.1.15 - 2026.01.24**/
 - Updated: VillaTheme support
 
