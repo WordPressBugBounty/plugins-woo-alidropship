@@ -375,9 +375,12 @@ class VI_WOO_ALIDROPSHIP_DATA {
 		if ( $html === 'viwad_init_data_before' && ! empty( $product_args['product_id'] ) ) {
 			$product_data = self::ali_request( [], wp_json_encode( $product_args ), [], 'https://aldapi.vinext.net/get_product' );
 			$html         = isset( $product_data['data']['product'] ) ? $product_data['data']['product'] : [];
-			if ( ! empty( $product_data['data']['freight'] ) ) {
-				$response['freight'] = $product_data['data']['freight']['methods'] ?? $product_data['data']['freight'];
-			}
+            if ( ! empty( $product_data['data']['freight'] ) && !isset($product_data['data']['freight']['ruFreightArg']) ) {
+                $response['freight'] = $product_data['data']['freight'];
+            }
+            if (isset($html['ae_item_base_info_dto']['currency_code']) && ($product_args['ship_to_country']??'') === 'RU' ){
+                $html['ae_item_base_info_dto']['currency_code'] = 'RUB';
+            }
 		}
 		if ( ! $html && $url ) {
 			$args             = wp_parse_args( $args, array(
@@ -1469,9 +1472,9 @@ class VI_WOO_ALIDROPSHIP_DATA {
 
 	public static function get_domain_name() {
 		if ( ! empty( $_SERVER['HTTP_HOST'] ) ) {
-			$name = $_SERVER['HTTP_HOST'];
+			$name = sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) );
 		} elseif ( ! empty( $_SERVER['SERVER_NAME'] ) ) {
-			$name = $_SERVER['SERVER_NAME'];
+			$name = sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) );
 		} else {
 			$name = self::get_domain_from_url( get_bloginfo( 'url' ) );
 		}

@@ -596,7 +596,7 @@ if ( ! class_exists( 'Ali_Product_Query' ) ) {
 			// Author/user stuff.
 
 			if ( ! empty( $q['author'] ) && '0' != $q['author'] ) {
-				$q['author'] = addslashes_gpc( '' . urldecode( $q['author'] ) );
+				$q['author'] = wp_slash( '' . urldecode( $q['author'] ) );
 				$authors     = array_unique( array_map( 'intval', preg_split( '/[,\s]+/', $q['author'] ) ) );
 				foreach ( $authors as $author ) {
 					$key         = $author > 0 ? 'author__in' : 'author__not_in';
@@ -706,7 +706,7 @@ if ( ! class_exists( 'Ali_Product_Query' ) ) {
 				$orderby_array = array();
 				if ( is_array( $q['orderby'] ) ) {
 					foreach ( $q['orderby'] as $_orderby => $order ) {
-						$orderby = addslashes_gpc( urldecode( $_orderby ) );
+						$orderby = wp_slash( urldecode( $_orderby ) );
 						$parsed  = $this->parse_orderby( $orderby );
 
 						if ( ! $parsed ) {
@@ -719,7 +719,7 @@ if ( ! class_exists( 'Ali_Product_Query' ) ) {
 
 				} else {
 					$q['orderby'] = urldecode( $q['orderby'] );
-					$q['orderby'] = addslashes_gpc( $q['orderby'] );
+					$q['orderby'] = wp_slash( $q['orderby'] );
 
 					foreach ( explode( ' ', $q['orderby'] ) as $i => $orderby ) {
 						$parsed = $this->parse_orderby( $orderby );

@@ -47,6 +47,9 @@ class VI_WOO_ALIDROPSHIP_Admin_Error_Images {
 
 	public function empty_list() {
 		global $wpdb;
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 		if ( ! empty( $_GET['vi_wad_empty_error_images'] ) && $page === 'woo-alidropship-error-images' ) {
 			$nonce = isset( $_GET['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ) : '';

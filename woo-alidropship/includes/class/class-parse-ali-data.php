@@ -750,6 +750,7 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_Ali_Data' ) ) {
 			$listAttributes             =  $listAttributesDisplayNames = array();
 			$listAttributesNames        =  $listAttributesSlug         =  $listAttributesIds          = array();
 			$variationImages            =  $variations                 = array();
+			$use_ali_regular_price =false;
 			if ( ! empty( $html['ae_item_base_info_dto'] ) ) {
 				/*Rebuild data from the new product API aliexpress.ds.product.get - since 1.0.10*/
 				if ( ! empty( $html['ae_item_base_info_dto']['product_status_type'] ) && $html['ae_item_base_info_dto']['product_status_type'] === 'offline' ) {
@@ -762,190 +763,195 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_Ali_Data' ) ) {
 				}
 				$attributes['gallery'] = !empty($html['ae_multimedia_info_dto']['image_urls']) ? explode( ';', $html['ae_multimedia_info_dto']['image_urls'] ) : array();
 				$skuModule = isset( $html['ae_item_sku_info_dtos'] ['ae_item_sku_info_d_t_o'] ) ? $html['ae_item_sku_info_dtos'] ['ae_item_sku_info_d_t_o'] : ( $html['ae_item_sku_info_dtos'] ??[]);
-				if ( is_array( $skuModule ) && !empty($skuModule) ) {
+				if (is_array($skuModule) && !empty($skuModule)) {
 					$productSKUPropertyList = array();
-					$propertyValueNames     = array();
-					if ( ! empty( $skuModule[0]['ae_sku_property_dtos']['ae_sku_property_d_t_o'] ) ) {
-						foreach ($skuModule[0]['ae_sku_property_dtos']['ae_sku_property_d_t_o'] as $i => $i_item){
+					$propertyValueNames = array();
+					if (!empty($skuModule[0]['ae_sku_property_dtos']['ae_sku_property_d_t_o'])) {
+						foreach ($skuModule[0]['ae_sku_property_dtos']['ae_sku_property_d_t_o'] as $i => $i_item) {
 							$productSKUPropertyList[] = array(
-								'id'     => $skuModule[0]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][ $i ]['sku_property_id'] ?? '',
+								'id' => $skuModule[0]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][$i]['sku_property_id'] ?? '',
 								'values' => array(),
-								'name'   => $skuModule[0]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][ $i ]['sku_property_name'] ?? '',
+								'name' => $skuModule[0]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][$i]['sku_property_name'] ?? '',
 							);
 						}
-						foreach ($skuModule as $i => $i_item){
-							foreach ($productSKUPropertyList as $j => $j_item){
-								if ( ! in_array( $skuModule[ $i ]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][ $j ]['property_value_id'], array_column( $productSKUPropertyList[ $j ]['values'], 'id' ) ) ) {
+						foreach ($skuModule as $i => $i_item) {
+							foreach ($productSKUPropertyList as $j => $j_item) {
+								if (!in_array($skuModule[$i]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][$j]['property_value_id'], array_column($productSKUPropertyList[$j]['values'], 'id'))) {
 									$property_value = array(
-										'id'        => isset( $skuModule[ $i ]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][ $j ]['property_value_id'] ) ? $skuModule[ $i ]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][ $j ]['property_value_id'] : '',
-										'image'     => isset( $skuModule[ $i ]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][ $j ]['sku_image'] ) ? str_replace( array(
+										'id' => isset($skuModule[$i]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][$j]['property_value_id']) ? $skuModule[$i]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][$j]['property_value_id'] : '',
+										'image' => isset($skuModule[$i]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][$j]['sku_image']) ? str_replace(array(
 											'ae02.alicdn.com',
 											'ae03.alicdn.com',
 											'ae04.alicdn.com',
 											'ae05.alicdn.com',
-										), 'ae01.alicdn.com', $skuModule[ $i ]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][ $j ]['sku_image'] ) : '',
-										'name'      => isset( $skuModule[ $i ]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][ $j ]['sku_property_value'] ) ? $skuModule[ $i ]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][ $j ]['sku_property_value'] : '',
+										), 'ae01.alicdn.com', $skuModule[$i]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][$j]['sku_image']) : '',
+										'name' => isset($skuModule[$i]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][$j]['sku_property_value']) ? $skuModule[$i]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][$j]['sku_property_value'] : '',
 										'ship_from' => '',
 									);
-									if ( ! empty( $skuModule[ $i ]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][ $j ]['property_value_definition_name'] ) ) {
+									if (!empty($skuModule[$i]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][$j]['property_value_definition_name'])) {
 										$property_value['sub_name'] = $property_value['name'];
-										$property_value['name'] = $skuModule[ $i ]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][ $j ]['property_value_definition_name'];
+										$property_value['name'] = $skuModule[$i]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][$j]['property_value_definition_name'];
 									}
-									$ship_from = self::property_value_id_to_ship_from( $skuModule[ $i ]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][ $j ]['sku_property_id'], $property_value['id'] );
-									if ( $ship_from ) {
+									$ship_from = self::property_value_id_to_ship_from($skuModule[$i]['ae_sku_property_dtos']['ae_sku_property_d_t_o'][$j]['sku_property_id'], $property_value['id']);
+									if ($ship_from) {
 										$property_value['ship_from'] = $ship_from;
 									}
-									$productSKUPropertyList[ $j ]['values'][] = $property_value;
+									$productSKUPropertyList[$j]['values'][] = $property_value;
 								}
 							}
 						}
 					}
-					if ( ! empty( $skuModule[0]['aeop_s_k_u_propertys'] ) ) {
-						foreach ($skuModule[0]['aeop_s_k_u_propertys'] as $i_item){
+					if (!empty($skuModule[0]['aeop_s_k_u_propertys'])) {
+						foreach ($skuModule[0]['aeop_s_k_u_propertys'] as $i_item) {
 							$productSKUPropertyList[] = array(
-								'id'     => $i_item['sku_property_id'] ?? '',
+								'id' => $i_item['sku_property_id'] ?? '',
 								'values' => array(),
-								'name'   => $i_item['sku_property_name'] ?? '',
+								'name' => $i_item['sku_property_name'] ?? '',
 							);
 						}
-						foreach ($skuModule as  $i_item){
-							foreach ($productSKUPropertyList as $j => $j_item){
-								if ( ! in_array( $i_item['aeop_s_k_u_propertys'][ $j ]['property_value_id'], array_column( $productSKUPropertyList[ $j ]['values'], 'id' ) ) ) {
+						foreach ($skuModule as $i_item) {
+							foreach ($productSKUPropertyList as $j => $j_item) {
+								if (!in_array($i_item['aeop_s_k_u_propertys'][$j]['property_value_id'], array_column($productSKUPropertyList[$j]['values'], 'id'))) {
 									$property_value = array(
-										'id'        => isset( $i_item['aeop_s_k_u_propertys'][ $j ]['property_value_id'] ) ? $i_item['aeop_s_k_u_propertys'][ $j ]['property_value_id'] : '',
-										'image'     => isset( $i_item['aeop_s_k_u_propertys'][ $j ]['sku_image'] ) ? str_replace( array(
+										'id' => isset($i_item['aeop_s_k_u_propertys'][$j]['property_value_id']) ? $i_item['aeop_s_k_u_propertys'][$j]['property_value_id'] : '',
+										'image' => isset($i_item['aeop_s_k_u_propertys'][$j]['sku_image']) ? str_replace(array(
 											'ae02.alicdn.com',
 											'ae03.alicdn.com',
 											'ae04.alicdn.com',
 											'ae05.alicdn.com',
-										), 'ae01.alicdn.com', $i_item['aeop_s_k_u_propertys'][ $j ]['sku_image'] ) : '',
-										'name'      => isset( $i_item['aeop_s_k_u_propertys'][ $j ]['sku_property_value'] ) ? $i_item['aeop_s_k_u_propertys'][ $j ]['sku_property_value'] : '',
+										), 'ae01.alicdn.com', $i_item['aeop_s_k_u_propertys'][$j]['sku_image']) : '',
+										'name' => isset($i_item['aeop_s_k_u_propertys'][$j]['sku_property_value']) ? $i_item['aeop_s_k_u_propertys'][$j]['sku_property_value'] : '',
 										'ship_from' => '',
 									);
-									if ( ! empty($i_item['aeop_s_k_u_propertys'][ $j ]['property_value_definition_name'] ) ) {
+									if (!empty($i_item['aeop_s_k_u_propertys'][$j]['property_value_definition_name'])) {
 										$property_value['sub_name'] = $property_value['name'];
-										$property_value['name'] =$i_item['aeop_s_k_u_propertys'][ $j ]['property_value_definition_name'];
+										$property_value['name'] = $i_item['aeop_s_k_u_propertys'][$j]['property_value_definition_name'];
 									}
-									$ship_from = self::property_value_id_to_ship_from($i_item['aeop_s_k_u_propertys'][ $j ]['sku_property_id'], $property_value['id'] );
-									if ( $ship_from ) {
+									$ship_from = self::property_value_id_to_ship_from($i_item['aeop_s_k_u_propertys'][$j]['sku_property_id'], $property_value['id']);
+									if ($ship_from) {
 										$property_value['ship_from'] = $ship_from;
 									}
-									$productSKUPropertyList[ $j ]['values'][] = $property_value;
+									$productSKUPropertyList[$j]['values'][] = $property_value;
 								}
 							}
 						}
 					}
 					$ignore_ship_from_default_id = '';
-					if ( !empty( $productSKUPropertyList ) ) {
-						foreach ($productSKUPropertyList as $i => $i_item){
-							$images            = array();
+					if (!empty($productSKUPropertyList)) {
+						foreach ($productSKUPropertyList as $i => $i_item) {
+							$images = array();
 							$skuPropertyValues = $i_item['values'];
-							$attr_parent_id    = $i_item['id'];
-							$skuPropertyName   = wc_sanitize_taxonomy_name( $i_item['name'] );
-							if ( ( $attr_parent_id == 200007763 ||strtolower( $skuPropertyName ) === 'ships-from') && $ignore_ship_from ) {
-								foreach ( $skuPropertyValues as $value ) {
-									if ( isset( $value['ship_from'] ) && $value['ship_from'] === $ignore_ship_from_default ) {
+							$attr_parent_id = $i_item['id'];
+							$skuPropertyName = wc_sanitize_taxonomy_name($i_item['name']);
+							if (($attr_parent_id == 200007763 || strtolower($skuPropertyName) === 'ships-from') && $ignore_ship_from) {
+								foreach ($skuPropertyValues as $value) {
+									if (isset($value['ship_from']) && $value['ship_from'] === $ignore_ship_from_default) {
 										$ignore_ship_from_default_id = $value['id'];
 									}
 								}
-								if ( $ignore_ship_from_default_id ) {
+								if ($ignore_ship_from_default_id) {
 									continue;
 								}
 							} //point 1
 							$attr = array(
-								'values'   => array(),
-								'slug'     => $skuPropertyName,
-								'name'     => $i_item['name'],
+								'values' => array(),
+								'slug' => $skuPropertyName,
+								'name' => $i_item['name'],
 								'position' => $i,
 							);
-							foreach ($skuPropertyValues as $j_item){
-								$skuPropertyValue         = $j_item;
-								$org_propertyValueId      = $skuPropertyValue['id'];
-								$propertyValueId          = "{$attr_parent_id}:{$org_propertyValueId}";
+							foreach ($skuPropertyValues as $j_item) {
+								$skuPropertyValue = $j_item;
+								$org_propertyValueId = $skuPropertyValue['id'];
+								$propertyValueId = "{$attr_parent_id}:{$org_propertyValueId}";
 								$propertyValueDisplayName = $skuPropertyValue['name'];
-								$propertyValueName        = $skuPropertyValue['sub_name']??$propertyValueDisplayName ;
-								if ( in_array( $propertyValueDisplayName, $listAttributesDisplayNames ) ) {
+								$propertyValueName = $skuPropertyValue['sub_name'] ?? $propertyValueDisplayName;
+								if (in_array($propertyValueDisplayName, $listAttributesDisplayNames)) {
 									$propertyValueDisplayName = "{$propertyValueDisplayName}-{$org_propertyValueId}";
 								}
-								if ( in_array( $propertyValueName, $propertyValueNames ) ) {
+								if (in_array($propertyValueName, $propertyValueNames)) {
 									$propertyValueName = "{$propertyValueName}-{$org_propertyValueId}";
 								}
-								$listAttributesNames[ $propertyValueId ]        = $skuPropertyName;
-								$listAttributesDisplayNames[ $propertyValueId ] = $propertyValueDisplayName;
-								$propertyValueNames[ $propertyValueId ]         = $propertyValueName;
-								$listAttributesIds[ $propertyValueId ]          = $attr_parent_id;
-								$listAttributesSlug[ $propertyValueId ]         = $skuPropertyName;
-								$attr['values'][ $propertyValueId ]             = $propertyValueDisplayName;
-								$listAttributes[ $propertyValueId ]             = array(
-									'name'      => $propertyValueDisplayName,
-									'name_sub'  => $propertyValueName,
-									'color'     => '',
-									'image'     => '',
-									'ship_from' => isset( $skuPropertyValue['ship_from'] ) ? $skuPropertyValue['ship_from'] : ''
+								$listAttributesNames[$propertyValueId] = $skuPropertyName;
+								$listAttributesDisplayNames[$propertyValueId] = $propertyValueDisplayName;
+								$propertyValueNames[$propertyValueId] = $propertyValueName;
+								$listAttributesIds[$propertyValueId] = $attr_parent_id;
+								$listAttributesSlug[$propertyValueId] = $skuPropertyName;
+								$attr['values'][$propertyValueId] = $propertyValueDisplayName;
+								$listAttributes[$propertyValueId] = array(
+									'name' => $propertyValueDisplayName,
+									'name_sub' => $propertyValueName,
+									'color' => '',
+									'image' => '',
+									'ship_from' => isset($skuPropertyValue['ship_from']) ? $skuPropertyValue['ship_from'] : ''
 								);
-								if ( isset( $skuPropertyValue['image'] ) && $skuPropertyValue['image'] ) {
-									$images[ $propertyValueId ]                  = $skuPropertyValue['image'];
-									$variationImages[ $propertyValueId ]         = $skuPropertyValue['image'];
-									$listAttributes[ $propertyValueId ]['image'] = $skuPropertyValue['image'];
+								if (isset($skuPropertyValue['image']) && $skuPropertyValue['image']) {
+									$images[$propertyValueId] = $skuPropertyValue['image'];
+									$variationImages[$propertyValueId] = $skuPropertyValue['image'];
+									$listAttributes[$propertyValueId]['image'] = $skuPropertyValue['image'];
 								}
 							}
 
-							$attributes['list_attributes']               = $listAttributes;
-							$attributes['list_attributes_names']         = $listAttributesNames;
-							$attributes['list_attributes_ids']           = $listAttributesIds;
-							$attributes['list_attributes_slugs']         = $listAttributesSlug;
-							$attributes['variation_images']              = $variationImages;
-							$attributes['attributes'][ $attr_parent_id ] = $attr;
-							$attributes['images'][ $attr_parent_id ]     = $images;
+							$attributes['list_attributes'] = $listAttributes;
+							$attributes['list_attributes_names'] = $listAttributesNames;
+							$attributes['list_attributes_ids'] = $listAttributesIds;
+							$attributes['list_attributes_slugs'] = $listAttributesSlug;
+							$attributes['variation_images'] = $variationImages;
+							$attributes['attributes'][$attr_parent_id] = $attr;
+							$attributes['images'][$attr_parent_id] = $images;
 
-							$attributes['parent'][ $attr_parent_id ] = $skuPropertyName;
+							$attributes['parent'][$attr_parent_id] = $skuPropertyName;
 						}
 					}
-					foreach ($skuModule as $j => $j_item){
-						if(isset($j_item['salable']) && !$j_item['salable']){
+					foreach ($skuModule as $j => $j_item) {
+						if (isset($j_item['salable']) && !$j_item['salable']) {
 							continue;
 						}
-						$ae_sku_property = isset( $j_item['ae_sku_property_dtos']['ae_sku_property_d_t_o'] ) ? $j_item['ae_sku_property_dtos']['ae_sku_property_d_t_o'] : '';
-						if (!$ae_sku_property){
-							$ae_sku_property = $j_item['aeop_s_k_u_propertys'] ??'';
+						$ae_sku_property = isset($j_item['ae_sku_property_dtos']['ae_sku_property_d_t_o']) ? $j_item['ae_sku_property_dtos']['ae_sku_property_d_t_o'] : '';
+						if (!$ae_sku_property) {
+							$ae_sku_property = $j_item['aeop_s_k_u_propertys'] ?? '';
 						}
-						$temp                  = array(
-							'skuId'              => $j_item['sku_id']??'',
-							'skuAttr'            => ( isset( $skuModule[ $j ]['id'] ) && $skuModule[ $j ]['id'] !== '<none>' ) ? $skuModule[ $j ]['id'] : '',
-							'skuPropIds'         => !empty( $ae_sku_property ) ? array_column( $ae_sku_property, 'property_value_id' ) : array(),
-							'skuVal'             => array(
-								'availQuantity'  => isset( $skuModule[ $j ]['sku_available_stock'] ) ? $skuModule[ $j ]['sku_available_stock'] : ( isset( $skuModule[ $j ]['ipm_sku_stock'] ) ? $skuModule[ $j ]['ipm_sku_stock'] : 0 ),
-								'skuCalPrice'    => isset( $skuModule[ $j ]['sku_price'] ) ? $skuModule[ $j ]['sku_price'] : '',
+						$temp = array(
+							'skuId' => $j_item['sku_id'] ?? '',
+							'skuAttr' => (isset($skuModule[$j]['id']) && $skuModule[$j]['id'] !== '<none>') ? $skuModule[$j]['id'] : '',
+							'skuPropIds' => !empty($ae_sku_property) ? array_column($ae_sku_property, 'property_value_id') : array(),
+							'skuVal' => array(
+								'availQuantity' => isset($skuModule[$j]['sku_available_stock']) ? $skuModule[$j]['sku_available_stock'] : (isset($skuModule[$j]['ipm_sku_stock']) ? $skuModule[$j]['ipm_sku_stock'] : 0),
+								'skuCalPrice' => isset($skuModule[$j]['sku_price']) ? $skuModule[$j]['sku_price'] : '',
 								'actSkuCalPrice' => 0,
 							),
-							'image'              => '',
-							'variation_ids'      => array(),
-							'variation_ids_sub'  => array(),
+							'image' => '',
+							'variation_ids' => array(),
+							'variation_ids_sub' => array(),
 							'variation_ids_slug' => array(),
-							'ship_from'          => '',
-							'currency_code'      => isset( $skuModule[ $j ]['currency_code'] ) ? $skuModule[ $j ]['currency_code'] : '',
+							'ship_from' => '',
+							'currency_code' => isset($skuModule[$j]['currency_code']) ? $skuModule[$j]['currency_code'] : '',
 						);
-						$s_price               = isset( $skuModule[ $j ]['offer_sale_price'] ) ? self::string_to_float( $skuModule[ $j ]['offer_sale_price'] ) : 0;
-						$offer_bulk_sale_price = isset( $skuModule[ $j ]['offer_bulk_sale_price'] ) ? self::string_to_float( $skuModule[ $j ]['offer_bulk_sale_price'] ) : 0;
+						if (!$use_ali_regular_price) {
+							$s_price = isset($skuModule[$j]['offer_sale_price']) ? self::string_to_float($skuModule[$j]['offer_sale_price']) : 0;
+							$offer_bulk_sale_price = isset($skuModule[$j]['offer_bulk_sale_price']) ? self::string_to_float($skuModule[$j]['offer_bulk_sale_price']) : 0;
 
-						if ( $s_price > 0 && $offer_bulk_sale_price > $s_price ) {
-							$s_price = $offer_bulk_sale_price;
+							if ($s_price > 0 && $offer_bulk_sale_price > $s_price) {
+								$s_price = $offer_bulk_sale_price;
+							}
+
+							$temp['skuVal']['actSkuCalPrice'] = $s_price;
 						}
 
-						$temp['skuVal']['actSkuCalPrice'] = $s_price;
+						if ($temp['skuPropIds']) {
+							$temAttr = array();
+							$temAttrSub = array();
+							$attrIds = $temp['skuPropIds'];
+							$parent_attrIds = explode(';', $temp['skuAttr']);/*extract attribute from sku*/
 
-						if ( $temp['skuPropIds'] ) {
-							$temAttr        = array();
-							$temAttrSub     = array();
-							$attrIds        = $temp['skuPropIds'];
-							$parent_attrIds = explode( ';', $temp['skuAttr'] );
-
-							if ( $ignore_ship_from_default_id && ! in_array( $ignore_ship_from_default_id, $attrIds ) && $ignore_ship_from ) {
+							if ($ignore_ship_from_default_id && !in_array($ignore_ship_from_default_id, $attrIds) && $ignore_ship_from) {
 								continue;
 							}
 
+							/*
+							02-05-2025: Remove old attribute fetching method
 							foreach ($attrIds as $k => $k_item){
 								$propertyValueId = explode( ':', $parent_attrIds[ $k ] )[0] . ':' . $k_item;
+
 								if ( isset( $listAttributesDisplayNames[ $propertyValueId ] ) ) {
 									$temAttr[ $attributes['list_attributes_slugs'][ $propertyValueId ] ] = $listAttributesDisplayNames[ $propertyValueId ];
 									$temAttrSub[ $attributes['list_attributes_slugs'][ $propertyValueId ] ] = $propertyValueNames[ $propertyValueId ];
@@ -956,11 +962,28 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_Ali_Data' ) ) {
 								if ( ! empty( $listAttributes[ $propertyValueId ]['ship_from'] ) ) {
 									$temp['ship_from'] = $listAttributes[ $propertyValueId ]['ship_from'];
 								}
+							}*/
+							/* 05-02-2025: New value, split directly from sku to get correct order */
+							foreach ($parent_attrIds as $k => $k_item) {
+								$TempPropertyValueId = explode('#', $k_item)[0] ?? '';/*Remove attribute name from string, get only code. eg: 5:200000990#OPEN*/
+								$propertyValueId = $TempPropertyValueId;
+
+								if (isset($listAttributesDisplayNames[$propertyValueId])) {
+									$temAttr[$attributes['list_attributes_slugs'][$propertyValueId]] = $listAttributesDisplayNames[$propertyValueId];
+									$temAttrSub[$attributes['list_attributes_slugs'][$propertyValueId]] = $propertyValueNames[$propertyValueId];
+									if (!empty($attributes['variation_images'][$propertyValueId])) {
+										$temp['image'] = $attributes['variation_images'][$propertyValueId];
+									}
+								}
+								if (!empty($listAttributes[$propertyValueId]['ship_from'])) {
+									$temp['ship_from'] = $listAttributes[$propertyValueId]['ship_from'];
+								}
 							}
 							$temp['variation_ids'] = $temAttr;
 							$temp['variation_ids_sub'] = $temAttrSub;
 						}
 						$variations [] = $temp;
+
 					}
 					$attributes['variations'] = $variations;
 				}

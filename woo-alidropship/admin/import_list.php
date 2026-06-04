@@ -155,6 +155,9 @@ class VI_WOO_ALIDROPSHIP_Admin_Import_List {
 
 	public function empty_import_list() {
 		global $wpdb;
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			return;
+		}
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 		if ( ! empty( $_GET['vi_wad_empty_product_list'] ) && $page === 'woo-alidropship-import-list' ) {
 			$nonce = isset( $_GET['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ) : '';
@@ -169,6 +172,9 @@ class VI_WOO_ALIDROPSHIP_Admin_Import_List {
 
 	public function move_queued_images() {
 		global $wpdb;
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			return;
+		}
 		if ( ! empty( $_GET['vi_wad_move_queued_images'] ) ) {
 			$nonce = isset( $_GET['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ) : '';
 			if ( wp_verify_nonce( $nonce ) ) {
@@ -1551,10 +1557,13 @@ class VI_WOO_ALIDROPSHIP_Admin_Import_List {
 	}
 
 	public function background_process() {
+		if ( ! is_admin() || ! current_user_can( 'manage_woocommerce' ) ) {
+			return;
+		}
 		self::$process              = new Vi_WAD_Background_Import_Product();
 		self::$process_image        = new Vi_WAD_Background_Download_Images();
 		self::$download_description = new Vi_WAD_Background_Download_Description();
-		$nonce                      = isset( $_REQUEST['_wpnonce'] ) ? sanitize_text_field( $_REQUEST['_wpnonce'] ) : '';
+		$nonce                      = isset( $_REQUEST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ) : '';
 		if ( wp_verify_nonce( $nonce ) ) {
 			if ( ! empty( $_REQUEST['vi_wad_cancel_import_product'] ) ) {
 				self::$process->kill_process();

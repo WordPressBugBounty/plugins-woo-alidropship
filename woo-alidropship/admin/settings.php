@@ -991,6 +991,17 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         </tr>
                         <tr>
                             <th>
+                                <label>
+                                    <?php esc_html_e( 'AliExpress categories', 'woo-alidropship' ) ?>
+                                </label>
+                            </th>
+                            <td>
+                                <a class="vi-ui button" target="_blank" href="https://1.envato.market/PeXrM"><?php esc_html_e( 'Upgrade This Feature', 'woo-alidropship' ) ?></a>
+                                <p class="description"><?php esc_html_e( "When import product from AliExpress, Ali's categories will be added to product categories.", 'woo-alidropship' ) ?></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
                                 <label for="<?php self::set_params( 'product_tags', true ) ?>"><?php esc_html_e( 'Default product tags', 'woo-alidropship' ); ?></label>
                             </th>
                             <td>

@@ -498,7 +498,7 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 				'product_id' => $product_id,
 				'target_currency' => $currency,
 				'ship_to_country' => $country,
-				'target_language' => $language,
+				'target_language' => $country ==='RU'?'en':$language,
 				'locale' => 'en_US',
 				'domain'=>get_site_url(),
 				'action' => 'import',

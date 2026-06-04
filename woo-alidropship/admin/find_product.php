@@ -376,6 +376,9 @@ class VI_WOO_ALIDROPSHIP_Admin_Find_Product {
 	}
 
 	public function ajax_add_to_import_list() {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json( array( 'status' => 'error', 'message' => esc_html__( 'Unauthorized', 'woo-alidropship' ) ) );
+		}
 		$return=['status'=>'error'];
 		if (!check_ajax_referer( 'woo_alidropship_admin_ajax', 'nonce' ,false)){
 			$return['message'] ='Invalid nonce';
@@ -589,6 +592,9 @@ class VI_WOO_ALIDROPSHIP_Admin_Find_Product {
 	}
 
 	public function ajax_search_product() {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error( esc_html__( 'Unauthorized', 'woo-alidropship' ) );
+		}
         if (!check_ajax_referer( 'woo_alidropship_admin_ajax', 'nonce' ,false)){
 	        wp_send_json_error( esc_html__( 'Invalid nonce', 'woo-alidropship' ) );
         }

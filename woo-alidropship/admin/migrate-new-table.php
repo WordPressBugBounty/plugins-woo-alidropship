@@ -13,6 +13,9 @@ class VI_WOO_ALIDROPSHIP_Admin_Migrate_New_Table {
 	}
 
 	public function migrate_to_new_table() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( esc_html__( 'Unauthorized', 'woo-alidropship' ) );
+		}
 		check_ajax_referer( 'woo_alidropship_admin_ajax', '_vi_wad_ajax_nonce' );
 		Ali_Product_Table::create_table();
 		$migrate_process = new VI_WOO_ALIDROPSHIP_BACKGROUND_MIGRATE_NEW_TABLE();
@@ -26,6 +29,9 @@ class VI_WOO_ALIDROPSHIP_Admin_Migrate_New_Table {
 	}
 
 	public function remove_old_data() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( esc_html__( 'Unauthorized', 'woo-alidropship' ) );
+		}
 		check_ajax_referer( 'woo_alidropship_admin_ajax', '_vi_wad_ajax_nonce' );
 		$migrate_process = new VI_WOO_ALIDROPSHIP_BACKGROUND_MIGRATE_NEW_TABLE();
 

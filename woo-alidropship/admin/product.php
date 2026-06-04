@@ -30,11 +30,11 @@ class VI_WOO_ALIDROPSHIP_Admin_Product {
 		if ( ! wp_verify_nonce( $_POST['viwad-variation-nonce'] ?? "", 'viwad-variation-settings' ) ) {
 			return;
 		}
-		$skuAttr = isset( $_POST['vi_wad_simple_variation_attr'] ) ? stripslashes( $_POST['vi_wad_simple_variation_attr'] ) : '';
+		$skuAttr = isset( $_POST['vi_wad_simple_variation_attr'] ) ? sanitize_text_field( wp_unslash( $_POST['vi_wad_simple_variation_attr'] ) ) : '';
 		if ( $skuAttr ) {
 			update_post_meta( $product_id, '_vi_wad_aliexpress_variation_attr', $skuAttr );
 		}
-		$skuID = isset( $_POST['vi_wad_simple_variation_id'] ) ? stripslashes( $_POST['vi_wad_simple_variation_id'] ) : '';
+		$skuID = isset( $_POST['vi_wad_simple_variation_id'] ) ? sanitize_text_field( wp_unslash( $_POST['vi_wad_simple_variation_id'] ) ) : '';
 		if ( $skuID ) {
 			update_post_meta( $product_id, '_vi_wad_aliexpress_variation_id', $skuID );
 		}
@@ -93,11 +93,11 @@ class VI_WOO_ALIDROPSHIP_Admin_Product {
 		if ( ! wp_verify_nonce( $_POST[ 'viwad-variation-' . $i . '-nonce' ] ?? "", 'viwad-variation-' . $i . '-settings' ) ) {
 			return;
 		}
-		$skuAttr = isset( $_POST['vi_wad_variation_attr'], $_POST['vi_wad_variation_attr'][ $i ] ) ? stripslashes( $_POST['vi_wad_variation_attr'][ $i ] ) : '';
+		$skuAttr = isset( $_POST['vi_wad_variation_attr'], $_POST['vi_wad_variation_attr'][ $i ] ) ? sanitize_text_field( wp_unslash( $_POST['vi_wad_variation_attr'][ $i ] ) ) : '';
 		if ( $skuAttr ) {
 			update_post_meta( $variation_id, '_vi_wad_aliexpress_variation_attr', $skuAttr );
 		}
-		$skuID = isset( $_POST['vi_wad_variation_id'], $_POST['vi_wad_variation_id'][ $i ] ) ? stripslashes( $_POST['vi_wad_variation_id'][ $i ] ) : '';
+		$skuID = isset( $_POST['vi_wad_variation_id'], $_POST['vi_wad_variation_id'][ $i ] ) ? sanitize_text_field( wp_unslash( $_POST['vi_wad_variation_id'][ $i ] ) ) : '';
 		if ( $skuID ) {
 			update_post_meta( $variation_id, '_vi_wad_aliexpress_variation_id', $skuID );
 		}

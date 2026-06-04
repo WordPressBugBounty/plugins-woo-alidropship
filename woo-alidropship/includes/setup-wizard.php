@@ -857,6 +857,9 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 		}
 
 		public function install_plugins() {
+			if ( ! current_user_can( 'install_plugins' ) ) {
+				wp_send_json_error( esc_html__( 'Unauthorized', 'woo-alidropship' ) );
+			}
 			check_ajax_referer( 'woo_alidropship_admin_ajax', '_vi_wad_ajax_nonce' );
 			$plugins = isset( $_POST['install_plugins'] ) ? stripslashes_deep( $_POST['install_plugins'] ) : array();
 			if ( ! is_array( $plugins ) && ! count( $plugins ) ) {
@@ -906,6 +909,9 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 		}
 
 		public function activate_plugins() {
+			if ( ! current_user_can( 'activate_plugins' ) ) {
+				wp_send_json_error( esc_html__( 'Unauthorized', 'woo-alidropship' ) );
+			}
 			check_ajax_referer( 'woo_alidropship_admin_ajax', '_vi_wad_ajax_nonce' );
 			$plugin_paths = PluginsHelper::get_installed_plugins_paths();
 			$plugins      = isset( $_POST['install_plugins'] ) ? stripslashes_deep( $_POST['install_plugins'] ) : array();
