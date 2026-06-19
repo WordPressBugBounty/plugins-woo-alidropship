@@ -1,3 +1,6 @@
+/**2.2.1 - 2026.06.19**/
+- Removed: Secret key authentication for Chrome extension connection.
+
 /**2.2.0 - 2026.06.04**/
 - Updated: Compatible with WP 7.0 and WC 10.8
 

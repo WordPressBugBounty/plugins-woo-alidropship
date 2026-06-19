@@ -291,33 +291,13 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
                         </td>
                     </tr>
                     <tr>
-                        <th>
-                            <label for="<?php self::set_params( 'secret_key', true ) ?>"><?php esc_html_e( 'Secret key', 'woo-alidropship' ) ?></label>
-                        </th>
-                        <td class="vi-wad relative">
-                            <div class="vi-ui left labeled input fluid">
-                                <label class="vi-ui label">
-                                    <div class="vi-wad-buttons-group">
-                                        <span class="vi-wad-copy-secretkey"
-                                              title="<?php esc_attr_e( 'Copy Secret key', 'woo-alidropship' ) ?>">
-                                                <i class="dashicons dashicons-admin-page"></i></span>
-                                    </div>
-                                </label>
-                                <input type="text" readonly
-                                       value="<?php echo esc_attr( self::$settings->get_params( 'secret_key' ) ) ?>"
-                                       class="<?php self::set_params( 'secret_key', true ) ?>">
-                            </div>
-                            <p><?php esc_html_e( 'Secret key is one of the two ways to connect the chrome extension with your store. The other way is to use WooCommerce authentication.', 'woo-alidropship' ) ?></p>
-                            <p class="vi-wad-connect-extension-desc vi-wad-hidden"><?php esc_html_e( 'To let the chrome extension connect with this store, please click the "Connect the Extension" button below.', 'woo-alidropship' ) ?></p>
-                        </td>
-                    </tr>
-                    <tr>
                         <th><?php esc_html_e( 'Video guide', 'woo-alidropship' ); ?></th>
                         <td>
                             <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/eO_C_b4ZQmo"
                                     title="YouTube video player" frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen></iframe>
+                            <p class="vi-wad-connect-extension-desc vi-wad-hidden"><?php esc_html_e( 'To let the chrome extension connect with this store, please click the "Connect the Extension" button below.', 'woo-alidropship' ) ?></p>
                         </td>
                     </tr>
                     </tbody>

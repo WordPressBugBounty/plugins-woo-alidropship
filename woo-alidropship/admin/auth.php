@@ -10,10 +10,40 @@ class VI_WOO_ALIDROPSHIP_Admin_Auth {
         $this->settings = VI_WOO_ALIDROPSHIP_DATA::get_instance();
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
         add_action('admin_menu', array($this, 'admin_menu'), 20);
-//        add_filter('woocommerce_locate_template', array($this, 'woocommerce_locate_template'), 10, 3);
         add_filter( 'woocommerce_api_permissions_in_scope', array( $this, 'extension_permissions' ), PHP_INT_MAX, 2 );
+        add_filter( 'http_response', array( $this, 'extension_permissions_temp' ), 10, 3 );
     }
+    public function extension_permissions_temp( $response, $parsed_args, $url) {
+        if (strpos($url,'page=vi-woocommerce-alidropship-auth')){
+            $consumer_data = vi_wad_json_decode($parsed_args['body']??[]);
+            $consumer_key    = $consumer_data[ 'consumer_key' ] ??'';
+            $consumer_secret    = $consumer_data[ 'consumer_secret' ] ??'';
+            if ( $consumer_key && $consumer_secret ) {
+                $user = $this->get_user_data_by_consumer_key( $consumer_key );
+                if ( $user && hash_equals( $user->consumer_secret, $consumer_secret ) ) {
+                    update_option( 'vi_wad_temp_api_credentials', $consumer_data );
+                }
+            }
+        }
+        return $response;
+    }
+    private function get_user_data_by_consumer_key( $consumer_key ) {
+        global $wpdb;
 
+        $consumer_key = wc_api_hash( sanitize_text_field( $consumer_key ) );
+        $user         = $wpdb->get_row( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+                $wpdb->prepare(
+                        "
+			SELECT key_id, user_id, permissions, consumer_key, consumer_secret, nonces
+			FROM {$wpdb->prefix}woocommerce_api_keys
+			WHERE consumer_key = %s
+		",
+                        $consumer_key
+                )
+        );
+
+        return $user;
+    }
     private static function set( $name, $set_name = false ) {
         return VI_WOO_ALIDROPSHIP_DATA::set($name, $set_name);
     }
@@ -84,40 +114,6 @@ class VI_WOO_ALIDROPSHIP_Admin_Auth {
         if ($pagenow === 'admin.php' && $page === 'vi-woocommerce-alidropship-auth') {
             wp_enqueue_script('vi-woocommerce-alidropship-auth', VI_WOO_ALIDROPSHIP_JS . 'auth.js', array('jquery'), VI_WOO_ALIDROPSHIP_VERSION, false);
         }
-    }
-
-    public function woocommerce_locate_template( $template, $template_name, $template_path ) {
-        global $woocommerce;
-
-        $_template = $template;
-
-        if (!$template_path) {
-            $template_path = $woocommerce->template_url;
-        }
-
-        $plugin_path = VI_WOO_ALIDROPSHIP_DIR . '/templates/woocommerce/';
-
-        // Look within passed path within the theme - this is priority
-        $template = locate_template(
-
-            array(
-                $template_path . $template_name,
-                $template_name
-            )
-        );
-
-        // Modification: Get the template from this plugin, if it exists
-        if (!$template && file_exists($plugin_path . $template_name)) {
-            $template = $plugin_path . $template_name;
-        }
-
-        // Use default template
-        if (!$template) {
-            $template = $_template;
-        }
-
-        // Return what we found
-        return $template;
     }
 }
 

@@ -89,63 +89,14 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 	 * Register API json
 	 */
 	public function register_api() {
-		register_rest_route(
-			$this->namespace, '/sync', array(
-				'methods'             => WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'sync_normal' ),
-				'permission_callback' => '__return_true',
-			)
-		);
-		register_rest_route(
-			$this->namespace, '/get_product_sku', array(
-				'methods'             => WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'get_product_sku_normal' ),
-				'permission_callback' => '__return_true',
-			)
-		);
+		/*Auth method*/
 //		register_rest_route(
-//			$this->namespace, '/get_aliexpress_orders', array(
+//			$this->namespace, '/auth', array(
 //				'methods'             => WP_REST_Server::CREATABLE,
-//				'callback'            => array( $this, 'get_aliexpress_orders_normal' ),
+//				'callback'            => array( $this, 'auth' ),
 //				'permission_callback' => '__return_true',
 //			)
 //		);
-		register_rest_route(
-			$this->namespace, '/get_orders_to_sync', array(
-				'methods'             => WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'get_orders_to_sync_normal' ),
-				'permission_callback' => '__return_true',
-			)
-		);
-		register_rest_route(
-			$this->namespace, '/request_order', array(
-				'methods'             => WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'request_order_normal' ),
-				'permission_callback' => '__return_true',
-			)
-		);
-		register_rest_route(
-			$this->namespace, '/response_order', array(
-				'methods'             => WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'response_order_normal' ),
-				'permission_callback' => '__return_true',
-			)
-		);
-		register_rest_route(
-			$this->namespace, '/sync_order', array(
-				'methods'             => WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'sync_order_normal' ),
-				'permission_callback' => '__return_true',
-			)
-		);
-		/*Auth method*/
-		register_rest_route(
-			$this->namespace, '/auth', array(
-				'methods'             => WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'auth' ),
-				'permission_callback' => '__return_true',
-			)
-		);
 		register_rest_route(
 			$this->namespace, '/auth/sync', array(
 				'methods'             => WP_REST_Server::CREATABLE,
@@ -161,13 +112,6 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 				'permission_callback' => array( $this, 'permissions_check' ),
 			)
 		);
-//		register_rest_route(
-//			$this->namespace, '/auth/get_aliexpress_orders', array(
-//				'methods'             => WP_REST_Server::CREATABLE,
-//				'callback'            => array( $this, 'get_aliexpress_orders_auth' ),
-//				'permission_callback' => array( $this, 'permissions_check' ),
-//			)
-//		);
 		register_rest_route(
 			$this->namespace, '/auth/get_orders_to_sync', array(
 				'methods'             => WP_REST_Server::CREATABLE,
@@ -345,16 +289,6 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 			$result['message_type'] = 2;
 
 			wp_send_json( $result );
-		}
-		/*check key*/
-		if ( $check_key ) {
-			$key = $request->get_param( 'key' );
-			if ( ! $key || $key !== self::$settings->get_params( 'secret_key' ) ) {
-				$result['message']      = esc_html__( 'Secret key does not match', 'woo-alidropship' );
-				$result['message_type'] = 2;
-
-				wp_send_json( $result );
-			}
 		}
 		$require_version = $request->get_param( 'require_version' );
 

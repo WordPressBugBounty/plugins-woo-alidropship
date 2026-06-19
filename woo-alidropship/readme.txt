@@ -51,11 +51,11 @@ Now this plugin is Top 1 the best free AliExpress Dropshipping plugin for WooCom
 
 &#9658; **Import Products**:
 
-This plugin allows you to import products from AliExpress to MULTIPLE WooCommerce stores at a time.
+This plugin allows you to seamlessly import products from AliExpress to multiple WooCommerce stores simultaneously.
 
-Since version 1.0.3, you can authenticate your extension using WooCommerce REST API authentication(recommended) to reduce errors. When authenticating, you have to turn off Coming Soon, Under Construction & Maintenance Mode.
+To get started, you can easily connect your stores with our extension using the WooCommerce REST API authentication method.
 
-Connecting with extension using secret key is still available but it may be deprecated in an update in the near future.
+**Important Note for a Smooth Setup:** Before authenticating, please ensure that any Coming Soon, Under Construction, or Maintenance Mode plugins/settings are temporarily turned off. This allows our extension to establish a secure and successful connection with your site.
 
 - **Import from single product page**
 
@@ -344,6 +344,9 @@ You can distinguish between AliExpress orders with your initial store orders and
 6. AliExpress single detail page
 
 == Changelog ==
+/**2.2.1 - 2026.06.19**/
+- Removed: Secret key authentication for Chrome extension connection.
+
 /**2.2.0 - 2026.06.04**/
 - Updated: Compatible with WP 7.0 and WC 10.8
 

@@ -25,7 +25,6 @@ class VI_WOO_ALIDROPSHIP_DATA {
 		}
 		$this->default = array(
 			'enable'                                => '1',
-			'secret_key'                            => '',
 			'product_status'                        => 'publish',
 			'catalog_visibility'                    => 'visible',
 			'product_gallery'                       => '1',

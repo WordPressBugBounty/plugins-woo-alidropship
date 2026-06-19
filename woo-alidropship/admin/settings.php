@@ -491,11 +491,8 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
 					?>
                 </div>
                 <div class="vi-ui bottom attached tab segment active" data-tab="general">
-                    <div class="vi-ui message positive">
-                        <ul class="list">
-                            <li><?php echo wp_kses_post( __( 'Since version 1.0.2 of <a href="https://downloads.villatheme.com/?download=alidropship-extension" target="_blank">WooCommerce AliExpress Dropshipping Extension</a>, you can authenticate your extension using WooCommerce REST API authentication(recommended). To edit or revoke your APIs, please go to <a href="admin.php?page=wc-settings&tab=advanced&section=keys" target="_blank">WooCommerce settings/Advanced/REST API</a>', 'woo-alidropship' ) ) ?></li>
-                            <li><?php echo wp_kses_post( __( 'Connecting with extension using secret key may be deprecated in an update in the near future.', 'woo-alidropship' ) ) ?></li>
-                        </ul>
+                    <div class="vi-ui message yellow">
+                        <?php echo wp_kses_post( __( 'Please note that connecting to the extension using a secret key has been deprecated. Please authenticate the extension using the WooCommerce REST API.', 'woo-alidropship' ) ) ?>
                     </div>
                     <table class="form-table">
                         <tbody>
@@ -527,33 +524,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
                         </tr>
                         <tr>
                             <th>
-                                <label for="<?php self::set_params( 'secret_key', true ) ?>"><?php esc_html_e( 'Secret key', 'woo-alidropship' ) ?></label>
-                            </th>
-                            <td class="vi-wad relative">
-                                <div class="vi-ui left labeled input fluid">
-                                    <label class="vi-ui label">
-                                        <div class="vi-wad-buttons-group">
-                                            <span class="vi-wad-copy-secretkey"
-                                                  title="<?php esc_attr_e( 'Copy Secret key', 'woo-alidropship' ) ?>">
-                                                <i class="dashicons dashicons-admin-page"></i>
-                                            </span>
-                                            <span class="vi-wad-generate-secretkey"
-                                                  title="<?php esc_attr_e( 'Generate new key', 'woo-alidropship' ) ?>">
-                                                <i class="dashicons dashicons-image-rotate"></i>
-                                            </span>
-                                        </div>
-                                    </label>
-                                    <input type="text" name="<?php self::set_params( 'secret_key' ) ?>"
-                                           value="<?php echo esc_attr( self::$settings->get_params( 'secret_key' ) ) ?>"
-                                           id="<?php self::set_params( 'secret_key', true ) ?>"
-                                           class="<?php self::set_params( 'secret_key', true ) ?>">
-                                </div>
-                                <p><?php esc_html_e( 'Secret key is one of the two ways to connect the chrome extension with your store. The other way is to use WooCommerce authentication.', 'woo-alidropship' ) ?></p>
-                                <p class="vi-wad-connect-extension-desc vi-wad-hidden"><?php esc_html_e( 'To let the chrome extension connect with this store, please click the "Connect the Extension" button below.', 'woo-alidropship' ) ?></p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
+                                <label> <?php esc_html_e( 'Chrome extension', 'woo-alidropship' ) ?></label>
                             </th>
                             <td>
                                 <p>
@@ -562,6 +533,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Settings {
 										<?php esc_html_e( 'Add WooCommerce AliExpress Dropshipping Extension', 'woo-alidropship' ); ?>
                                     </a>
                                 </p>
+                                <p class="vi-wad-connect-extension-desc vi-wad-hidden"><?php esc_html_e( 'To let the chrome extension connect with this store, please click the "Connect the Extension" button below.', 'woo-alidropship' ) ?></p>
                             </td>
                         </tr>
                         <tr>
