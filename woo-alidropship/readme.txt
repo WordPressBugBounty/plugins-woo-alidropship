@@ -4,7 +4,7 @@ Donate link: http://www.villatheme.com/donate
 Tags: alidropship, dropship, alidropship woo, aliexpress dropshipping plugin, aliexpress dropshipping
 Requires at least: 5.0
 Tested up to: 7.0
-WC tested up to: 10.8
+WC tested up to: 10.9
 WC requires at least: 7.0
 Requires PHP: 7.0
 Stable tag: trunk
@@ -344,6 +344,9 @@ You can distinguish between AliExpress orders with your initial store orders and
 6. AliExpress single detail page
 
 == Changelog ==
+/**2.2.2 - 2026.07.10**/
+- Added: Connect Chrome extension using WooCommerce REST API key.
+
 /**2.2.1 - 2026.06.19**/
 - Removed: Secret key authentication for Chrome extension connection.
 

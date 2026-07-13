@@ -90,13 +90,13 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 	 */
 	public function register_api() {
 		/*Auth method*/
-//		register_rest_route(
-//			$this->namespace, '/auth', array(
-//				'methods'             => WP_REST_Server::CREATABLE,
-//				'callback'            => array( $this, 'auth' ),
-//				'permission_callback' => '__return_true',
-//			)
-//		);
+		register_rest_route(
+			$this->namespace, '/auth', array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array($this, 'permissions_check_read_product'),
+				'permission_callback'            => array($this, 'permissions_check'),
+			)
+		);
 		register_rest_route(
 			$this->namespace, '/auth/sync', array(
 				'methods'             => WP_REST_Server::CREATABLE,
@@ -227,6 +227,20 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 		);
 	}
 
+	/**
+	 * @param $request WP_REST_Request
+	 *
+	 * @return bool|WP_Error
+	 */
+	public function permissions_check_read_product( $request ) {
+		$product_ids = $request->get_param('product_ids');
+		$product_id  = isset($product_ids['id']) ? $product_ids['id'] : '';
+		if (!apply_filters('vi_wad_rest_check_product_read_permission', wc_rest_check_post_permissions('product', 'read', $product_id))) {
+			return new WP_Error('woocommerce_rest_cannot_read', esc_html__('Unauthorized', 'woocommerce-alidropship'), array('status' => rest_authorization_required_code()));
+		}
+
+		return true;
+	}
 	/**
 	 * @param $request WP_REST_Request
 	 *
