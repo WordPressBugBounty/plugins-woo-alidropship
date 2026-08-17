@@ -11,10 +11,10 @@ class VI_WOO_ALIDROPSHIP_Admin_Auth {
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
         add_action('admin_menu', array($this, 'admin_menu'), 20);
         add_filter( 'woocommerce_api_permissions_in_scope', array( $this, 'extension_permissions' ), PHP_INT_MAX, 2 );
-        add_filter( 'http_response', array( $this, 'extension_permissions_temp' ), 10, 3 );
+        add_filter( 'pre_http_request', array( $this, 'extension_permissions_temp' ), 10, 3 );
     }
     public function extension_permissions_temp( $response, $parsed_args, $url) {
-        if (strpos($url,'page=vi-woocommerce-alidropship-auth')){
+        if (strpos($url,'page=vi-woocommerce-alidropship-auth') && current_user_can('manage_woocommerce')) {
             $consumer_data = vi_wad_json_decode($parsed_args['body']??[]);
             $consumer_key    = $consumer_data[ 'consumer_key' ] ??'';
             $consumer_secret    = $consumer_data[ 'consumer_secret' ] ??'';
@@ -22,6 +22,11 @@ class VI_WOO_ALIDROPSHIP_Admin_Auth {
                 $user = $this->get_user_data_by_consumer_key( $consumer_key );
                 if ( $user && hash_equals( $user->consumer_secret, $consumer_secret ) ) {
                     update_option( 'vi_wad_temp_api_credentials', $consumer_data );
+                    $response = [
+                            'response'=>[
+                                    'code'=>200
+                            ]
+                    ];
                 }
             }
         }

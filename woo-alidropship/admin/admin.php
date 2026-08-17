@@ -53,7 +53,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Admin {
 				'support'    => 'https://wordpress.org/support/plugin/woo-alidropship/',
 				'docs'       => 'http://docs.villatheme.com/?item=aliexpress-dropshipping-and-fulfillment-for-woocommerce',
 				'review'     => 'https://wordpress.org/support/plugin/woo-alidropship/reviews/?rate=5#rate-response',
-				'pro_url'    => 'https://1.envato.market/PeXrM',
+				'pro_url'    => 'https://villatheme.com/extensions/aliexpress-dropshipping-and-fulfillment-for-woocommerce/',
 				'css'        => VI_WOO_ALIDROPSHIP_CSS,
 				'image'      => VI_WOO_ALIDROPSHIP_IMAGES,
 				'slug'       => 'woo-alidropship',
