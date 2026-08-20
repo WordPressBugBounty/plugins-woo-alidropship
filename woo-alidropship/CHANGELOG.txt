@@ -1,5 +1,9 @@
 *** ALD - Dropshipping and Fulfillment for AliExpress and WooCommerce Changelog ***
 
+2026.08.20 - version 2.2.4
+- Updated: Compatible with WP 7.1
+- Updated: Compatibility check with WC 11.0
+
 2026.08.17 - version 2.2.3
 - Updated: Change premium version url
 
