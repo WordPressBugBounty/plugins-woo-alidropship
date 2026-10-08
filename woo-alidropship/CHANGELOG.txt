@@ -1,5 +1,9 @@
 *** ALD - Dropshipping and Fulfillment for AliExpress and WooCommerce Changelog ***
 
+2026.10.08 - version 2.2.5
+- Fixed: Setup wizard installs recommended plugins only for administrators who can install and activate plugins
+- Updated: Recommended plugins page shows Install and Activate only when the current user has those permissions
+
 2026.08.20 - version 2.2.4
 - Updated: Compatible with WP 7.1
 - Updated: Compatibility check with WC 11.0

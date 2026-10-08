@@ -185,18 +185,26 @@ class VI_WOO_ALIDROPSHIP_Admin_Recommend {
                             <div>
 								<?php
 								if ( ! isset( $installed_plugins[ $plugin_id ] ) ) {
-									?>
-                                    <a href="<?php echo esc_url( wp_nonce_url( self_admin_url( "update.php?action=install-plugin&plugin={$plugin['slug']}" ), "install-plugin_{$plugin['slug']}" ) ) ?>"
-                                       target="_blank"><?php esc_html_e( 'Install', 'woo-alidropship' ); ?></a>
-									<?php
+									if ( current_user_can( 'install_plugins' ) ) {
+										?>
+                                        <a href="<?php echo esc_url( wp_nonce_url( self_admin_url( "update.php?action=install-plugin&plugin={$plugin['slug']}" ), "install-plugin_{$plugin['slug']}" ) ) ?>"
+                                           target="_blank"><?php esc_html_e( 'Install', 'woo-alidropship' ); ?></a>
+										<?php
+									} else {
+										esc_html_e( 'Not installed', 'woo-alidropship' );
+									}
 								} elseif ( ! is_plugin_active( $plugin_id ) ) {
-									?>
-                                    <a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array(
-										'action' => 'activate',
-										'plugin' => $plugin_id
-									), admin_url( 'plugins.php' ) ), "activate-plugin_{$plugin_id}" ) ) ?>"
-                                       target="_blank"><?php esc_html_e( 'Activate', 'woo-alidropship' ); ?></a>
-									<?php
+									if ( current_user_can( 'activate_plugins' ) ) {
+										?>
+                                        <a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array(
+											'action' => 'activate',
+											'plugin' => $plugin_id
+										), admin_url( 'plugins.php' ) ), "activate-plugin_{$plugin_id}" ) ) ?>"
+                                           target="_blank"><?php esc_html_e( 'Activate', 'woo-alidropship' ); ?></a>
+										<?php
+									} else {
+										esc_html_e( 'Inactive', 'woo-alidropship' );
+									}
 								} else {
 									esc_html_e( 'Currently active', 'woo-alidropship' );
 								}

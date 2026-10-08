@@ -17,6 +17,7 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 			$this->plugins_init();
 			add_action( 'admin_menu', array( $this, 'admin_menu' ), 25 );
 			add_action( 'admin_head', array( $this, 'setup_wizard' ) );
+			add_action( 'admin_post_vi_wad_install_recommend_plugins', array( $this, 'install_recommend_plugins' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 			add_action( 'wp_ajax_vi_wad_setup_install_plugins', array( $this, 'install_plugins' ) );
 			add_action( 'wp_ajax_vi_wad_setup_activate_plugins', array( $this, 'activate_plugins' ) );
@@ -161,31 +162,45 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 			}
 		}
 
-		/**
-		 * @throws Exception
-		 */
-		public function setup_wizard() {
-			if ( isset( $_POST['submit'] ) && $_POST['submit'] === 'vi_wad_install_recommend_plugins' ) {
-				$wc_install = new WC_Install();
-				if ( is_array( $this->plugins ) && ! empty( $this->plugins ) ) {
-					foreach ( $this->plugins as $plugin ) {
-						$slug_name = $this->set_name( $plugin['slug'] );
-						if ( ! empty( $_POST[ $slug_name ] ) ) {
-							$wc_install::background_installer(
-								$plugin['slug'],
-								array(
-									'name'      => $plugin['name'],
-									'repo-slug' => $plugin['slug'],
-								)
-							);
-						}
-					}
-				}
-				wp_safe_redirect( admin_url( 'admin.php?page=woo-alidropship-import-list#aldShowModal' ) );
-				exit;
+		public function install_recommend_plugins() {
+			if ( ! current_user_can( 'install_plugins' ) || ! current_user_can( 'activate_plugins' ) || ! current_user_can( 'manage_options' ) ) {
+				wp_die(
+					esc_html__( 'Sorry, you are not allowed to install plugins.', 'woo-alidropship' ),
+					esc_html__( 'Forbidden', 'woo-alidropship' ),
+					403
+				);
 			}
 
-			if ( isset( $_GET['vi_wad_setup_wizard'], $_GET['_wpnonce'] ) && sanitize_text_field( $_GET['vi_wad_setup_wizard'] ) && wp_verify_nonce( sanitize_text_field( $_GET['_wpnonce'] ), 'vi_wad_setup' ) ) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			check_admin_referer( 'vi_wad_install_recommend_plugins' );
+
+			if ( ! class_exists( '\WC_Install' ) ) {
+				wp_die( esc_html__( 'WooCommerce is required to install plugins.', 'woo-alidropship' ) );
+			}
+
+			foreach ( self::recommended_plugins() as $plugin ) {
+				if ( empty( $plugin['slug'] ) ) {
+					continue;
+				}
+				$field    = $this->set_name( $plugin['slug'] );
+				$selected = isset( $_POST[ $field ] ) ? sanitize_text_field( wp_unslash( $_POST[ $field ] ) ) : '';
+				if ( '' === $selected ) {
+					continue;
+				}
+				\WC_Install::background_installer(
+					$plugin['slug'],
+					array(
+						'name'      => $plugin['name'],
+						'repo-slug' => $plugin['slug'],
+					)
+				);
+			}
+
+			wp_safe_redirect( admin_url( 'admin.php?page=woo-alidropship-import-list#aldShowModal' ) );
+			exit;
+		}
+
+		public function setup_wizard() {
+			if ( current_user_can( 'manage_options' ) && isset( $_GET['vi_wad_setup_wizard'], $_GET['_wpnonce'] ) && sanitize_text_field( $_GET['vi_wad_setup_wizard'] ) && wp_verify_nonce( sanitize_text_field( $_GET['_wpnonce'] ), 'vi_wad_setup' ) ) {// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				$step = isset( $_GET['step'] ) ? intval( sanitize_text_field( $_GET['step'] ) ) : 1;
 				$func = 'set_up_step_' . $step;
 
@@ -689,7 +704,9 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 			$plugins = $this->plugins;
 			?>
             <form method="post" style="margin-bottom: 0"
-                  action="<?php echo esc_url( admin_url( 'admin.php?page=woo-alidropship' ) ) ?>">
+                  action="<?php echo esc_url( admin_url( 'admin-post.php' ) ) ?>">
+				<?php wp_nonce_field( 'vi_wad_install_recommend_plugins' ); ?>
+                <input type="hidden" name="action" value="vi_wad_install_recommend_plugins"/>
                 <div class="vi-wad-step-3">
                     <div class="">
                         <table id="status" class="vi-ui table">
@@ -739,11 +756,13 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
                         <i class="icon step backward"> </i>
 						<?php esc_html_e( 'Back', 'woo-alidropship' ); ?>
                     </a>
+					<?php if ( current_user_can( 'install_plugins' ) && current_user_can( 'activate_plugins' ) ) : ?>
                     <button type="submit" class="vi-ui button primary labeled icon vi-wad-finish" name="submit"
                             value="vi_wad_install_recommend_plugins">
                         <i class="icon check"></i>
                         <span><?php esc_html_e( 'Install & Return to Import list', 'woo-alidropship' ); ?></span>
                     </button>
+					<?php endif; ?>
                 </div>
             </form>
 			<?php
@@ -837,12 +856,12 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 		}
 
 		public function install_plugins() {
-			if ( ! current_user_can( 'install_plugins' ) ) {
+			if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'install_plugins' ) ) {
 				wp_send_json_error( esc_html__( 'Unauthorized', 'woo-alidropship' ) );
 			}
 			check_ajax_referer( 'woo_alidropship_admin_ajax', '_vi_wad_ajax_nonce' );
-			$plugins = isset( $_POST['install_plugins'] ) ? stripslashes_deep( $_POST['install_plugins'] ) : array();
-			if ( ! is_array( $plugins ) && ! count( $plugins ) ) {
+			$plugins = isset( $_POST['install_plugins'] ) ? stripslashes_deep( $_POST['install_plugins'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			if ( ! is_array( $plugins ) || array() === $plugins ) {
 				wp_send_json_error();
 			}
 
@@ -855,11 +874,9 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 			$existing_plugins  = PluginsHelper::get_installed_plugins_paths();
 			$installed_plugins = array();
 
-			foreach ( $plugins as $plugin ) {
-				$slug = sanitize_key( $plugin );
-
+			foreach ( $this->allowlisted_request_slugs( $plugins ) as $slug ) {
 				if ( isset( $existing_plugins[ $slug ] ) ) {
-					$installed_plugins[] = $plugin;
+					$installed_plugins[] = $slug;
 					continue;
 				}
 
@@ -877,7 +894,7 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 					$upgrader = new \Plugin_Upgrader( new \Automatic_Upgrader_Skin() );
 					$result   = $upgrader->install( $api->download_link );
 					if ( ! is_wp_error( $result ) && ! is_null( $result ) ) {
-						$installed_plugins[] = $plugin;
+						$installed_plugins[] = $slug;
 					}
 				}
 			}
@@ -889,13 +906,13 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 		}
 
 		public function activate_plugins() {
-			if ( ! current_user_can( 'activate_plugins' ) ) {
+			if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'activate_plugins' ) ) {
 				wp_send_json_error( esc_html__( 'Unauthorized', 'woo-alidropship' ) );
 			}
 			check_ajax_referer( 'woo_alidropship_admin_ajax', '_vi_wad_ajax_nonce' );
 			$plugin_paths = PluginsHelper::get_installed_plugins_paths();
-			$plugins      = isset( $_POST['install_plugins'] ) ? stripslashes_deep( $_POST['install_plugins'] ) : array();
-			if ( ! is_array( $plugins ) && ! count( $plugins ) ) {
+			$plugins      = isset( $_POST['install_plugins'] ) ? stripslashes_deep( $_POST['install_plugins'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			if ( ! is_array( $plugins ) || array() === $plugins ) {
 				wp_send_json_error();
 			}
 			$activated_plugins = array();
@@ -904,13 +921,12 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 			// the mollie-payments-for-woocommerce plugin calls `WP_Filesystem()` during it's activation hook, which crashes without this include.
 			require_once ABSPATH . 'wp-admin/includes/file.php';
 
-			foreach ( $plugins as $plugin ) {
-				$slug = $plugin;
+			foreach ( $this->allowlisted_request_slugs( $plugins ) as $slug ) {
 				$path = isset( $plugin_paths[ $slug ] ) ? $plugin_paths[ $slug ] : false;
 				if ( $path ) {
 					$result = activate_plugin( $path );
 					if ( is_null( $result ) ) {
-						$activated_plugins[] = $plugin;
+						$activated_plugins[] = $slug;
 					}
 				}
 			}
@@ -919,6 +935,37 @@ if ( ! class_exists( 'Vi_Wad_Setup_Wizard' ) ) {
 			} else {
 				wp_send_json_error();
 			}
+		}
+
+		/**
+		 * Recommended slugs selected by the current request.
+		 *
+		 * Values that contain a slash are ignored so a client path cannot be installed or activated.
+		 *
+		 * @param array $plugins Request payload.
+		 * @return string[]
+		 */
+		private function allowlisted_request_slugs( array $plugins ) {
+			$allow = array();
+			foreach ( self::recommended_plugins() as $plugin ) {
+				if ( empty( $plugin['slug'] ) ) {
+					continue;
+				}
+				$allow[ sanitize_key( $plugin['slug'] ) ] = true;
+			}
+
+			$slugs = array();
+			foreach ( $plugins as $plugin ) {
+				if ( ! is_string( $plugin ) || false !== strpos( $plugin, '/' ) ) {
+					continue;
+				}
+				$slug = sanitize_key( $plugin );
+				if ( isset( $allow[ $slug ] ) ) {
+					$slugs[ $slug ] = $slug;
+				}
+			}
+
+			return array_values( $slugs );
 		}
 
 		private static function set_params( $name = '', $class = false, $multiple = false ) {
