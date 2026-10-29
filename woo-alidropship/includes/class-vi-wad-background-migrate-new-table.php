@@ -27,7 +27,7 @@ class VI_WOO_ALIDROPSHIP_BACKGROUND_MIGRATE_NEW_TABLE extends WP_Background_Proc
 	 */
 	protected function task( $item ) {
 		if ( ! empty( $item ) ) {
-			$step        = $item['step'];
+			$step        = isset( $item['step'] ) ? $item['step'] : '';
 			$numberposts = WP_DEBUG ? 1 : 30;
 			$this->step  = $step;
 
@@ -136,7 +136,10 @@ class VI_WOO_ALIDROPSHIP_BACKGROUND_MIGRATE_NEW_TABLE extends WP_Background_Proc
 					case 'move':
 						update_option( 'ald_migrated_to_new_table', true );
 
-						$settings              = get_option( 'wooaliexpressdropship_params' );
+						$settings = get_option( 'wooaliexpressdropship_params', array() );
+						if ( ! is_array( $settings ) ) {
+							$settings = array();
+						}
 						$settings['ald_table'] = 1;
 						update_option( 'wooaliexpressdropship_params', $settings );
 						break;

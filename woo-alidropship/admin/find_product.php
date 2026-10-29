@@ -402,11 +402,11 @@ class VI_WOO_ALIDROPSHIP_Admin_Find_Product {
 		] );
 		if ( $get_data['status'] !== 'success' ) {
 			if ( !empty($get_data['message']) ) {
-				$result['message']      = $get_data['message'];
+				$return['message']      = $get_data['message'];
 			} else {
-				$result['message']      = esc_html__( 'Cannot retrieve data. Please contact us and we will help you detect and handle the problem', 'woo-alidropship' );
+				$return['message']      = esc_html__( 'Cannot retrieve data. Please contact us and we will help you detect and handle the problem', 'woo-alidropship' );
 			}
-			wp_send_json( $result );
+			wp_send_json( $return );
 		}
 		$data = $get_data['data']??[];
 		$time = time() ;

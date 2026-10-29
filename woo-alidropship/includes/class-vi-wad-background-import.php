@@ -47,9 +47,11 @@ if ( ! class_exists( 'Vi_WAD_Background_Import_Product' ) ) {
 					$position          = 0;
 					$variation_visible = $settings->get_params( 'variation_visible' );
 					foreach ( $attributes as $key => $attr ) {
-						$attr_data[ strtolower( $attr['slug'] ) ] = array(
-							'name'         => VI_WOO_ALIDROPSHIP_DATA::get_attribute_name_by_slug( $attr['slug'] ),
-							'value'        => implode( ' | ', $attr['values'] ),
+						$attr_slug   = isset( $attr['slug'] ) ? (string) $attr['slug'] : '';
+						$attr_values = isset( $attr['values'] ) && is_array( $attr['values'] ) ? $attr['values'] : array();
+						$attr_data[ strtolower( $attr_slug ) ] = array(
+							'name'         => VI_WOO_ALIDROPSHIP_DATA::get_attribute_name_by_slug( $attr_slug ),
+							'value'        => implode( ' | ', $attr_values ),
 							'position'     => isset( $attr['position'] ) ? $attr['position'] : $position,
 							'is_visible'   => $variation_visible ? 1 : '',
 							'is_variation' => 1,
@@ -226,33 +228,37 @@ if ( ! class_exists( 'Vi_WAD_Background_Import_Product' ) ) {
 		public static function import_product_variation( $product_variable_id, $item, $dispatch ) {
 			$product = wc_get_product( $product_variable_id );
 			if ( $product ) {
-				if ( is_array( $item['variations'] ) && count( $item['variations'] ) ) {
+				$variations       = isset( $item['variations'] ) && is_array( $item['variations'] ) ? $item['variations'] : array();
+				$variation_images = isset( $item['variation_images'] ) && is_array( $item['variation_images'] ) ? $item['variation_images'] : array();
+				if ( count( $variations ) ) {
 					$variation_ids = array();
-					if ( count( $item['variation_images'] ) ) {
-						foreach ( $item['variation_images'] as $key => $val ) {
+					if ( count( $variation_images ) ) {
+						foreach ( $variation_images as $key => $val ) {
 							$variation_ids[ $key ] = array();
 						}
 					}
 
-					$settings       = VI_WOO_ALIDROPSHIP_DATA::get_instance();
+					$settings     = VI_WOO_ALIDROPSHIP_DATA::get_instance();
 					$manage_stock = $settings->get_params( 'manage_stock' );
 					$manage_stock = $manage_stock ? 'yes' : 'no';
 
-					foreach ( $item['variations'] as $product_variation ) {
+					foreach ( $variations as $product_variation ) {
 						$stock_quantity = isset( $product_variation['stock'] ) ? absint( $product_variation['stock'] ) : 0;
 						$variation      = new WC_Product_Variation();
 						$variation->set_parent_id( $product_variable_id );
-						$variation->set_attributes( $product_variation['attributes'] );
+						$variation->set_attributes( isset( $product_variation['attributes'] ) && is_array( $product_variation['attributes'] ) ? $product_variation['attributes'] : array() );
 						/*Set metabox for variation . Check field name at woocommerce/includes/class-wc-ajax.php*/
-						$fields = array(
-							'sku'            => wc_product_generate_unique_sku( 0, $product_variation['sku'] ),
-							'regular_price'  => $product_variation['regular_price'],
-							'price'          => $product_variation['regular_price'],
+						$sku           = isset( $product_variation['sku'] ) ? $product_variation['sku'] : '';
+						$regular_price = isset( $product_variation['regular_price'] ) ? $product_variation['regular_price'] : '';
+						$fields        = array(
+							'sku'            => wc_product_generate_unique_sku( 0, $sku ),
+							'regular_price'  => $regular_price,
+							'price'          => $regular_price,
 							'manage_stock'   => $manage_stock,
 							'stock_status'   => 'instock',
 							'stock_quantity' => $stock_quantity,
 						);
-						if ( isset( $product_variation['sale_price'] ) && $product_variation['sale_price'] && $product_variation['sale_price'] < $product_variation['regular_price'] ) {
+						if ( isset( $product_variation['sale_price'] ) && $product_variation['sale_price'] && $product_variation['sale_price'] < $regular_price ) {
 							$fields['sale_price'] = $product_variation['sale_price'];
 							$fields['price']      = $product_variation['sale_price'];
 						}
@@ -260,10 +266,10 @@ if ( ! class_exists( 'Vi_WAD_Background_Import_Product' ) ) {
 							$variation->{"set_$field"}( wc_clean( $value ) );
 						}
 						do_action( 'product_variation_linked', $variation->save() );
-						update_post_meta( $variation->get_id(), '_vi_wad_aliexpress_variation_id', $product_variation['skuId'] );
-						update_post_meta( $variation->get_id(), '_vi_wad_aliexpress_variation_attr', $product_variation['skuAttr'] );
-						if ( $product_variation['image'] ) {
-							$pos = array_search( $product_variation['image'], $item['variation_images'] );
+						update_post_meta( $variation->get_id(), '_vi_wad_aliexpress_variation_id', isset( $product_variation['skuId'] ) ? $product_variation['skuId'] : '' );
+						update_post_meta( $variation->get_id(), '_vi_wad_aliexpress_variation_attr', isset( $product_variation['skuAttr'] ) ? $product_variation['skuAttr'] : '' );
+						if ( ! empty( $product_variation['image'] ) ) {
+							$pos = array_search( $product_variation['image'], $variation_images );
 							if ( $pos !== false ) {
 								$variation_ids[ $pos ][] = $variation->get_id();
 							}
@@ -271,12 +277,12 @@ if ( ! class_exists( 'Vi_WAD_Background_Import_Product' ) ) {
 					}
 					if ( count( $variation_ids ) ) {
 						foreach ( $variation_ids as $key => $values ) {
-							if ( count( $values ) && ! empty( $item['variation_images'][ $key ] ) ) {
+							if ( count( $values ) && ! empty( $variation_images[ $key ] ) ) {
 								$dispatch   = true;
 								$image_data = array(
 									'woo_product_id' => $product_variable_id,
 									'parent_id'      => '',
-									'src'            => $item['variation_images'][ $key ],
+									'src'            => $variation_images[ $key ],
 									'product_ids'    => $values,
 									'set_gallery'    => 0,
 								);

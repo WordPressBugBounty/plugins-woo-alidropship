@@ -102,12 +102,13 @@ class VI_WOO_ALIDROPSHIP_Admin_Error_Images {
 		);
 		if ( $id ) {
 			$data = VI_WOO_ALIDROPSHIP_Error_Images_Table::get_row( $id );
-			if ( count( $data ) ) {
+			if ( is_array( $data ) && count( $data ) ) {
 				$product_id = $data['product_id'];
 				$post       = get_post( $product_id );
 				if ( $post && $post->post_type === 'product' ) {
 					if ( $data['set_gallery'] != 2 || ( ! $this->settings->get_params( 'use_external_image' ) && $this->settings->get_params( 'download_description_images' ) ) ) {
-						$thumb_id = VI_WOO_ALIDROPSHIP_DATA::download_image( $image_id, html_entity_decode( $data['image_src'] ), $product_id );
+						$image_id = '';
+						$thumb_id = VI_WOO_ALIDROPSHIP_DATA::download_image( $image_id, html_entity_decode( (string) $data['image_src'] ), $product_id );
 
 
 						if ( $thumb_id && ! is_wp_error( $thumb_id ) ) {
@@ -144,7 +145,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Error_Images {
 							$response['status'] = 'success';
 							VI_WOO_ALIDROPSHIP_Error_Images_Table::delete( $id );
 						} else {
-							$response['message'] = $thumb_id->get_error_message();
+							$response['message'] = is_wp_error( $thumb_id ) ? $thumb_id->get_error_message() : $response['message'];
 						}
 					} else {
 						$response['message'] = esc_html__( 'Please disable "Use external links for images" and enable "Import description images"', 'woo-alidropship' );
@@ -233,7 +234,7 @@ class VI_WOO_ALIDROPSHIP_Admin_Error_Images {
 			$vi_wad_search_product_id = isset( $_GET['vi_wad_search_product_id'] ) ? sanitize_text_field( $_GET['vi_wad_search_product_id'] ) : '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$count                    = VI_WOO_ALIDROPSHIP_Error_Images_Table::get_rows( 0, 0, true, $vi_wad_search_product_id );
 			$results                  = VI_WOO_ALIDROPSHIP_Error_Images_Table::get_rows( $per_page, ( $paged - 1 ) * $per_page, false, $vi_wad_search_product_id );
-			if ( count( $results ) ) {
+			if ( is_array( $results ) && count( $results ) ) {
 				if ( $this->settings->get_params( 'use_external_image' ) || ! $this->settings->get_params( 'download_description_images' ) ) {
 					?>
                     <div class="vi-ui negative message">
@@ -478,6 +479,9 @@ class VI_WOO_ALIDROPSHIP_Admin_Error_Images {
                         </div>
 						<?php
 						$products = VI_WOO_ALIDROPSHIP_Error_Images_Table::get_products_ids();
+						if ( ! is_array( $products ) ) {
+							$products = array();
+						}
 						if ( count( $products ) < 100 ) {
 							if ( count( $products ) > 1 ) {
 								ob_start();

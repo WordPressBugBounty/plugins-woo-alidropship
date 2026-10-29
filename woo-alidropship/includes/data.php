@@ -34,7 +34,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 			'product_description'                   => 'item_specifics_and_description',
 			'variation_visible'                     => '',
 			'manage_stock'                          => '1',
-			'ignore_ship_from'                      => '',
+			'ignore_ship_from'                      => 0,
 			'price_from'                            => array( 0 ),
 			'price_to'                              => array( '' ),
 			'plus_value'                            => array( 200 ),
@@ -48,7 +48,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 			'import_product_currency'               => 'USD',
 			'import_currency_rate'                  => '1',
 			'import_currency_rate_RUB'              => '',
-			'fulfill_default_carrier'               => 'EMS_ZX_ZX_US',
+			'fulfill_default_carrier'               => 'CAINIAO_STANDARD',
 			'fulfill_default_phone_number'          => '',
 			'fulfill_default_phone_number_override' => '',
 			'fulfill_default_phone_country'         => '',
@@ -484,7 +484,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 		return floatval( str_replace( ',', '', $string_number ) );
 	}
 
-	public function process_exchange_price( $price ) {
+	public function process_exchange_price( $price, $is_product_price = true ) {
 		if ( ! $price ) {
 			return $price;
 		}
@@ -492,7 +492,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 		if ( $rate ) {
 			$price = $price * $rate;
 		}
-		if ( $this->get_params( 'format_price_rules_enable' ) ) {
+		if ( $is_product_price && $this->get_params( 'format_price_rules_enable' ) ) {
 			self::format_price( $price );
 		}
 
@@ -701,7 +701,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 				$description_url,
 				array(
 					'user-agent' => self::get_user_agent(),
-					'timeout'    => 3,
+					'timeout'    => 10,
 				)
 			);
 			if ( ! is_wp_error( $request ) && get_post_type( $product_id ) === 'vi_wad_draft_product' ) {
@@ -751,6 +751,7 @@ class VI_WOO_ALIDROPSHIP_DATA {
 	 * @return array|bool|int|object|string|WP_Error|null
 	 */
 	public static function download_image( &$image_id, $url, $post_parent = 0, $exclude = array(), $post_title = '', $desc = null ) {
+		$url = str_replace( ' ', '', $url );
 		global $wpdb;
 		$instance = self::get_instance();
 		if ( $instance->get_params( 'use_external_image' ) && ( class_exists( 'EXMAGE_WP_IMAGE_LINKS' ) || class_exists( '\EXMAGE\EXMAGE' ) ) ) {
@@ -1414,10 +1415,8 @@ class VI_WOO_ALIDROPSHIP_DATA {
 			$freight_amount = $freight_v['standardFreightAmount']['value'];
 		} elseif ( isset( $freight_v['freightAmount']['value'], $freight_v['freightAmount']['currency'] ) && $freight_v['freightAmount']['currency'] === 'USD' ) {
 			$freight_amount = $freight_v['freightAmount']['value'];
-			$currency       = $freight_v['freightAmount']['currency'];
 		} elseif ( isset( $freight_v['previewFreightAmount']['value'], $freight_v['previewFreightAmount']['currency'] ) && $freight_v['previewFreightAmount']['currency'] === 'USD' ) {
 			$freight_amount = $freight_v['previewFreightAmount']['value'];
-			$currency       = $freight_v['freightAmount']['currency'];
 		}
 		if ( $freight_amount === '' ) {
 			if ( isset( $freight_v['standardFreightAmount']['value'], $freight_v['standardFreightAmount']['currency'] ) ) {
@@ -1433,18 +1432,19 @@ class VI_WOO_ALIDROPSHIP_DATA {
 		}
 		if ( $freight_amount === '' && isset( $freight_v['shipping_fee_currency'], $freight_v['shipping_fee_cent'] ) ) {
 			$freight_amount = $freight_v['shipping_fee_cent'];
+			$currency       = $freight_v['shipping_fee_currency'];
 		}
 		if ( $freight_amount && $currency && $currency !== 'USD' ) {
-			$instance             = self::get_instance();
-			$woocommerce_currency = get_option( 'woocommerce_currency' );
-			$rate                 = 0;
-			if ( $woocommerce_currency === $currency ) {
-				$rate = $instance->get_params( 'import_currency_rate' );
-			} elseif ( in_array( $currency, array( 'RUB', ), true ) ) {
-				$rate = $instance->get_params( "import_currency_rate_{$currency}" );
+			$instance = self::get_instance();
+			$rate     = '';
+			if ( in_array( $currency, array( 'RUB' ), true ) ) {
+				$custom_rate = $instance->get_params( "import_currency_rate_{$currency}" );
+				if ( $custom_rate ) {
+					$rate = 1 / $custom_rate;
+				}
 			}
 			if ( $rate ) {
-				$freight_amount = $freight_amount * $rate;
+				$freight_amount = $freight_amount / $rate;
 				$freight_amount = round( $freight_amount, 2 );
 			}
 		}

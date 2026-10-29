@@ -38,6 +38,7 @@ class Vi_WAD_Background_Download_Images extends WP_Background_Process {
 			}
 			$post = get_post( $product_id );
 			if ( $post && $post->post_type === 'product' && $src ) {
+				$image_id = null;
 				$thumb_id = VI_WOO_ALIDROPSHIP_DATA::download_image( $image_id, $src, $product_id );
 				if ( $thumb_id && ! is_wp_error( $thumb_id ) ) {
 
@@ -46,7 +47,7 @@ class Vi_WAD_Background_Download_Images extends WP_Background_Process {
 						if ( $set_gallery == 2 ) {
 							$downloaded_url = wp_get_attachment_url( $thumb_id );
 							$description    = html_entity_decode( $post->post_content, ENT_QUOTES | ENT_XML1, 'UTF-8' );
-							$description    = preg_replace( '/[^"]{0,}' . preg_quote( $image_id, '/' ) . '[^"]{0,}/U', $downloaded_url, $description );
+							$description    = preg_replace( '/[^"]{0,}' . preg_quote( (string) $image_id, '/' ) . '[^"]{0,}/U', $downloaded_url, $description );
 							$description    = str_replace( $src, $downloaded_url, $description );
 							wp_update_post( array( 'ID' => $product_id, 'post_content' => $description ) );
 						} else {
@@ -78,7 +79,11 @@ class Vi_WAD_Background_Download_Images extends WP_Background_Process {
 
 				} else {
 					VI_WOO_ALIDROPSHIP_Error_Images_Table::insert( $product_id, implode( ',', $product_ids ), $src, intval( $set_gallery ) );
-					error_log( 'ALD - Dropshipping and Fulfillment for AliExpress and WooCommerce error: ' . $thumb_id->get_error_code() . ' - ' . $thumb_id->get_error_message() );
+					if ( is_wp_error( $thumb_id ) ) {
+						error_log( 'ALD - Dropshipping and Fulfillment for AliExpress and WooCommerce error: ' . $thumb_id->get_error_code() . ' - ' . $thumb_id->get_error_message() );
+					} else {
+						error_log( 'ALD - Dropshipping and Fulfillment for AliExpress and WooCommerce error: image download failed' );
+					}
 				}
 			}
 

@@ -236,7 +236,7 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 		$product_ids = $request->get_param('product_ids');
 		$product_id  = isset($product_ids['id']) ? $product_ids['id'] : '';
 		if (!apply_filters('vi_wad_rest_check_product_read_permission', wc_rest_check_post_permissions('product', 'read', $product_id))) {
-			return new WP_Error('woocommerce_rest_cannot_read', esc_html__('Unauthorized', 'woocommerce-alidropship'), array('status' => rest_authorization_required_code()));
+			return new WP_Error('woocommerce_rest_cannot_read', esc_html__('Unauthorized', 'woo-alidropship'), array('status' => rest_authorization_required_code()));
 		}
 
 		return true;
@@ -307,7 +307,7 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 		$require_version = $request->get_param( 'require_version' );
 
 		/*check version*/
-		if ( version_compare( VI_WOO_ALIDROPSHIP_VERSION, $require_version, '<' ) ) {
+		if ( version_compare( VI_WOO_ALIDROPSHIP_VERSION, (string) $require_version, '<' ) ) {
 			$result['message']      = sprintf( esc_html__( 'Require ALD - Dropshipping and Fulfillment for AliExpress and WooCommerce plugin version %s, your current version is %s', 'woo-alidropship' ), $require_version ,VI_WOO_ALIDROPSHIP_VERSION);//phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
 			$result['message_type'] = 2;
 
@@ -436,7 +436,7 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 		);
 		vi_wad_set_time_limit();
 		$product_id   = $request->get_param( 'productID' );
-		$product_html =  base64_decode( $request->get_param( 'ali_product_data' ) ) ;
+		$product_html = base64_decode( (string) ( $request->get_param( 'ali_product_data' ) ?? '' ) );
 		$data         = array();
 		$country     = $request->get_param( 'country' );
 		if ( $product_id ) {
@@ -643,7 +643,7 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 								if ( ! in_array( $ali_order_id, $match_aliexpress_order_ids ) ) {
 									wc_add_order_item_meta( $item_id, '_vi_wad_match_aliexpress_order_id', $ali_order_id );
 								}
-								if ( strtolower( trim( $matchOrder['orderStatus'] ) ) === 'wait_seller_send_goods' ) {
+								if ( strtolower( trim( (string) ( $matchOrder['orderStatus'] ?? '' ) ) ) === 'wait_seller_send_goods' ) {
 									wc_update_order_item_meta( $item_id, '_vi_wad_aliexpress_order_id', $ali_order_id );
 								}
 							}
@@ -664,7 +664,7 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 	 * @return array
 	 */
 	public static function get_order_details( $orderTotal ) {
-		$orderTotal         = html_entity_decode( $orderTotal );
+		$orderTotal         = html_entity_decode( (string) $orderTotal );
 		$support_currencies = array( '$', '￡', '€', 'руб.', '￥', 'SEK' );
 		$total              = $currency = '';
 		foreach ( $support_currencies as $symbol ) {
@@ -745,7 +745,7 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 		);
 		global $wpdb;
 		$aliexpress_standard_shipping = false;
-		if ( strtolower( trim( $carrier_name ) ) === 'aliexpress standard shipping' ) {
+		if ( strtolower( trim( (string) $carrier_name ) ) === 'aliexpress standard shipping' ) {
 			$aliexpress_standard_shipping = true;
 		} else {
 			$carrier_url  = apply_filters( 'villatheme_woo_alidropship_sync_ali_order_carrier_url', $carrier_url );
@@ -755,7 +755,7 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 			$query          = $wpdb->prepare( "Select * from {$wpdb->prefix}woocommerce_order_itemmeta where meta_key='_vi_wad_aliexpress_order_id' and meta_value=%s", $ali_order_id );
 			$q_result       = $wpdb->get_results( $query, ARRAY_A );// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared ,WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$order_item_ids = array();
-			if ( count( $q_result ) ) {
+			if ( is_array( $q_result ) && count( $q_result ) ) {
 				if ( $orderTotal ) {
 					$orderDetails = self::get_order_details( $orderTotal );
 					VI_WOO_ALIDROPSHIP_Ali_Orders_Info_Table::insert( $ali_order_id, $orderDetails['currency'], $orderDetails['total'] );
@@ -819,7 +819,7 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 							}
 						}
 					}
-					if ( in_array( strtolower( trim( $tracking_status ) ), array(
+					if ( in_array( strtolower( trim( (string) $tracking_status ) ), array(
 						'delivery successful',
 						'delivered'
 					), true ) ) {
@@ -830,7 +830,7 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 			} else {
 				$query    = $wpdb->prepare( "Select * from {$wpdb->prefix}woocommerce_order_itemmeta where meta_key='_vi_wad_match_aliexpress_order_id' and meta_value=%s", $ali_order_id );
 				$q_result = $wpdb->get_results( $query, ARRAY_A );// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared , WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-				if ( count( $q_result ) ) {
+				if ( is_array( $q_result ) && count( $q_result ) ) {
 					if ( $orderTotal ) {
 						$orderDetails = self::get_order_details( $orderTotal );
 						VI_WOO_ALIDROPSHIP_Ali_Orders_Info_Table::insert( $ali_order_id, $orderDetails['currency'], $orderDetails['total'] );
@@ -896,7 +896,7 @@ class VI_WOO_ALIDROPSHIP_Admin_API {
 									}
 								}
 							}
-							if ( in_array( strtolower( trim( $tracking_status ) ), array(
+							if ( in_array( strtolower( trim( (string) $tracking_status ) ), array(
 								'delivery successful',
 								'delivered'
 							), true ) ) {

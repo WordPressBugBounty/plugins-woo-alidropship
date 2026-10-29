@@ -14,8 +14,10 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_Other_Data' ) ) {
 				return;
 			}
 			if ( ! empty( $data['GLOBAL_DATA']['globalData']['itemStatus'] ) ) {
-				$error['error']   = 1;
-				$error['message'] = esc_html__( 'Ali product is no longer available!', 'woocommerce-alidropship' );
+				$error = [
+					'error'   => 1,
+					'message' => esc_html__( 'Ali product is no longer available!', 'woo-alidropship' ),
+				];
 
 				return;
 			}
@@ -44,14 +46,15 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_Other_Data' ) ) {
 				$ignore_ship_from_default_id = '';
 				if ( is_array( $productSKUPropertyList ) && ! empty( $productSKUPropertyList ) ) {
 					foreach ( $productSKUPropertyList as $i => $skuProperty ) {
-						$images            = array();
-						$skuPropertyValues = $skuProperty['skuPropertyValues'];
-						$attr_parent_id    = $skuProperty['skuPropertyId'];
-						$skuPropertyName   = wc_sanitize_taxonomy_name( $skuProperty['skuPropertyName'] );
+						$images              = array();
+						$skuPropertyValues   = $skuProperty['skuPropertyValues'] ?? array();
+						$attr_parent_id      = $skuProperty['skuPropertyId'] ?? '';
+						$skuPropertyNameRaw  = $skuProperty['skuPropertyName'] ?? '';
+						$skuPropertyName     = wc_sanitize_taxonomy_name( (string) $skuPropertyNameRaw );
 						if ( ( $attr_parent_id == 200007763 || strtolower( $skuPropertyName ) === 'ships-from' ) && $ignore_ship_from ) {
 							foreach ( $skuPropertyValues as $value ) {
-								if ( $value['skuPropertySendGoodsCountryCode'] === $ignore_ship_from_default ) {
-									$ignore_ship_from_default_id = ! empty( $value['propertyValueId'] ) ? $value['propertyValueId'] : $value['propertyValueIdLong'];
+								if ( ( $value['skuPropertySendGoodsCountryCode'] ?? '' ) === $ignore_ship_from_default ) {
+									$ignore_ship_from_default_id = ! empty( $value['propertyValueId'] ) ? $value['propertyValueId'] : ( $value['propertyValueIdLong'] ?? '' );
 								}
 							}
 							if ( $ignore_ship_from_default_id ) {
@@ -61,15 +64,15 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_Other_Data' ) ) {
 						$attr = array(
 							'values'   => array(),
 							'slug'     => $skuPropertyName,
-							'name'     => $skuProperty['skuPropertyName'],
+							'name'     => $skuPropertyNameRaw,
 							'position' => $i,
 						);
 						foreach ( $skuPropertyValues as $j => $j_item ) {
 							$skuPropertyValue         = $skuPropertyValues[ $j ];
-							$org_propertyValueId      = $skuPropertyValue['propertyValueId'] ?? $skuPropertyValue['propertyValueIdLong'];
+							$org_propertyValueId      = $skuPropertyValue['propertyValueId'] ?? $skuPropertyValue['propertyValueIdLong'] ?? '';
 							$propertyValueId          = "{$attr_parent_id}:{$org_propertyValueId}";
-							$propertyValueName        = $skuPropertyValue['propertyValueName'];
-							$propertyValueDisplayName = $skuPropertyValue['propertyValueDisplayName'];
+							$propertyValueName        = $skuPropertyValue['propertyValueName'] ?? '';
+							$propertyValueDisplayName = $skuPropertyValue['propertyValueDisplayName'] ?? '';
 							if ( in_array( $propertyValueDisplayName, $listAttributesDisplayNames ) ) {
 								$propertyValueDisplayName = "{$propertyValueDisplayName}-{$org_propertyValueId}";
 							}
@@ -119,7 +122,7 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_Other_Data' ) ) {
 					if ( isset( $j_item['salable'] ) && ! $j_item['salable'] && (($j_item['skuStock'] ?? '') != 0) ) {
 						continue;
 					}
-					$skuId = strval( $j_item['skuIdStr'] ?: $j_item['skuId'] );
+					$skuId = strval( ( $j_item['skuIdStr'] ?? '' ) ?: ( $j_item['skuId'] ?? '' ) );
 					$temp  = array(
 						'skuId'              => $skuId,
 						'skuAttr'            => $j_item['skuAttr'] ?? '',
@@ -173,7 +176,7 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_Other_Data' ) ) {
 							continue;
 						}
 						foreach ( $attrIds as $k => $k_item ) {
-							$propertyValueId = explode( ':', $parent_attrIds[ $k ] )[0] . ':' . $k_item;
+							$propertyValueId = explode( ':', $parent_attrIds[ $k ] ?? '' )[0] . ':' . $k_item;
 							if ( isset( $listAttributesDisplayNames[ $propertyValueId ] ) ) {
 								$temAttr[ $result['list_attributes_slugs'][ $propertyValueId ] ]    = $listAttributesDisplayNames[ $propertyValueId ];
 								$temAttrSub[ $result['list_attributes_slugs'][ $propertyValueId ] ] = $propertyValueNames[ $propertyValueId ];
@@ -206,8 +209,10 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_Other_Data' ) ) {
 				return;
 			}
 			if ( ! empty( $data['itemStatusComponent']['status'] ) ) {
-				$error['error']   = 1;
-				$error['message'] = esc_html__( 'Ali product is no longer available!', 'woocommerce-alidropship' );
+				$error = [
+					'error'   => 1,
+					'message' => esc_html__( 'Ali product is no longer available!', 'woo-alidropship' ),
+				];
 
 				return;
 			}

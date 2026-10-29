@@ -179,7 +179,7 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_Ali_Data' ) ) {
 								$is_ru = true;
 							}
 						}
-						$response = self::error_currency_imported( $attributes['currency_code'] );
+						$response = self::error_currency_imported( $attributes['currency_code'] ?? '' );
 						if ($response){
 							return;
 						}
@@ -607,7 +607,7 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_Ali_Data' ) ) {
 					$attributes['currency_code'] = $webEnv['currency'];
 				}
 			}
-			if ( ! $attributes['sku'] ) {
+			if ( empty( $attributes['sku'] ) ) {
 				$search  = array( "\n", "\r", "\t" );
 				$replace = array( "", "", "" );
 				$html    = str_replace( $search, $replace, $html );
@@ -752,10 +752,11 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_Ali_Data' ) ) {
 			$variationImages            =  $variations                 = array();
 			$use_ali_regular_price =false;
 			if ( ! empty( $html['ae_item_base_info_dto'] ) ) {
+				$currency = '';
 				/*Rebuild data from the new product API aliexpress.ds.product.get - since 1.0.10*/
 				if ( ! empty( $html['ae_item_base_info_dto']['product_status_type'] ) && $html['ae_item_base_info_dto']['product_status_type'] === 'offline' ) {
 					$response['error']  = 1;
-					$response['message'] = esc_html__( 'This product is no longer available', 'woocommerce-alidropship' );
+					$response['message'] = esc_html__( 'This product is no longer available', 'woo-alidropship' );
 					return;
 				}
 				if ( ! empty( $html['ae_item_base_info_dto']['product_id'] ) ) {
@@ -926,6 +927,9 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_Ali_Data' ) ) {
 							'ship_from' => '',
 							'currency_code' => isset($skuModule[$j]['currency_code']) ? $skuModule[$j]['currency_code'] : '',
 						);
+						if (!$currency && !empty($temp['currency_code'])) {
+							$currency = $temp['currency_code'];
+						}
 						if (!$use_ali_regular_price) {
 							$s_price = isset($skuModule[$j]['offer_sale_price']) ? self::string_to_float($skuModule[$j]['offer_sale_price']) : 0;
 							$offer_bulk_sale_price = isset($skuModule[$j]['offer_bulk_sale_price']) ? self::string_to_float($skuModule[$j]['offer_bulk_sale_price']) : 0;
@@ -996,7 +1000,7 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_Ali_Data' ) ) {
 					'num'  => isset( $html['ae_store_info']['store_id'] ) ? $html['ae_store_info']['store_id'] : '',
 				);
 				$attributes['name']          = $html['ae_item_base_info_dto']['subject'];
-				$attributes['currency_code'] = $html['ae_item_base_info_dto']['currency_code'];
+				$attributes['currency_code'] = $currency ?: $html['ae_item_base_info_dto']['currency_code'];
 			}
 		}
 		public static function parse_data(&$attributes, $data, $skip_ship_from_check = false ){

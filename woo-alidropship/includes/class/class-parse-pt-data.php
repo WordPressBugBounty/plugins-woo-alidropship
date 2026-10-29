@@ -15,7 +15,7 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_PT_Data' ) ) {
 				if ( ! is_array( $value ) ) {
 					continue;
 				}
-				if ( substr( $key, 0, 14 ) === 'actionButtons_' ) {
+				if ( substr( (string) $key, 0, 14 ) === 'actionButtons_' ) {
 					if ( isset( $value['type'] ) && $value['type'] === 'actionButtons' ) {
 						if ( isset( $value['fields'] ) ) {
 							$action_module = $value['fields'];
@@ -42,7 +42,7 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_PT_Data' ) ) {
 				if ( ! is_array( $value ) ) {
 					continue;
 				}
-				if ( substr( $key, 0, 12 ) === 'description_' ) {
+				if ( substr( (string) $key, 0, 12 ) === 'description_' ) {
 					if ( isset( $value['type'] ) && $value['type'] === 'description' ) {
 						if ( isset( $value['fields'], $value['fields']['detailDesc'] ) ) {
 							$desc = $value['fields']['detailDesc'];
@@ -70,7 +70,7 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_PT_Data' ) ) {
 				if ( ! is_array( $value ) ) {
 					continue;
 				}
-				if ( substr( $key, 0, 10 ) === 'specsInfo_' ) {
+				if ( substr( (string) $key, 0, 10 ) === 'specsInfo_' ) {
 					if ( isset( $value['type'] ) && $value['type'] === 'specsInfo' ) {
 						if ( isset( $value['fields'], $value['fields']['specs'] ) ) {
 							$specs = $value['fields']['specs'];
@@ -97,7 +97,7 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_PT_Data' ) ) {
 				if ( ! is_array( $value ) ) {
 					continue;
 				}
-				if ( substr( $key, 0, 15 ) === 'storeRecommend_' ) {
+				if ( substr( (string) $key, 0, 15 ) === 'storeRecommend_' ) {
 					if ( isset( $value['type'] ) && $value['type'] === 'storeRecommend' ) {
 						if ( isset( $value['fields'] ) ) {
 							$store_info = $value['fields'];
@@ -124,7 +124,7 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_PT_Data' ) ) {
 				if ( ! is_array( $value ) ) {
 					continue;
 				}
-				if ( substr( $key, 0, 10 ) === 'imageView_' ) {
+				if ( substr( (string) $key, 0, 10 ) === 'imageView_' ) {
 					if ( isset( $value['type'] ) && $value['type'] === 'imageView' ) {
 						if ( isset( $value['fields'] ) ) {
 							$image_view = $value['fields'];
@@ -152,7 +152,7 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_PT_Data' ) ) {
 				if ( ! is_array( $value ) ) {
 					continue;
 				}
-				if ( substr( $key, 0, 4 ) === 'sku_' ) {
+				if ( substr( (string) $key, 0, 4 ) === 'sku_' ) {
 					if ( isset( $value['type'] ) && $value['type'] === 'sku' ) {
 						if ( isset( $value['fields'] ) ) {
 							$sku_module = $value['fields'];
@@ -179,7 +179,7 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_PT_Data' ) ) {
 				if ( ! is_array( $value ) ) {
 					continue;
 				}
-				if ( substr( $key, 0, 12 ) === 'titleBanner_' ) {
+				if ( substr( (string) $key, 0, 12 ) === 'titleBanner_' ) {
 					if ( isset( $value['type'] ) && $value['type'] === 'titleBanner' ) {
 						if ( isset( $value['fields'] ) ) {
 							$title_module = $value['fields'];
@@ -207,7 +207,7 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_PT_Data' ) ) {
 				if ( ! is_array( $value ) ) {
 					continue;
 				}
-				if ( substr( $key, 0, 9 ) === 'shipping_' ) {
+				if ( substr( (string) $key, 0, 9 ) === 'shipping_' ) {
 					if ( isset( $value['type'] ) && $value['type'] === 'shipping' ) {
 						if ( isset( $value['fields'], $value['fields']['tradeCurrency'] ) && $value['fields']['tradeCurrency'] ) {
 							$currency = $value['fields']['tradeCurrency'];

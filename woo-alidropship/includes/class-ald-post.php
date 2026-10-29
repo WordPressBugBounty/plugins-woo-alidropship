@@ -1,5 +1,6 @@
 <?php
 
+#[AllowDynamicProperties]
 final class ALD_Post {
 
 	public $ID;
@@ -108,6 +109,7 @@ final class ALD_Post {
 		}
 
 		if ( 'post_category' === $key ) {
+			$terms = false;
 			if ( is_object_in_taxonomy( $this->post_type, 'category' ) ) {
 				$terms = get_the_terms( $this, 'category' );
 			}
@@ -120,6 +122,7 @@ final class ALD_Post {
 		}
 
 		if ( 'tags_input' === $key ) {
+			$terms = false;
 			if ( is_object_in_taxonomy( $this->post_type, 'post_tag' ) ) {
 				$terms = get_the_terms( $this, 'post_tag' );
 			}

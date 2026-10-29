@@ -1,5 +1,13 @@
 *** ALD - Dropshipping and Fulfillment for AliExpress and WooCommerce Changelog ***
 
+2026.10.29 - version 2.2.6
+- Fixed: Checkout “English only” validation for billing/shipping names and city now allows spaces
+- Fixed: AliExpress shipping cost conversion for non-USD freight (including RUB custom exchange rate)
+- Fixed: Carrier URL find/replace keeps {tracking_number} and {postal_code} placeholders when URLs are sanitized
+- Fixed: Import currency rate saved with a safe default; general settings text fields handle slashes correctly
+- Updated: Default fulfill carrier set to Cainiao Standard
+- Updated: Raised minimum WordPress requirement to 6.2
+
 2026.10.08 - version 2.2.5
 - Fixed: Setup wizard installs recommended plugins only for administrators who can install and activate plugins
 - Updated: Recommended plugins page shows Install and Activate only when the current user has those permissions

@@ -2,7 +2,7 @@
 Contributors: villatheme, mrt3vn
 Donate link: http://www.villatheme.com/donate
 Tags: alidropship, dropship, alidropship woo, aliexpress dropshipping plugin, aliexpress dropshipping
-Requires at least: 5.0
+Requires at least: 6.2
 Tested up to: 7.1
 WC tested up to: 11.2
 WC requires at least: 7.0
@@ -344,6 +344,15 @@ You can distinguish between AliExpress orders with your initial store orders and
 6. AliExpress single detail page
 
 == Changelog ==
+
+2026.10.29 - version 2.2.6
+- Fixed: Checkout 'English only' validation for billing/shipping names and city now allows spaces
+- Fixed: AliExpress shipping cost conversion for non-USD freight (including RUB custom exchange rate)
+- Fixed: Carrier URL find/replace keeps {tracking_number} and {postal_code} placeholders when URLs are sanitized
+- Fixed: Import currency rate saved with a safe default; general settings text fields handle slashes correctly
+- Updated: Default fulfill carrier set to Cainiao Standard
+- Updated: Raised minimum WordPress requirement to 6.2
+
 2026.10.08 - version 2.2.5
 - Fixed: Setup wizard installs recommended plugins only for administrators who can install and activate plugins
 - Updated: Recommended plugins page shows Install and Activate only when the current user has those permissions

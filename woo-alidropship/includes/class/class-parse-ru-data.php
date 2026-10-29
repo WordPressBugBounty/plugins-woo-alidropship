@@ -11,6 +11,9 @@ if ( ! class_exists( 'VIALD_CLASS_Parse_RU_Data' ) ) {
 		 */
 		public static function aliexpress_ru_get_currency( $widgets ) {
 			global $wad_count;
+			if ( ! isset( $wad_count ) ) {
+				$wad_count = 0;
+			}
 			$wad_count ++;
 			$currency = '';
 			foreach ( $widgets as $key => $value ) {

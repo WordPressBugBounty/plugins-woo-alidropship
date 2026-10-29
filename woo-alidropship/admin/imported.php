@@ -575,6 +575,9 @@ class VI_WOO_ALIDROPSHIP_Admin_Imported {
 						$image = ( is_array( $gallery ) && count( $gallery ) ) ? array_shift( $gallery ) : '';
 					}
 					$variations         = Ali_Product_Table::get_post_meta( $product_id, '_vi_wad_variations', true );
+					if ( ! is_array( $variations ) ) {
+						$variations = array();
+					}
 					$overriding_product = VI_WOO_ALIDROPSHIP_DATA::get_overriding_product( $product_id );
 					$accordion_active   = '';
 					if ( $overriding_product ) {

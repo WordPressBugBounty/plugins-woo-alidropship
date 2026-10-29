@@ -50,6 +50,9 @@ class VI_WOO_ALIDROPSHIP_Admin_Product {
 			$from_id = VI_WOO_ALIDROPSHIP_DATA::product_get_id_by_woo_id( $product_id, false, false, array( 'publish', 'override' ) );
 			if ( $from_id ) {
 				$variations = Ali_Product_Table::get_post_meta( $from_id, '_vi_wad_variations', true );
+				if ( ! is_array( $variations ) ) {
+					$variations = array();
+				}
 				$skuAttr    = get_post_meta( $product_id, '_vi_wad_aliexpress_variation_attr', true );
 				if ( $skuAttr || count( $variations ) > 1 ) {
 					$id = "vi-wad-original-attributes-simple-{$product_id}";
@@ -63,15 +66,19 @@ class VI_WOO_ALIDROPSHIP_Admin_Product {
                             <option value=""><?php esc_html_e( 'Please select original variation', 'woo-alidropship' ); ?></option>
 							<?php
 							foreach ( $variations as $key => $value ) {
-								$attr_name = $value['skuAttr'];
-								if ( isset( $value['attributes_sub'] ) && count( $value['attributes_sub'] ) > count( $value['attributes'] ) ) {
+								if ( ! is_array( $value ) ) {
+									continue;
+								}
+								$attr_name  = $value['skuAttr'] ?? '';
+								$attributes = ( isset( $value['attributes'] ) && is_array( $value['attributes'] ) ) ? $value['attributes'] : array();
+								if ( isset( $value['attributes_sub'] ) && is_array( $value['attributes_sub'] ) && count( $value['attributes_sub'] ) > count( $attributes ) ) {
 									$attr_name = implode( ', ', $value['attributes_sub'] );
-								} elseif ( count( $value['attributes'] ) ) {
-									$attr_name = implode( ', ', $value['attributes'] );
+								} elseif ( count( $attributes ) ) {
+									$attr_name = implode( ', ', $attributes );
 								}
 								?>
-                                <option value="<?php echo esc_attr( $value['skuAttr'] ) ?>"
-                                        data-vi_wad_sku_id="<?php echo esc_attr( $value['skuId'] ) ?>" <?php selected( $value['skuAttr'], $skuAttr ) ?>><?php echo esc_html( $attr_name ) ?></option>
+                                <option value="<?php echo esc_attr( $value['skuAttr'] ?? '' ) ?>"
+                                        data-vi_wad_sku_id="<?php echo esc_attr( $value['skuId'] ?? '' ) ?>" <?php selected( $value['skuAttr'] ?? '', $skuAttr ) ?>><?php echo esc_html( $attr_name ) ?></option>
 								<?php
 							}
 							?>
@@ -119,6 +126,9 @@ class VI_WOO_ALIDROPSHIP_Admin_Product {
 			if ( $from_id ) {
 				$variation_id = $variation->ID;
 				$variations   = Ali_Product_Table::get_post_meta( $from_id, '_vi_wad_variations', true );
+				if ( ! is_array( $variations ) ) {
+					$variations = array();
+				}
 				$skuAttr      = get_post_meta( $variation_id, '_vi_wad_aliexpress_variation_attr', true );
 				$id           = "vi-wad-original-attributes-{$variation_id}";
 				wp_nonce_field( 'viwad-variation-' . $loop . '-settings', 'viwad-variation-' . $loop . '-nonce', false );
@@ -135,15 +145,19 @@ class VI_WOO_ALIDROPSHIP_Admin_Product {
 							<?php
 						}
 						foreach ( $variations as $key => $value ) {
-							$attr_name = $value['skuAttr'];
-							if ( isset( $value['attributes_sub'] ) && count( $value['attributes_sub'] ) > count( $value['attributes'] ) ) {
+							if ( ! is_array( $value ) ) {
+								continue;
+							}
+							$attr_name  = $value['skuAttr'] ?? '';
+							$attributes = ( isset( $value['attributes'] ) && is_array( $value['attributes'] ) ) ? $value['attributes'] : array();
+							if ( isset( $value['attributes_sub'] ) && is_array( $value['attributes_sub'] ) && count( $value['attributes_sub'] ) > count( $attributes ) ) {
 								$attr_name = implode( ', ', $value['attributes_sub'] );
-							} elseif ( count( $value['attributes'] ) ) {
-								$attr_name = implode( ', ', $value['attributes'] );
+							} elseif ( count( $attributes ) ) {
+								$attr_name = implode( ', ', $attributes );
 							}
 							?>
-                            <option value="<?php echo esc_attr( $value['skuAttr'] ) ?>"
-                                    data-vi_wad_sku_id="<?php echo esc_attr( $value['skuId'] ) ?>" <?php selected( $value['skuAttr'], $skuAttr ) ?>><?php echo esc_html( $attr_name ) ?></option>
+                            <option value="<?php echo esc_attr( $value['skuAttr'] ?? '' ) ?>"
+                                    data-vi_wad_sku_id="<?php echo esc_attr( $value['skuId'] ?? '' ) ?>" <?php selected( $value['skuAttr'] ?? '', $skuAttr ) ?>><?php echo esc_html( $attr_name ) ?></option>
 							<?php
 						}
 						?>

@@ -1050,7 +1050,7 @@ if ( ! class_exists( 'Ali_Product_Query' ) ) {
 
 			$this->posts = apply_filters_ref_array( 'posts_pre_query', array( null, &$this ) );
 
-			$id_query_is_cacheable = ! str_contains( strtoupper( $orderby ), ' RAND(' );
+			$id_query_is_cacheable = false === strpos( strtoupper( $orderby ), ' RAND(' );
 
 			$cacheable_field_values = array(
 				"{$wpdb->ald_posts}.*",

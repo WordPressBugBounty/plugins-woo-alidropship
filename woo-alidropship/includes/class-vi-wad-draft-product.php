@@ -35,20 +35,14 @@ if ( ! class_exists( 'Vi_Wad_Draft_Product' ) ) {
 				return;
 			}
 			$labels = array(
-				'name'               => _x( 'Draft product', 'woocommerce-coupon-box' ),
-				'singular_name'      => _x( 'Draft product', 'woocommerce-coupon-box' ),
-//				'menu_name'          => _x( 'Draft product', 'Admin menu', 'woocommerce-coupon-box' ),
-//				'name_admin_bar'     => _x( 'Draft product', 'Add new on Admin bar', 'woocommerce-coupon-box' ),
-//				'add_new'            => _x( 'Add New Subscribe', 'role', 'woocommerce-coupon-box' ),
-//				'add_new_item'       => __( 'Add New Email Subscribe', 'woocommerce-coupon-box' ),
-//				'new_item'           => __( 'New Draft product', 'woocommerce-coupon-box' ),
-				'edit_item'          => __( 'Edit', 'woocommerce-coupon-box' ),
-				'view_item'          => __( 'View', 'woocommerce-coupon-box' ),
-				'all_items'          => __( 'All products', 'woocommerce-coupon-box' ),
-				'search_items'       => __( 'Search product', 'woocommerce-coupon-box' ),
-//				'parent_item_colon'  => __( 'Parent Draft product:', 'woocommerce-coupon-box' ),
-				'not_found'          => __( 'No draft product found.', 'woocommerce-coupon-box' ),
-				'not_found_in_trash' => __( 'No draft product found in Trash.', 'woocommerce-coupon-box' )
+				'name'               => __( 'Draft product', 'woo-alidropship' ),
+				'singular_name'      => __( 'Draft product', 'woo-alidropship' ),
+				'edit_item'          => __( 'Edit', 'woo-alidropship' ),
+				'view_item'          => __( 'View', 'woo-alidropship' ),
+				'all_items'          => __( 'All products', 'woo-alidropship' ),
+				'search_items'       => __( 'Search product', 'woo-alidropship' ),
+				'not_found'          => __( 'No draft product found.', 'woo-alidropship' ),
+				'not_found_in_trash' => __( 'No draft product found in Trash.', 'woo-alidropship' )
 			);
 			$args   = array(
 				'labels'              => $labels,

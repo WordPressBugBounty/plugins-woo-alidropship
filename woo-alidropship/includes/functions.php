@@ -18,12 +18,15 @@ if ( ! function_exists( 'vi_include_folder' ) ) {
 			$ext = array_map( 'trim', $ext );
 		}
 		$sfiles = scandir( $path );
+		if ( ! is_array( $sfiles ) ) {
+			return;
+		}
 		foreach ( $sfiles as $sfile ) {
 			if ( $sfile != '.' && $sfile != '..' ) {
 				if ( is_file( $path . "/" . $sfile ) ) {
 					$ext_file  = pathinfo( $path . "/" . $sfile );
 					$file_name = $ext_file['filename'];
-					if ( $ext_file['extension'] ) {
+					if ( ! empty( $ext_file['extension'] ) ) {
 						if ( in_array( $ext_file['extension'], $ext ) ) {
 							$class = preg_replace( '/\W/i', '_', $prefix . ucfirst( $file_name ) );
 
@@ -76,15 +79,18 @@ if ( ! function_exists( 'vi_wad_upload_image' ) ) {
 					require_once( ABSPATH . "wp-admin" . '/includes/media.php' );
 				}
 				// Download file to temp location
-				$tmp                    = download_url( $url );
-				$img_name = trim(wp_parse_url($url)['path']??'','/');
-				if ($img_name){
-					$img_name = str_replace('/','-',$img_name);
-					$img_name = substr($img_name,0,strpos($img_name,$matches[1]));
+				$tmp        = download_url( $url );
+				$parsed_url = wp_parse_url( $url );
+				$img_name   = trim( ( is_array( $parsed_url ) ? ( $parsed_url['path'] ?? '' ) : '' ), '/' );
+				if ( $img_name ) {
+					$img_name = str_replace( '/', '-', $img_name );
+					$ext_pos  = strpos( $img_name, $matches[1] );
+					$img_name = ( false !== $ext_pos ) ? substr( $img_name, 0, $ext_pos ) : '';
 				}
-				if (!$img_name){
+				if ( ! $img_name ) {
 					$img_name = basename( $matches[0] );
-					$img_name = substr($img_name,0,strpos($img_name,$matches[1])).time();
+					$ext_pos  = strpos( $img_name, $matches[1] );
+					$img_name = ( ( false !== $ext_pos ) ? substr( $img_name, 0, $ext_pos ) : '' ) . time();
 				}
 				$file_array['name']     = apply_filters( 'vi_wad_image_file_name', $img_name.$matches[1], $post_parent,$post_title );
 				$file_array['tmp_name'] = $tmp;
@@ -121,7 +127,7 @@ if ( ! function_exists( 'woocommerce_version_check' ) ) {
 	function woocommerce_version_check( $version = '3.0' ) {
 		global $woocommerce;
 
-		if ( version_compare( $woocommerce->version, $version, ">=" ) ) {
+		if ( is_object( $woocommerce ) && isset( $woocommerce->version ) && version_compare( $woocommerce->version, $version, ">=" ) ) {
 			return true;
 		}
 
@@ -130,8 +136,15 @@ if ( ! function_exists( 'woocommerce_version_check' ) ) {
 }
 if ( ! function_exists( 'vi_wad_json_decode' ) ) {
 	function vi_wad_json_decode( $json, $assoc = true, $depth = 512, $options = 2 ) {
-		if (is_array($json)){
+		if ( is_array( $json ) ) {
 			return $json;
+		}
+		if ( ! is_string( $json ) ) {
+			if ( is_scalar( $json ) || null === $json ) {
+				$json = (string) $json;
+			} else {
+				return null;
+			}
 		}
 		if ( function_exists( 'mb_convert_encoding' ) ) {
 			$json = mb_convert_encoding( $json, 'UTF-8', 'UTF-8' );

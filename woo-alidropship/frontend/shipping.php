@@ -20,33 +20,33 @@ class VI_WOO_ALIDROPSHIP_Frontend_Shipping {
 		}
 
 		if ( empty( $data['ship_to_different_address'] ) ) {
-			$f_name = $data['billing_first_name'];
-			$l_name = $data['billing_last_name'];
-			$city   = $data['billing_city'];
+			$f_name = $data['billing_first_name'] ?? '';
+			$l_name = $data['billing_last_name'] ?? '';
+			$city   = $data['billing_city'] ?? '';
 
-			if ( $f_name && preg_match( '/[^A-Za-z0-9]/im', $f_name ) ) {
+			if ( $f_name && preg_match( '/[^A-Za-z0-9\s]/im', $f_name ) ) {
 				wc_add_notice( esc_html__( 'Require first name in English', 'woo-alidropship' ), 'error', [ 'ald_fname_field' => 'wrong_language' ] );
 			}
 
-			if ( $l_name && preg_match( '/[^A-Za-z0-9]/im', $l_name ) ) {
+			if ( $l_name && preg_match( '/[^A-Za-z0-9\s]/im', $l_name ) ) {
 				wc_add_notice( esc_html__( 'Require last name in English', 'woo-alidropship' ), 'error', [ 'ald_lname_field' => 'wrong_language' ] );
 			}
 
-			if ( $city && preg_match( '/[^A-Za-z0-9]/im', $city ) ) {
+			if ( $city && preg_match( '/[^A-Za-z0-9\s]/im', $city ) ) {
 				wc_add_notice( esc_html__( 'Require city in English', 'woo-alidropship' ), 'error', [ 'ald_city_field' => 'wrong_language' ] );
 			}
 		} else {
-			$f_name = $data['shipping_first_name'];
-			$l_name = $data['shipping_last_name'];
-			$city   = $data['shipping_city'];
+			$f_name = $data['shipping_first_name'] ?? '';
+			$l_name = $data['shipping_last_name'] ?? '';
+			$city   = $data['shipping_city'] ?? '';
 
-			if ( $f_name && preg_match( '/[^A-Za-z0-9]/im', $f_name ) ) {
+			if ( $f_name && preg_match( '/[^A-Za-z0-9\s]/im', $f_name ) ) {
 				wc_add_notice( esc_html__( 'Require shipping first name in English', 'woo-alidropship' ), 'error', [ 'ald_fname_field' => 'wrong_language' ] );
 			}
-			if ( $l_name && preg_match( '/[^A-Za-z0-9]/im', $l_name ) ) {
+			if ( $l_name && preg_match( '/[^A-Za-z0-9\s]/im', $l_name ) ) {
 				wc_add_notice( esc_html__( 'Require shipping last name in English', 'woo-alidropship' ), 'error', [ 'ald_lname_field' => 'wrong_language' ] );
 			}
-			if ( $city && preg_match( '/[^A-Za-z0-9]/im', $city ) ) {
+			if ( $city && preg_match( '/[^A-Za-z0-9\s]/im', $city ) ) {
 				wc_add_notice( esc_html__( 'Require shipping city in English', 'woo-alidropship' ), 'error', [ 'ald_city_field' => 'wrong_language' ] );
 			}
 		}

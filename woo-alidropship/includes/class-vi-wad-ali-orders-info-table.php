@@ -35,7 +35,7 @@ if ( ! class_exists( 'VI_WOO_ALIDROPSHIP_Ali_Orders_Info_Table' ) ) {
 			global $wpdb;
 			$table       = $wpdb->prefix . 'vi_wad_ali_orders_info';
 			$order_id    = strval( $order_id );
-			$currency    = trim( $currency );
+			$currency    = trim( (string) $currency );
 			$order_total = floatval( $order_total );
 			$result      = self::get_row_by_order_id( $order_id );
 			if ( $order_id && $currency && $order_total ) {
@@ -49,7 +49,7 @@ if ( ! class_exists( 'VI_WOO_ALIDROPSHIP_Ali_Orders_Info_Table' ) ) {
 				)) );
 				$return = strval( $return );
 			} else {
-				if ( ! empty( $result['id'] ) ) {
+				if ( is_array( $result ) && ! empty( $result['id'] ) ) {
 					if ( $order_total ) {
 						$update_fields = array( 'order_total' => $order_total );
 						if ( $currency ) {
